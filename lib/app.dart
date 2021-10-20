@@ -7,7 +7,7 @@ import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class App {
-  static App _instance = App();
+  static App _instance;
   final String apiBaseURL;
   final String appTitle;
 
