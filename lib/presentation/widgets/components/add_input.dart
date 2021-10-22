@@ -6,13 +6,16 @@ class AddInput extends StatelessWidget {
   final String label, hint;
   final TextEditingController controller;
   final bool isRequired;
-  const AddInput(
-      {Key key,
-      @required this.label,
-      @required this.hint,
-      @required this.controller,
-      this.isRequired = false})
-      : super(key: key);
+  final TextInputType type;
+
+  const AddInput({
+    Key key,
+    @required this.label,
+    @required this.hint,
+    @required this.controller,
+    this.isRequired = false,
+    this.type = TextInputType.name,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +58,7 @@ class AddInput extends StatelessWidget {
               color: AppColor.black,
               fontSize: 16.sp,
             ),
+            keyboardType: this.type,
             decoration: InputDecoration(
               hintText: this.hint,
               floatingLabelBehavior: FloatingLabelBehavior.always,

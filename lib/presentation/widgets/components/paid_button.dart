@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class PaidButton extends StatelessWidget {
   final bool isDisabled;
   final Function onTap;
+  final IconData icon;
 
-  const PaidButton({Key key, this.isDisabled = false, this.onTap}) : super(key: key);
+  const PaidButton({Key key, this.isDisabled = false, this.onTap, this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +23,18 @@ class PaidButton extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: this.isDisabled ? AppColor.disableGrey : AppColor.darkPrimary,
+                color: this.isDisabled
+                    ? AppColor.disableGrey
+                    : AppColor.darkPrimary,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(8),
                   topLeft: Radius.circular(8),
                 ),
               ),
               child: Icon(
-                Icons.arrow_forward_rounded,
+                this.icon,
                 color: Colors.white,
                 size: 24,
               ),

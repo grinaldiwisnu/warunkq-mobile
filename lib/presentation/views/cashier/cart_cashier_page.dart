@@ -232,6 +232,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                       ),
                     ),
                     PaidButton(
+                      icon: Icons.payments_outlined,
                       isDisabled: false,
                       onTap: () {},
                     ),

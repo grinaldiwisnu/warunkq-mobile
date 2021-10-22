@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/presentation/views/product/product_category_page.dart';
 import 'package:warunkq_apps/presentation/views/product/product_page.dart';
 import 'package:warunkq_apps/presentation/widgets/components/store_menu.dart';
 
@@ -122,7 +123,17 @@ class StorePage extends StatelessWidget {
                               name: "Produk Saya",
                               icon: Icons.card_giftcard_rounded,
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductPage()));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ProductPage()));
+                              },
+                            ),
+                            StoreMenu(
+                              name: "Kategori Produk",
+                              icon: Icons.list_rounded,
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProductCategoryPage()));
                               },
                             ),
                             StoreMenu(

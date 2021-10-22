@@ -21,74 +21,76 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-            color: AppColor.black,
-          ),
-          backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+          color: AppColor.black,
         ),
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 25.h),
-                alignment: Alignment.center,
-                child: Text(
-                  "Masukkan akun anda",
-                  style: TextStyle(
-                    color: AppColor.black,
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
+        backgroundColor: Colors.transparent,
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 25.h),
+              alignment: Alignment.center,
+              child: Text(
+                "Masukkan akun anda",
+                style: TextStyle(
+                  color: AppColor.black,
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(
-                height: 15.h,
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
+              child: PhoneNumberInput(
+                controller: _phoneNumberInput,
+                onChanged: (String val) {
+                  setState(() {
+                    _ableToNext = val.length > 8;
+                  });
+                },
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
-                child: PhoneNumberInput(
-                  controller: _phoneNumberInput,
-                  onChanged: (String val) {
-                    setState(() {
-                      _ableToNext = val.length > 8;
-                    });
-                  },
-                ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
+              child: BaseInput(
+                controller: _passwordInput,
+                label: "Kata sandi akun anda",
+                passwordField: true,
+                maxLines: 1,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
-                child: BaseInput(
-                  controller: _passwordInput,
-                  label: "Kata sandi akun anda",
-                  passwordField: true,
-                  maxLines: 1,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        bottomSheet: Container(
-          padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
-          width: double.infinity,
-          child: BaseButton(
-            style: AppButtonStyle.primary,
-            radius: 8,
-            fontSize: 16.sp,
-            padding: 20,
-            isDisabled: !_ableToNext,
-            text: "Masuk",
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
-            },
-          ),
-        ));
+      ),
+      bottomSheet: Container(
+        padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
+        width: double.infinity,
+        child: BaseButton(
+          style: AppButtonStyle.primary,
+          radius: 8,
+          fontSize: 16.sp,
+          padding: 20,
+          isDisabled: !_ableToNext,
+          text: "Masuk",
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => HomePage()));
+          },
+        ),
+      ),
+    );
   }
 }

@@ -91,9 +91,11 @@ class _CashierPageState extends State<CashierPage> {
               right: 0,
               left: 0,
               child: PaidButton(
+                icon: Icons.shopping_basket_outlined,
                 isDisabled: false,
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CartCashierPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CartCashierPage()));
                 },
               ),
             ),
