@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/presentation/views/customer/customer_page.dart';
@@ -46,7 +45,8 @@ class _CartCashierPageState extends State<CartCashierPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomerPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CustomerPage()));
                       },
                       child: Icon(
                         Icons.group_add_rounded,
@@ -61,7 +61,8 @@ class _CartCashierPageState extends State<CartCashierPage> {
                   child: ListView.separated(
                     itemCount: 5,
                     separatorBuilder: (context, index) => Divider(),
-                    padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Container(
@@ -74,14 +75,16 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                   height: 35,
                                   width: 35,
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: AppColor.grey, width: 1),
+                                    border: Border.all(
+                                        color: AppColor.grey, width: 1),
                                     borderRadius: BorderRadius.circular(5),
                                     color: AppColor.disableDarkGrey,
                                   ),
                                 ),
                                 Expanded(
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 15.w),
                                     child: Text(
                                       "Premium XL (16 Kombinasi 750ml) Salad Sayur",
                                       style: TextStyle(
@@ -99,7 +102,6 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                 )
                               ],
                             ),
-
                           ],
                         ),
                       );

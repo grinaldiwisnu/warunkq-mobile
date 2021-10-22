@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 
 class HistoryPage extends StatefulWidget {
   HistoryPage({Key key}) : super(key: key);
@@ -67,11 +66,13 @@ class _HistoryPageState extends State<HistoryPage> {
                 color: AppColor.grey,
                 child: ListView.builder(
                   itemCount: 5,
-                  padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Container(
-                      padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 25.h, horizontal: 15.w),
                       margin: EdgeInsets.only(bottom: 10.h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
@@ -107,7 +108,8 @@ class _HistoryPageState extends State<HistoryPage> {
                               borderRadius: BorderRadius.circular(8),
                               color: AppColor.primary,
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10.h, horizontal: 15.w),
                             child: Text(
                               "SELESAI",
                               style: TextStyle(
