@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColor {
   static Color primary = Color(0xFF1A72DD);
+  static Color darkPrimary = Color(0xFF0659C5);
   static Color secondary = Color(0xFFFF6D0D);
 
   static Color pink = Color(0xFFEF798A);
@@ -14,4 +15,6 @@ class AppColor {
   static Color grey = Color(0xFFF8F8F8);
   static Color boxGrey = Color(0xFFD5D6DD);
   static Color black = Color(0xFF050F19);
+  static Color disableGrey = Color(0xFFBDBDBD);
+  static Color disableDarkGrey = Color(0xFFD8D8D8);
 }

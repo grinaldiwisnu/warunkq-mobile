@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/presentation/views/home/home_page.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_input.dart';
 import 'package:warunkq_apps/presentation/widgets/components/phone_number_input.dart';
@@ -83,8 +83,11 @@ class _LoginPageState extends State<LoginPage> {
             radius: 8,
             fontSize: 16.sp,
             padding: 20,
+            isDisabled: !_ableToNext,
             text: "Masuk",
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+            },
           ),
         ));
   }
