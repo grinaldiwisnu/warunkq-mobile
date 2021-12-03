@@ -5,7 +5,8 @@ import 'package:warunkq_apps/entrypoint.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  App.configure(apiBaseURL: "", appTitle: 'WarunkQ');
+  App.configure(
+      apiBaseURL: "https://multazamgsd.com/warunkq-api", appTitle: 'WarunkQ');
 
   await App().init();
 

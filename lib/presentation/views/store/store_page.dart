@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/views/product/product_category_page.dart';
 import 'package:warunkq_apps/presentation/views/product/product_page.dart';
 import 'package:warunkq_apps/presentation/widgets/components/store_menu.dart';
 
 class StorePage extends StatelessWidget {
-  const StorePage({Key key}) : super(key: key);
+  final HomeCubit homeCubit;
+
+  const StorePage({Key key, this.homeCubit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Warung Rizky Sejahtera",
+            this.homeCubit.user.storeName,
             style: TextStyle(
                 fontSize: 18.sp,
                 color: Colors.white,
@@ -65,7 +68,7 @@ class StorePage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Grinaldi Wisnu Tri Prasetyo",
+                                    this.homeCubit.user.fullname,
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       color: Colors.black,
@@ -73,7 +76,7 @@ class StorePage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "grinaldifoc@gmail.com",
+                                    this.homeCubit.user.email,
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       color: AppColor.darkGrey,
@@ -81,7 +84,7 @@ class StorePage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "+62 852 3002 6622",
+                                    this.homeCubit.user.phoneNumber,
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       color: AppColor.darkGrey,

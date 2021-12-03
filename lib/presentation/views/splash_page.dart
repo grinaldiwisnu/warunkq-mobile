@@ -7,6 +7,7 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/presentation/views/auth/onboarding_page.dart';
+import 'package:warunkq_apps/presentation/views/home/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -24,10 +25,9 @@ class _SplashPageState extends State<SplashPage> {
   _loadWidget() async {
     var _duration = Duration(seconds: 5);
 
-    String isLogin =
-        App().prefs.getString(ConstantHelper.PREFS_IS_USER_LOGGED_IN);
-    if (isLogin == '1') {
-      return Timer(_duration, navigationPage);
+    bool isLogin = App().prefs.getBool(ConstantHelper.PREFS_IS_USER_LOGGED_IN);
+    if (isLogin != null && isLogin) {
+      return Timer(_duration, navigationHomePage);
     } else {
       return Timer(_duration, navigationPage);
     }
@@ -36,6 +36,11 @@ class _SplashPageState extends State<SplashPage> {
   void navigationPage() {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => OnboardingPage()));
+  }
+
+  void navigationHomePage() {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => HomePage()));
   }
 
   @override

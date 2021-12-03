@@ -13,6 +13,7 @@ class BaseInput extends StatelessWidget {
   final int maxLines;
   final TextCapitalization textCapitalization;
   final Color backgroundColor;
+  final ValueChanged<String> onChanged;
 
   BaseInput(
       {@required this.controller,
@@ -24,7 +25,8 @@ class BaseInput extends StatelessWidget {
       this.validator,
       this.maxLines,
       this.textCapitalization,
-      this.backgroundColor});
+      this.backgroundColor,
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class BaseInput extends StatelessWidget {
       obscureText: passwordField,
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       readOnly: onClick != null,
+      onChanged: onChanged,
       validator: validator ?? (String args) => null,
       style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
