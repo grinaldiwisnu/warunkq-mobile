@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     homeCubit = BlocProvider.of<HomeCubit>(context);
-    homeCubit.init();
     _pageController = PageController(
       initialPage: 0,
       keepPage: true,
@@ -54,7 +53,9 @@ class _HomePageState extends State<HomePage> {
               CashierPage(),
               HistoryPage(),
               ReportPage(),
-              StorePage(),
+              StorePage(
+                homeCubit: homeCubit,
+              ),
             ],
           ),
         ),

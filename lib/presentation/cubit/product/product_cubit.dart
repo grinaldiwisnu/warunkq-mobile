@@ -22,6 +22,7 @@ class ProductCubit extends Cubit<ProductState> {
       return;
     }
 
+    this.listProduct = result.success;
     emit(LoadProductSuccess());
   }
 }

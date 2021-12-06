@@ -30,7 +30,7 @@ class UserAPI {
   Future<ApiResponse<User>> getUserDetail() async {
     try {
       Response res = await App().dio.get(
-          UrlHelper.auth + App().prefs.getString(ConstantHelper.PREFS_USER_ID));
+          UrlHelper.user + App().prefs.getInt(ConstantHelper.PREFS_USER_ID).toString());
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse<User>(
             result: User.fromJson(res.data['result'].first),

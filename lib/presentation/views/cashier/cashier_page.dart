@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
+import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
@@ -31,6 +32,7 @@ class _CashierPageState extends State<CashierPage> {
     productCubit = BlocProvider.of<ProductCubit>(context);
     homeCubit = BlocProvider.of<HomeCubit>(context);
     productCubit.load();
+    homeCubit.init();
     super.initState();
   }
 
@@ -46,7 +48,6 @@ class _CashierPageState extends State<CashierPage> {
           cubit: productCubit,
           listener: (context, state) {
             if (state is LoadProductFailed) {
-              Navigator.of(context).pop();
               AppAlertDialog(
                   title: "Gagal mendapatkan produk",
                   description:
@@ -73,16 +74,23 @@ class _CashierPageState extends State<CashierPage> {
                 ),
               ),
               actions: [
-                Container(
-                  padding: EdgeInsets.only(right: 15.w),
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    homeCubit.user.storeName,
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      color: Colors.white,
-                    ),
-                  ),
+                BlocBuilder(
+                  cubit: homeCubit,
+                  builder: (context, state) {
+                    return Container(
+                      padding: EdgeInsets.only(right: 15.w),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        !GlobalHelper.isEmpty(homeCubit.user)
+                            ? homeCubit.user.storeName
+                            : "",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  },
                 )
               ],
             ),
@@ -105,14 +113,14 @@ class _CashierPageState extends State<CashierPage> {
                           label: "Cari produk yang dibeli",
                         ),
                       ),
-                      RefreshIndicator(
-                        onRefresh: refreshProduct,
-                        child: BlocBuilder(
-                          cubit: productCubit,
-                          builder: (context, state) {
-                            return Expanded(
-                              child: Container(
-                                  color: AppColor.grey,
+                      BlocBuilder(
+                        cubit: productCubit,
+                        builder: (context, state) {
+                          return Expanded(
+                            child: Container(
+                                color: AppColor.grey,
+                                child: RefreshIndicator(
+                                  onRefresh: refreshProduct,
                                   child: GridView.count(
                                     shrinkWrap: true,
                                     crossAxisCount: 2,
@@ -120,8 +128,7 @@ class _CashierPageState extends State<CashierPage> {
                                         horizontal: 12.w, vertical: 15.h),
                                     childAspectRatio: 8.5 / 9.0,
                                     children: List.generate(
-                                        productCubit.listProduct.length,
-                                        (index) {
+                                        productCubit.listProduct.length, (index) {
                                       Product data =
                                           productCubit.listProduct[index];
                                       return ProductCard(
@@ -135,10 +142,10 @@ class _CashierPageState extends State<CashierPage> {
                                         },
                                       );
                                     }),
-                                  )),
-                            );
-                          },
-                        ),
+                                  ),
+                                )),
+                          );
+                        },
                       )
                     ],
                   ),
