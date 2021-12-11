@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
+import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class ProductCard extends StatelessWidget {
-  final String productInitial, productStock, productName, productPrice;
+  final Product data;
   final bool isBestSeller;
   final Function onTap;
+
   const ProductCard(
       {Key key,
-      @required this.productInitial,
-      @required this.productName,
-      @required this.productPrice,
-      @required this.productStock,
+      @required this.data,
       @required this.isBestSeller,
       @required this.onTap})
       : super(key: key);
@@ -36,7 +36,7 @@ class ProductCard extends StatelessWidget {
                       alignment: Alignment.center,
                       color: AppColor.darkGrey,
                       child: Text(
-                        this.productInitial,
+                        GlobalHelper.getInitials(this.data.productName),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,
@@ -47,7 +47,7 @@ class ProductCard extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(top: 5, left: 5, right: 5),
                       padding: EdgeInsets.all(4),
-                      child: Text(this.productStock,
+                      child: Text(this.data.quantity.toString(),
                           style: TextStyle(
                             fontSize: 12.sp,
                             color: Colors.white,
@@ -59,33 +59,36 @@ class ProductCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                     ),
-                    Positioned(
-                      child: new Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Container(
-                            margin: EdgeInsets.only(bottom: 5.0.h),
-                            alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(left: 5.0.w),
-                            height: 23,
-                            child: Opacity(
-                                opacity: 1,
-                                child: Container(
-                                  padding: EdgeInsets.all(4.0),
-                                  child: Text(
-                                    "Terlaris",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        color: AppColor.greenSecondary,
-                                        fontWeight: FontWeight.w500),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFD6FFDE),
-                                    borderRadius: BorderRadius.circular(3.0),
-                                  ),
-                                ))),
-                      ),
-                    )
+                    this.isBestSeller
+                        ? Positioned(
+                            child: new Align(
+                              alignment: FractionalOffset.bottomCenter,
+                              child: Container(
+                                  margin: EdgeInsets.only(bottom: 5.0.h),
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(left: 5.0.w),
+                                  height: 23,
+                                  child: Opacity(
+                                      opacity: 1,
+                                      child: Container(
+                                        padding: EdgeInsets.all(4.0),
+                                        child: Text(
+                                          "Terlaris",
+                                          style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: AppColor.greenSecondary,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFD6FFDE),
+                                          borderRadius:
+                                              BorderRadius.circular(3.0),
+                                        ),
+                                      ))),
+                            ),
+                          )
+                        : Container()
                   ],
                 ),
               ),
@@ -100,7 +103,7 @@ class ProductCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        this.productName,
+                        this.data.productName,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
                         maxLines: 2,
@@ -112,7 +115,7 @@ class ProductCard extends StatelessWidget {
                       ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Rp" + this.productPrice,
+                        "Rp" + GlobalHelper.formatPrice(this.data.price),
                         textAlign: TextAlign.left,
                         maxLines: 1,
                         style: TextStyle(

@@ -3,17 +3,19 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
-import 'package:warunkq_apps/core/models/product.dart';
+import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/helpers/url_helper.dart';
 
-class ProductAPI {
-  Future<ApiResponse<List<Product>>> findAll() async {
+class CategoryAPI {
+  Future<ApiResponse<List<Category>>> findAll() async {
     try {
-      Response res = await App().dio.get(UrlHelper.product);
+      Response res = await App().dio.get(UrlHelper.category);
       if (res.data['status'] == HttpStatus.ok) {
-        return ApiResponse<List<Product>>(
-            result: List.generate(res.data['result']['data'].length,
-                (index) => Product.fromJson(res.data['result']['data'][index])),
+        return ApiResponse<List<Category>>(
+            result: List.generate(
+                res.data['result']['data'].length,
+                (index) =>
+                    Category.fromJson(res.data['result']['data'][index])),
             status: res.data['status']);
       }
 
@@ -25,14 +27,16 @@ class ProductAPI {
     }
   }
 
-  Future<ApiResponse<List<Product>>> create(Product data) async {
+  Future<ApiResponse<List<Category>>> create(Category data) async {
     try {
       Response res =
-          await App().dio.post(UrlHelper.product, data: data.toJson());
+          await App().dio.post(UrlHelper.category, data: data.toJson());
       if (res.data['status'] == HttpStatus.ok) {
-        return ApiResponse<List<Product>>(
-            result: List.generate(res.data['result']['data'].length,
-                (index) => Product.fromJson(res.data['result']['data'][index])),
+        return ApiResponse<List<Category>>(
+            result: List.generate(
+                res.data['result']['data'].length,
+                (index) =>
+                    Category.fromJson(res.data['result']['data'][index])),
             status: res.data['status']);
       }
 

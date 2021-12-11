@@ -4,6 +4,8 @@ class Product {
   String description;
   String image;
   String category;
+  int categoryId;
+  int basePrice;
   int price;
   int quantity;
   String createdAt;
@@ -18,7 +20,9 @@ class Product {
       this.price,
       this.quantity,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.basePrice,
+      this.categoryId});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -26,6 +30,8 @@ class Product {
     description = json['description'];
     image = json['image'];
     category = json['category'];
+    categoryId = json['category_id'];
+    basePrice = json['base_price'];
     price = json['price'];
     quantity = json['quantity'];
     createdAt = json['created_at'];
@@ -43,6 +49,8 @@ class Product {
     data['quantity'] = this.quantity;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['category_id'] = this.categoryId;
+    data['base_price'] = this.basePrice;
     return data;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 import 'package:warunkq_apps/presentation/widgets/components/add_input.dart';
 
@@ -12,6 +14,19 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
+  ProductCubit productCubit;
+  TextEditingController productName,
+      productSKU,
+      productHPP,
+      productHJP,
+      productStock = TextEditingController();
+
+  @override
+  void initState() {
+    productCubit = BlocProvider.of<ProductCubit>(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,12 +87,12 @@ class _AddProductPageState extends State<AddProductPage> {
                 AddInput(
                   label: "Nama produk",
                   isRequired: true,
-                  controller: TextEditingController(),
+                  controller: productName,
                   hint: "e.g Minyak goreng",
                 ),
                 AddInput(
                   label: "SKU",
-                  controller: TextEditingController(),
+                  controller: productSKU,
                   hint: "e.g 192381391293",
                   type: TextInputType.number,
                 ),
@@ -87,7 +102,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       child: AddInput(
                         label: "Harga pokok produk",
                         isRequired: true,
-                        controller: TextEditingController(),
+                        controller: productHPP,
                         hint: "e.g 5000",
                         type: TextInputType.number,
                       ),
@@ -99,7 +114,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       child: AddInput(
                         label: "Harga jual produk",
                         isRequired: true,
-                        controller: TextEditingController(),
+                        controller: productHJP,
                         hint: "e.g 6000",
                         type: TextInputType.number,
                       ),
@@ -109,7 +124,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 AddInput(
                   label: "Stok produk",
                   hint: "e.g 50",
-                  controller: TextEditingController(),
+                  controller: productStock,
                   isRequired: true,
                   type: TextInputType.number,
                 ),

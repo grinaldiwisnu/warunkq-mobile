@@ -171,40 +171,42 @@ class StorePage extends StatelessWidget {
                       SizedBox(
                         height: 40.h,
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 15.w, vertical: 15.h),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 2,
-                                color: AppColor.boxGrey,
-                                spreadRadius: 0,
-                                offset: Offset(0, 0),
-                              ),
-                            ]),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(right: 10.w),
-                              child: Icon(
-                                Icons.logout,
-                                color: AppColor.red,
-                                size: 20,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Keluar",
-                                style: TextStyle(
+                      InkWell(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 15.w, vertical: 15.h),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 2,
+                                  color: AppColor.boxGrey,
+                                  spreadRadius: 0,
+                                  offset: Offset(0, 0),
+                                ),
+                              ]),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(right: 10.w),
+                                child: Icon(
+                                  Icons.logout,
                                   color: AppColor.red,
-                                  fontSize: 16.sp,
+                                  size: 20,
                                 ),
                               ),
-                            )
-                          ],
+                              Expanded(
+                                child: Text(
+                                  "Keluar",
+                                  style: TextStyle(
+                                    color: AppColor.red,
+                                    fontSize: 16.sp,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],

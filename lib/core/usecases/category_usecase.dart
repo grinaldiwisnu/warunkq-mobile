@@ -1,25 +1,16 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/app.dart';
-import 'package:warunkq_apps/core/data/remote/product_api.dart';
+import 'package:warunkq_apps/core/data/remote/category_api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
-import 'package:warunkq_apps/core/models/product.dart';
+import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/core/usecase.dart';
 
-class ProductUsecase implements UseCase {
-  ProductAPI _productAPI = ProductAPI();
-
-  @override
-  Future<DataState<List<Product>>> get() async {
-    ApiResponse<List<Product>> userData = await _productAPI.findAll();
-    if (userData.message != null) {
-      return DataFailed(userData.message);
-    }
-    return DataSuccess(userData.result);
-  }
-
+class CategoryUsecase implements UseCase {
   @override
   SharedPreferences prefs = App().prefs;
+
+  CategoryAPI _categoryAPI = CategoryAPI();
 
   @override
   Future<DataState> delete() {
@@ -28,8 +19,17 @@ class ProductUsecase implements UseCase {
   }
 
   @override
+  Future<DataState<List<Category>>> get() async {
+    ApiResponse<List<Category>> userData = await _categoryAPI.findAll();
+    if (userData.message != null) {
+      return DataFailed(userData.message);
+    }
+    return DataSuccess(userData.result);
+  }
+
+  @override
   Future<DataState> store(data) async {
-    ApiResponse<List<Product>> userData = await _productAPI.create(data);
+    ApiResponse<List<Category>> userData = await _categoryAPI.create(data);
     if (userData.message != null) {
       return DataFailed(userData.message);
     }

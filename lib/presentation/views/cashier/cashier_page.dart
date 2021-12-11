@@ -128,15 +128,13 @@ class _CashierPageState extends State<CashierPage> {
                                         horizontal: 12.w, vertical: 15.h),
                                     childAspectRatio: 8.5 / 9.0,
                                     children: List.generate(
-                                        productCubit.listProduct.length, (index) {
+                                        productCubit.listProduct.length,
+                                        (index) {
                                       Product data =
                                           productCubit.listProduct[index];
                                       return ProductCard(
-                                        isBestSeller: true,
-                                        productInitial: "SKM",
-                                        productName: data.productName,
-                                        productPrice: data.price.toString(),
-                                        productStock: data.quantity.toString(),
+                                        isBestSeller: false,
+                                        data: data,
                                         onTap: () {
                                           print("ini produk $index");
                                         },
