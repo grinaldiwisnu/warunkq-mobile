@@ -6,6 +6,7 @@ import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:warunkq_apps/presentation/cubit/auth/auth_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
+import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
 import 'package:warunkq_apps/presentation/views/splash_page.dart';
@@ -20,6 +21,7 @@ class Entrypoint extends StatelessWidget {
     HomeCubit home = HomeCubit();
     CashierCubit cashier = CashierCubit();
     ProductCubit product = ProductCubit();
+    CategoryCubit category = CategoryCubit();
 
     return MultiBlocProvider(
       providers: [
@@ -27,6 +29,7 @@ class Entrypoint extends StatelessWidget {
         BlocProvider<HomeCubit>(create: (context) => home),
         BlocProvider<CashierCubit>(create: (context) => cashier),
         BlocProvider<ProductCubit>(create: (context) => product),
+        BlocProvider<CategoryCubit>(create: (context) => category),
       ],
       child: ScreenUtilInit(
         designSize: Size(375, 812),

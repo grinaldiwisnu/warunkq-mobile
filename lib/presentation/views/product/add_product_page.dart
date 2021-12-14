@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 import 'package:warunkq_apps/presentation/widgets/components/add_input.dart';
@@ -15,6 +16,7 @@ class AddProductPage extends StatefulWidget {
 
 class _AddProductPageState extends State<AddProductPage> {
   ProductCubit productCubit;
+  CategoryCubit categoryCubit;
   TextEditingController productName,
       productSKU,
       productHPP,
@@ -24,6 +26,7 @@ class _AddProductPageState extends State<AddProductPage> {
   @override
   void initState() {
     productCubit = BlocProvider.of<ProductCubit>(context);
+    categoryCubit = BlocProvider.of<CategoryCubit>(context);
     super.initState();
   }
 
@@ -160,11 +163,11 @@ class _AddProductPageState extends State<AddProductPage> {
                         ),
                       ),
                       DropdownButtonFormField(
-                        items: [
-                          DropdownMenuItem(
-                            child: Text("Pilih kategori produk ini"),
-                          )
-                        ],
+                        items: categoryCubit.listCaategory.map((e) {
+                          return DropdownMenuItem(
+                            child: Text(e.name),
+                          );
+                        }),
                         style: TextStyle(
                           color: AppColor.black,
                           fontSize: 16.sp,
