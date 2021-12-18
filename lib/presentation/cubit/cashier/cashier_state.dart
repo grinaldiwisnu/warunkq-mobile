@@ -8,3 +8,5 @@ abstract class CashierState extends Equatable {
 }
 
 class CashierInitial extends CashierState {}
+
+class AddItemSuccess extends CashierState {}

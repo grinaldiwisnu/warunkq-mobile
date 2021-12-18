@@ -134,4 +134,36 @@ class ProductCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget overlayActiveItem(double count) {
+    return Stack(
+      children: <Widget>[
+        SizedBox(
+          child: Opacity(
+            opacity: 0.5,
+            child: Container(color: AppColor.boxGrey),
+          ),
+        ),
+        Center(
+          child: Opacity(
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  color: AppColor.disableGrey),
+              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+              child: Text(
+                count.toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: AppColor.grey),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            opacity: 0.7,
+          ),
+        ),
+      ],
+    );
+  }
 }
