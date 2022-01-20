@@ -28,6 +28,13 @@ class GlobalHelper {
     return int.parse(double.parse(text).toStringAsFixed(0)).toString();
   }
 
+  static int formatStringToNumber(String text, {int defaultValue = 0}) {
+    if (GlobalHelper.isEmpty(text)) {
+      return defaultValue;
+    }
+    return int.parse(double.parse(text).toStringAsFixed(0));
+  }
+
   static String getInitials(name) {
     List<String> names = name.split(" ");
     String initials = "";
@@ -47,5 +54,17 @@ class GlobalHelper {
         locale: Platform.localeName, name: '', decimalDigits: 0);
 
     return formatCurrency.format(price);
+  }
+
+  static String displayDate(DateTime date) {
+    String formattedDate = DateFormat('dd MMMM yyyy').format(date);
+
+    return formattedDate;
+  }
+
+  static String displayDateRange(DateTime date) {
+    String formattedDate = DateFormat('dd MMMM yyyy').format(date);
+
+    return formattedDate;
   }
 }

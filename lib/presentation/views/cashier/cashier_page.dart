@@ -10,6 +10,7 @@ import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
 import 'package:warunkq_apps/presentation/views/cashier/cart_cashier_page.dart';
 import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.dart';
+import 'package:warunkq_apps/presentation/widgets/components/loading_indicator.dart';
 import 'package:warunkq_apps/presentation/widgets/components/paid_button.dart';
 import 'package:warunkq_apps/presentation/widgets/components/product_card.dart';
 import 'package:warunkq_apps/presentation/widgets/components/search_bar.dart';
@@ -85,8 +86,9 @@ class _CashierPageState extends State<CashierPage> {
                             ? homeCubit.user.storeName
                             : "",
                         style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 20.sp,
                           color: Colors.white,
+                          fontWeight: FontWeight.w500
                         ),
                       ),
                     );
@@ -121,12 +123,11 @@ class _CashierPageState extends State<CashierPage> {
                                 color: AppColor.grey,
                                 child: RefreshIndicator(
                                   onRefresh: refreshProduct,
-                                  child: GridView.count(
+                                  child: state is ProductLoading ? LoadingIndicator() : GridView.count(
                                     shrinkWrap: true,
                                     crossAxisCount: 2,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 12.w, vertical: 15.h),
-                                    childAspectRatio: 8.5 / 9.0,
                                     children: List.generate(
                                         productCubit.listProduct.length,
                                         (index) {
@@ -136,7 +137,7 @@ class _CashierPageState extends State<CashierPage> {
                                         isBestSeller: false,
                                         data: data,
                                         onTap: () {
-                                          print("ini produk $index");
+                                          cashierCubit.addItem(data);
                                         },
                                       );
                                     }),
@@ -153,7 +154,9 @@ class _CashierPageState extends State<CashierPage> {
                     left: 0,
                     child: PaidButton(
                       icon: Icons.shopping_basket_outlined,
-                      isDisabled: false,
+                      isDisabled: cashierCubit.cartCashier.totalProduct > 0 ? false : true,
+                      totalPrice: cashierCubit.cartCashier.totalPrice,
+                      totalProduct: cashierCubit.cartCashier.totalProduct,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => CartCashierPage()));

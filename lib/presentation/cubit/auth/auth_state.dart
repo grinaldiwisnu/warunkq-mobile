@@ -16,3 +16,11 @@ class AuthFailedState extends AuthState {
 
   AuthFailedState({this.message});
 }
+
+class RegisterSuccessState extends AuthState {}
+
+class RegisterFailedState extends AuthState {
+  final String message;
+
+  RegisterFailedState({this.message});
+}

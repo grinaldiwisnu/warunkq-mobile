@@ -33,7 +33,7 @@ class LoadingDialog {
                         fontSize: 16,
                         fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(height: 18),
+                  SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -41,16 +41,18 @@ class LoadingDialog {
                         valueColor:
                             AlwaysStoppedAnimation<Color>(AppColor.primary),
                       ),
-                      SizedBox(width: 20),
-                      Text(
-                        description,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          description,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),

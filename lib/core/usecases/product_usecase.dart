@@ -28,17 +28,21 @@ class ProductUsecase implements UseCase {
   }
 
   @override
-  Future<DataState> store(data) async {
-    ApiResponse<List<Product>> userData = await _productAPI.create(data);
-    if (userData.message != null) {
-      return DataFailed(userData.message);
+  Future<DataState<List<Product>>> store(data) async {
+    ApiResponse<List<Product>> productData = await _productAPI.create(data);
+    if (productData.message != null) {
+      return DataFailed(productData.message);
     }
-    return DataSuccess(userData.result);
+    return DataSuccess(productData.result);
   }
 
   @override
-  Future<DataState> update(data) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<DataState<List<Product>>> update(data) async {
+    ApiResponse<List<Product>> productData = await _productAPI.update(data);
+    print(productData.result.toString());
+    if (productData.message != null) {
+      return DataFailed(productData.message);
+    }
+    return DataSuccess(productData.result);
   }
 }

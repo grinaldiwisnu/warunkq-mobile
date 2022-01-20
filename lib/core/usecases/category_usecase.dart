@@ -20,25 +20,28 @@ class CategoryUsecase implements UseCase {
 
   @override
   Future<DataState<List<Category>>> get() async {
-    ApiResponse<List<Category>> userData = await _categoryAPI.findAll();
-    if (userData.message != null) {
-      return DataFailed(userData.message);
+    ApiResponse<List<Category>> categoryData = await _categoryAPI.findAll();
+    if (categoryData.message != null) {
+      return DataFailed(categoryData.message);
     }
-    return DataSuccess(userData.result);
+    return DataSuccess(categoryData.result);
   }
 
   @override
-  Future<DataState> store(data) async {
-    ApiResponse<List<Category>> userData = await _categoryAPI.create(data);
-    if (userData.message != null) {
-      return DataFailed(userData.message);
+  Future<DataState<List<Category>>> store(data) async {
+    ApiResponse<List<Category>> categoryData = await _categoryAPI.create(data);
+    if (categoryData.message != null) {
+      return DataFailed(categoryData.message);
     }
-    return DataSuccess(userData.result);
+    return DataSuccess(categoryData.result);
   }
 
   @override
-  Future<DataState> update(data) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<DataState<List<Category>>> update(data) async {
+    ApiResponse<List<Category>> categoryData = await _categoryAPI.update(data);
+    if (categoryData.message != null) {
+      return DataFailed(categoryData.message);
+    }
+    return DataSuccess(categoryData.result);
   }
 }

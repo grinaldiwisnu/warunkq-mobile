@@ -1,210 +1,348 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 import 'package:warunkq_apps/presentation/widgets/components/add_input.dart';
+import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.dart';
+import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart';
 
 class AddProductPage extends StatefulWidget {
-  AddProductPage({Key key}) : super(key: key);
+  final Product product;
+
+  AddProductPage({Key key, this.product}) : super(key: key);
 
   @override
   _AddProductPageState createState() => _AddProductPageState();
 }
 
 class _AddProductPageState extends State<AddProductPage> {
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  String title = "Tambah Produk";
   ProductCubit productCubit;
   CategoryCubit categoryCubit;
-  TextEditingController productName,
-      productSKU,
-      productHPP,
-      productHJP,
-      productStock = TextEditingController();
+  int selectedCategory;
+  TextEditingController productName = TextEditingController();
+  TextEditingController productSKU = TextEditingController();
+  TextEditingController productHPP = TextEditingController();
+  TextEditingController productHJP = TextEditingController();
+  TextEditingController productStock = TextEditingController();
 
   @override
   void initState() {
     productCubit = BlocProvider.of<ProductCubit>(context);
     categoryCubit = BlocProvider.of<CategoryCubit>(context);
+    if (!GlobalHelper.isEmpty(widget.product)) {
+      productName.text = widget.product.productName;
+      productHPP.text = widget.product.basePrice.toString();
+      productHJP.text = widget.product.price.toString();
+      productStock.text = widget.product.quantity.toString();
+      productSKU.text = widget.product.description;
+      selectedCategory = widget.product.categoryId;
+      title = "Ubah Produk";
+    }
+    categoryCubit.load();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: true,
-      appBar: AppBar(
-        backgroundColor: AppColor.primary,
-        title: Text(
-          "Tambah Produk",
-          style: TextStyle(
-            fontSize: 18.sp,
-            color: Colors.white,
+    return BlocListener(
+      listener: (context, state) {
+        if (state is ProductLoading) {
+          LoadingDialog(
+                  title: "Loading ...",
+                  description: "Sedang megirim ke sistem.")
+              .show(context);
+        } else if (state is AddProductFailed || state is UpdateProductFailed) {
+          Navigator.of(context).pop();
+          AppAlertDialog(
+            title: "Gagal!",
+            description: "Gagal menyimpan produk ke sistem.",
+            positiveButtonText: "Oke",
+            positiveButtonOnTap: () {
+              Navigator.of(context).pop();
+            },
+          ).show(context);
+        } else if (state is AddProductSuccess) {
+          Navigator.of(context).pop();
+          AppAlertDialog(
+            title: "Berhasil!",
+            description: "Berhasil menambahkan produk.",
+            positiveButtonText: "Oke",
+            positiveButtonOnTap: () {
+              productCubit.load();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+          ).show(context);
+        } else if (state is UpdateProductSuccess) {
+          Navigator.of(context).pop();
+          AppAlertDialog(
+            title: "Berhasil!",
+            description: "Berhasil merubah produk.",
+            positiveButtonText: "Oke",
+            positiveButtonOnTap: () {
+              productCubit.load();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+          ).show(context);
+        }
+      },
+      cubit: productCubit,
+      child: Scaffold(
+        resizeToAvoidBottomPadding: true,
+        appBar: AppBar(
+          backgroundColor: AppColor.primary,
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: 18.sp,
+              color: Colors.white,
+            ),
           ),
+          elevation: 1,
         ),
-        elevation: 1,
-      ),
-      backgroundColor: Colors.white,
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: SingleChildScrollView(
+        backgroundColor: Colors.white,
+        body: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: formkey,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-            child: Column(
-              children: [
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 180,
-                    height: 150.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColor.boxGrey,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.camera_alt_outlined,
-                          size: 36.sp,
-                          color: AppColor.darkGrey,
-                        ),
-                        Text(
-                          "Tambahkan gambar produk",
-                          style: TextStyle(
-                            color: AppColor.darkGrey,
-                            fontSize: 12.sp,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                AddInput(
-                  label: "Nama produk",
-                  isRequired: true,
-                  controller: productName,
-                  hint: "e.g Minyak goreng",
-                ),
-                AddInput(
-                  label: "SKU",
-                  controller: productSKU,
-                  hint: "e.g 192381391293",
-                  type: TextInputType.number,
-                ),
-                Row(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: AddInput(
-                        label: "Harga pokok produk",
-                        isRequired: true,
-                        controller: productHPP,
-                        hint: "e.g 5000",
-                        type: TextInputType.number,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Expanded(
-                      child: AddInput(
-                        label: "Harga jual produk",
-                        isRequired: true,
-                        controller: productHJP,
-                        hint: "e.g 6000",
-                        type: TextInputType.number,
-                      ),
-                    ),
-                  ],
-                ),
-                AddInput(
-                  label: "Stok produk",
-                  hint: "e.g 50",
-                  controller: productStock,
-                  isRequired: true,
-                  type: TextInputType.number,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        child: Row(
+                    Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 180,
+                        height: 150,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColor.boxGrey,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Kategori produk",
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.normal,
-                                color: AppColor.black,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 3.w,
+                            Icon(
+                              Icons.camera_alt_outlined,
+                              size: 36.sp,
+                              color: AppColor.darkGrey,
                             ),
                             Text(
-                              "*",
+                              "Tambahkan gambar produk",
                               style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.normal,
-                                color: AppColor.red,
+                                color: AppColor.darkGrey,
+                                fontSize: 12.sp,
                               ),
                             )
                           ],
                         ),
                       ),
-                      DropdownButtonFormField(
-                        items: categoryCubit.listCaategory.map((e) {
-                          return DropdownMenuItem(
-                            child: Text(e.name),
-                          );
-                        }),
-                        style: TextStyle(
-                          color: AppColor.black,
-                          fontSize: 16.sp,
-                        ),
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: AppColor.boxGrey),
+                    ),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    AddInput(
+                      label: "Nama produk",
+                      isRequired: true,
+                      controller: productName,
+                      hint: "e.g Minyak goreng",
+                      validation: (value) {
+                        if (GlobalHelper.isEmpty(value)) {
+                          return "Nama produk masih kosong";
+                        }
+
+                        return null;
+                      },
+                    ),
+                    AddInput(
+                      label: "SKU",
+                      controller: productSKU,
+                      hint: "e.g 192381391293",
+                      type: TextInputType.number,
+                      validation: (value) {
+                        return null;
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AddInput(
+                            label: "Harga pokok produk",
+                            isRequired: true,
+                            controller: productHPP,
+                            hint: "e.g 5000",
+                            type: TextInputType.number,
+                            validation: (value) {
+                              if (GlobalHelper.isEmpty(value)) {
+                                return "Harga pokok produk masih kosong";
+                              }
+
+                              return null;
+                            },
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: AppColor.primary),
-                          ),
-                          isDense: true,
                         ),
-                        isDense: true,
-                        isExpanded: true,
-                        onChanged: (val) {},
-                        elevation: 1,
-                      ),
-                    ],
-                  ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Expanded(
+                          child: AddInput(
+                            label: "Harga jual produk",
+                            isRequired: true,
+                            controller: productHJP,
+                            hint: "e.g 6000",
+                            type: TextInputType.number,
+                            validation: (value) {
+                              if (GlobalHelper.isEmpty(value)) {
+                                return "Harga jual produk masih kosong";
+                              }
+
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    AddInput(
+                      label: "Stok produk",
+                      hint: "e.g 50",
+                      controller: productStock,
+                      isRequired: true,
+                      type: TextInputType.number,
+                      validation: (value) {
+                        if (GlobalHelper.isEmpty(value)) {
+                          return "Stok produk masih kosong";
+                        }
+
+                        return null;
+                      },
+                    ),
+                    BlocBuilder(
+                      cubit: categoryCubit,
+                      builder: (context, state) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 10.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 5.h),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Kategori produk",
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColor.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 3.w,
+                                    ),
+                                    Text(
+                                      "*",
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColor.red,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              DropdownButtonFormField(
+                                items: List.generate(
+                                    categoryCubit.listCategory.length,
+                                    (index) => DropdownMenuItem(
+                                          child: Text(categoryCubit
+                                              .listCategory[index].name),
+                                          value: categoryCubit
+                                              .listCategory[index].id,
+                                        )),
+                                style: TextStyle(
+                                  color: AppColor.black,
+                                  fontSize: 16.sp,
+                                ),
+                                decoration: InputDecoration(
+                                  border: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: AppColor.boxGrey),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: AppColor.primary),
+                                  ),
+                                  isDense: true,
+                                ),
+                                isDense: true,
+                                isExpanded: true,
+                                onChanged: (val) {
+                                  setState(() {
+                                    selectedCategory = val;
+                                  });
+                                },
+                                elevation: 1,
+                                value: selectedCategory,
+                                validator: (value) {
+                                  if (GlobalHelper.isEmpty(value)) {
+                                    return "Kategori produk harus dipilih";
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    )
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
-      bottomSheet: Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-        width: double.infinity,
-        child: BaseButton(
-          style: AppButtonStyle.primary,
-          radius: 8,
-          fontSize: 16.sp,
-          padding: 20,
-          text: "Simpan Produk",
-          onPressed: () {},
+        bottomSheet: Container(
+          color: Colors.white,
+          padding: EdgeInsets.all(15),
+          width: double.infinity,
+          child: BaseButton(
+            style: AppButtonStyle.primary,
+            radius: 8,
+            padding: 15,
+            text: "Simpan Produk",
+            onPressed: () {
+              Product product = Product(
+                quantity: GlobalHelper.formatStringToNumber(productStock.text),
+                basePrice: GlobalHelper.formatStringToNumber(productHPP.text),
+                categoryId: selectedCategory,
+                description: productSKU.text,
+                id: GlobalHelper.isEmpty(widget.product)
+                    ? ""
+                    : widget.product.id,
+                price: GlobalHelper.formatStringToNumber(productHJP.text),
+                productName: productName.text,
+              );
+              if (!GlobalHelper.isEmpty(widget.product)) {
+                productCubit.save(product);
+              } else {
+                productCubit.add(product);
+              }
+            },
+          ),
         ),
       ),
     );

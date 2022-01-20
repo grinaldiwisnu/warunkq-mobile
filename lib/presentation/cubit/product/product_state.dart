@@ -9,6 +9,16 @@ abstract class ProductState extends Equatable {
 
 class ProductInitial extends ProductState {}
 
+class ProductLoading extends ProductState {}
+
 class LoadProductFailed extends ProductState {}
 
 class LoadProductSuccess extends ProductState {}
+
+class UpdateProductFailed extends ProductState {}
+
+class UpdateProductSuccess extends ProductState {}
+
+class AddProductFailed extends ProductState {}
+
+class AddProductSuccess extends ProductState {}

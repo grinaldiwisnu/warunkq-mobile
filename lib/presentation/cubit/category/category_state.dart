@@ -11,4 +11,14 @@ class CategoryInitial extends CategoryState {}
 
 class LoadCategoryFailed extends CategoryState {}
 
+class CategoryLoading extends CategoryState {}
+
 class LoadCategorySuccess extends CategoryState {}
+
+class UpdateCategoryFailed extends CategoryState {}
+
+class UpdateCategorySuccess extends CategoryState {}
+
+class AddCategoryFailed extends CategoryState {}
+
+class AddCategorySuccess extends CategoryState {}

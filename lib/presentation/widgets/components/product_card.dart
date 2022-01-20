@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/core/models/product.dart';
@@ -32,24 +33,57 @@ class ProductCard extends StatelessWidget {
               child: Container(
                 child: Stack(
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      color: AppColor.darkGrey,
-                      child: Text(
-                        GlobalHelper.getInitials(this.data.productName),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    GlobalHelper.isEmpty(data.image)
+                        ? Container(
+                            alignment: Alignment.center,
+                            color: AppColor.darkGrey,
+                            child: Text(
+                              GlobalHelper.getInitials(this.data.productName),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 36.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            alignment: Alignment.center,
+                            color: AppColor.darkGrey,
+                            child: CachedNetworkImage(
+                              imageUrl: data.image,
+                              progressIndicatorBuilder:
+                                  (context, url, progress) => Column(
+                                children: [
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      value: progress.progress,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              errorWidget: (context, url, error) => Container(
+                                alignment: Alignment.center,
+                                color: AppColor.darkGrey,
+                                child: Text(
+                                  GlobalHelper.getInitials(
+                                      this.data.productName),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 36.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              height: double.infinity,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                     Container(
                       margin: EdgeInsets.only(top: 5, left: 5, right: 5),
-                      padding: EdgeInsets.all(4),
+                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                       child: Text(this.data.quantity.toString(),
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 14.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
                           ),
@@ -106,9 +140,9 @@ class ProductCard extends StatelessWidget {
                         this.data.productName,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
-                        maxLines: 2,
+                        maxLines: 1,
                         style: TextStyle(
-                          fontSize: 14.sp,
+                          fontSize: 16.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
                         ),
@@ -119,7 +153,7 @@ class ProductCard extends StatelessWidget {
                         textAlign: TextAlign.left,
                         maxLines: 1,
                         style: TextStyle(
-                          fontSize: 14.sp,
+                          fontSize: 18.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),

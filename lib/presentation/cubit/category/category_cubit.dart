@@ -12,17 +12,36 @@ class CategoryCubit extends Cubit<CategoryState> {
   // Define Usecase
   CategoryUsecase categoryUsecase = CategoryUsecase();
 
-  List<Category> listCaategory = List<Category>();
+  List<Category> listCategory = List<Category>();
 
   void load() async {
-    emit(CategoryInitial());
+    emit(CategoryLoading());
     DataState<List<Category>> result = await categoryUsecase.get();
     if (result.error != null) {
       emit(LoadCategoryFailed());
-      return;
+    } else {
+      this.listCategory = result.success;
+      emit(LoadCategorySuccess());
     }
+  }
 
-    this.listCaategory = result.success;
-    emit(LoadCategorySuccess());
+  void save(Category data) async {
+    emit(CategoryLoading());
+    DataState<List<Category>> result = await categoryUsecase.update(data);
+    if (result.error != null) {
+      emit(UpdateCategoryFailed());
+    } else {
+      emit(UpdateCategorySuccess());
+    }
+  }
+
+  void add(Category data) async {
+    emit(CategoryLoading());
+    DataState<List<Category>> result = await categoryUsecase.store(data);
+    if (result.error != null) {
+      emit(AddCategoryFailed());
+    } else {
+      emit(AddCategorySuccess());
+    }
   }
 }

@@ -25,9 +25,9 @@ class Category {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
+    data['category_id'] = this.id;
+    data['category_name'] = this.name;
+    data['category_description'] = this.description;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['users_id'] = this.usersId;

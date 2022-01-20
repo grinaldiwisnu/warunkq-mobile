@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
+import 'package:warunkq_apps/presentation/widgets/components/loading_indicator.dart';
 
 class ReportPage extends StatefulWidget {
   ReportPage({Key key}) : super(key: key);
@@ -26,7 +27,7 @@ class _ReportPageState extends State<ReportPage> {
         ),
       ),
       body: Container(
-        child: CircularProgressIndicator(),
+        child: LoadingIndicator(),
       ),
     );
   }

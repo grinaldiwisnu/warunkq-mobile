@@ -5,7 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class SearchBar extends StatefulWidget {
   final TextEditingController controller;
   final String label;
-  SearchBar({Key key, @required this.controller, @required this.label}) : super(key: key);
+  final Function(String) onChanged;
+
+  SearchBar(
+      {Key key,
+      @required this.controller,
+      @required this.label,
+      @required this.onChanged})
+      : super(key: key);
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -19,6 +26,7 @@ class _SearchBarState extends State<SearchBar> {
         fontSize: 16.sp,
         color: Colors.black,
       ),
+      onChanged: widget.onChanged,
       controller: widget.controller,
       decoration: InputDecoration(
           fillColor: AppColor.grey,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:warunkq_apps/presentation/views/auth/login_page.dart';
+import 'package:warunkq_apps/presentation/views/auth/register_page.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -18,8 +19,8 @@ class OnboardingPage extends StatelessWidget {
               "Selamat datang di WarunkQ!",
               style: TextStyle(
                 color: AppColor.black,
-                fontWeight: FontWeight.w400,
-                fontSize: 24.sp,
+                fontWeight: FontWeight.w500,
+                fontSize: 26.sp,
               ),
             ),
             Text(
@@ -27,7 +28,7 @@ class OnboardingPage extends StatelessWidget {
               style: TextStyle(
                 color: AppColor.darkGrey,
                 fontWeight: FontWeight.normal,
-                fontSize: 14.sp,
+                fontSize: 18.sp,
               ),
             ),
             SizedBox(
@@ -57,7 +58,6 @@ class OnboardingPage extends StatelessWidget {
                 },
                 text: "Masuk",
                 radius: 8,
-                fontSize: 16.sp,
                 padding: 20,
               ),
             ),
@@ -66,10 +66,12 @@ class OnboardingPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 25.w),
               child: BaseButton(
                 style: AppButtonStyle.secondary,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => RegisterPage()));
+                },
                 text: "Mendaftar",
                 radius: 8,
-                fontSize: 16.sp,
                 padding: 20,
                 border: BorderSide(color: AppColor.primary, width: 1),
               ),

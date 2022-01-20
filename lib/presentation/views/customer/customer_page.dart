@@ -58,6 +58,8 @@ class _CustomerPageState extends State<CustomerPage> {
                       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 15.w),
                       margin: EdgeInsets.only(bottom: 10.h),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Customer $index",

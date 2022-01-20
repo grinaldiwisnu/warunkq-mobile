@@ -7,12 +7,14 @@ class AddInput extends StatelessWidget {
   final TextEditingController controller;
   final bool isRequired;
   final TextInputType type;
+  final Function(String) validation;
 
   const AddInput({
     Key key,
     @required this.label,
     @required this.hint,
     @required this.controller,
+    @required this.validation,
     this.isRequired = false,
     this.type = TextInputType.name,
   }) : super(key: key);
@@ -53,6 +55,7 @@ class AddInput extends StatelessWidget {
             ),
           ),
           TextFormField(
+            validator: validation,
             controller: this.controller,
             style: TextStyle(
               color: AppColor.black,
