@@ -12,7 +12,7 @@ class AuthInitial extends AuthState {}
 class AuthSuccessState extends AuthState {}
 
 class AuthFailedState extends AuthState {
-  final String message;
+  final String? message;
 
   AuthFailedState({this.message});
 }
@@ -20,7 +20,7 @@ class AuthFailedState extends AuthState {
 class RegisterSuccessState extends AuthState {}
 
 class RegisterFailedState extends AuthState {
-  final String message;
+  final String? message;
 
   RegisterFailedState({this.message});
 }

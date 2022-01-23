@@ -20,7 +20,7 @@ class OnboardingPage extends StatelessWidget {
               style: TextStyle(
                 color: AppColor.black,
                 fontWeight: FontWeight.w500,
-                fontSize: 26.sp,
+                fontSize: 22.sp,
               ),
             ),
             Text(
@@ -58,7 +58,7 @@ class OnboardingPage extends StatelessWidget {
                 },
                 text: "Masuk",
                 radius: 8,
-                padding: 20,
+                padding: 16,
               ),
             ),
             Container(
@@ -72,8 +72,8 @@ class OnboardingPage extends StatelessWidget {
                 },
                 text: "Mendaftar",
                 radius: 8,
-                padding: 20,
-                border: BorderSide(color: AppColor.primary, width: 1),
+                padding: 16,
+                border: BorderSide(color: AppColor.primary, width: 1.sp),
               ),
             )
           ],

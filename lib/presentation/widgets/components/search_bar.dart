@@ -3,12 +3,12 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchBar extends StatefulWidget {
-  final TextEditingController controller;
-  final String label;
-  final Function(String) onChanged;
+  final TextEditingController? controller;
+  final String? label;
+  final Function(String)? onChanged;
 
   SearchBar(
-      {Key key,
+      {Key? key,
       @required this.controller,
       @required this.label,
       @required this.onChanged})
@@ -23,7 +23,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         color: Colors.black,
       ),
       onChanged: widget.onChanged,
@@ -34,20 +34,19 @@ class _SearchBarState extends State<SearchBar> {
           hoverColor: AppColor.grey,
           filled: true,
           prefixIcon: Container(
-            margin: EdgeInsets.fromLTRB(8.w, 9.h, 0.w, 9.h),
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
             child: Container(
-              padding: EdgeInsets.only(right: 6.w),
               child: Icon(
                 Icons.search_rounded,
                 color: AppColor.disableDarkGrey,
+                size: 18.sp,
               ),
             ),
           ),
           contentPadding: EdgeInsets.all(0),
           hintText: widget.label,
           hintStyle: TextStyle(
-            fontSize: 16.sp,
+            fontSize: 14.sp,
             color: AppColor.disableDarkGrey,
           ),
           focusedBorder: OutlineInputBorder(

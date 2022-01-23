@@ -8,18 +8,18 @@ import 'package:warunkq_apps/presentation/views/product/product_page.dart';
 import 'package:warunkq_apps/presentation/widgets/components/store_menu.dart';
 
 class StorePage extends StatelessWidget {
-  final HomeCubit homeCubit;
+  final HomeCubit? homeCubit;
 
-  const StorePage({Key key, this.homeCubit}) : super(key: key);
+  const StorePage({Key? key, this.homeCubit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            this.homeCubit.user.storeName,
+            this.homeCubit!.user.storeName!,
             style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 color: Colors.white,
                 fontWeight: FontWeight.w500),
           ),
@@ -44,7 +44,7 @@ class StorePage extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: EdgeInsets.all(15),
+                        padding: EdgeInsets.all(8),
                         child: Row(
                           children: [
                             Container(
@@ -58,9 +58,9 @@ class StorePage extends StatelessWidget {
                               ),
                               child: Text(
                                 GlobalHelper.getInitials(
-                                    this.homeCubit.user.fullname),
+                                    this.homeCubit!.user.fullname),
                                 style: TextStyle(
-                                  fontSize: 36.sp,
+                                  fontSize: 24.sp,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -72,25 +72,25 @@ class StorePage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      this.homeCubit.user.fullname,
+                                      this.homeCubit!.user.fullname!,
                                       style: TextStyle(
-                                        fontSize: 18.sp,
+                                        fontSize: 16.sp,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                     Text(
-                                      this.homeCubit.user.email,
+                                      this.homeCubit!.user.email!,
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 12.sp,
                                         color: AppColor.darkGrey,
                                         fontWeight: FontWeight.normal,
                                       ),
                                     ),
                                     Text(
-                                      this.homeCubit.user.phoneNumber,
+                                      this.homeCubit!.user.phoneNumber!,
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 12.sp,
                                         color: AppColor.darkGrey,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -112,7 +112,7 @@ class StorePage extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 15.w),
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
@@ -178,7 +178,7 @@ class StorePage extends StatelessWidget {
                         InkWell(
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 15.w, vertical: 15.h),
+                                horizontal: 10.w, vertical: 15.h),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(8),
@@ -197,7 +197,7 @@ class StorePage extends StatelessWidget {
                                   child: Icon(
                                     Icons.logout,
                                     color: AppColor.red,
-                                    size: 20,
+                                    size: 18.sp,
                                   ),
                                 ),
                                 Expanded(
@@ -205,7 +205,7 @@ class StorePage extends StatelessWidget {
                                     "Keluar",
                                     style: TextStyle(
                                       color: AppColor.red,
-                                      fontSize: 16.sp,
+                                      fontSize: 14.sp,
                                     ),
                                   ),
                                 )

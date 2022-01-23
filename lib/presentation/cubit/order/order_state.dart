@@ -20,7 +20,7 @@ class SearchOrderFailed extends OrderState {}
 class SearchOrderSuccess extends OrderState {}
 
 class DetailOrderSuccess extends OrderState {
-  final Transaction data;
+  final Transaction? data;
 
   DetailOrderSuccess({this.data});
 }

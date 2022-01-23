@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppAlertDialog {
-  final String title;
-  final String description;
-
-  final String positiveButtonText;
-  final Function positiveButtonOnTap;
-
-  final String negativeButtonText;
-  final Function negativeButtonOnTap;
+  final String? title, description, positiveButtonText, negativeButtonText;
+  final VoidCallback? positiveButtonOnTap, negativeButtonOnTap;
 
   AppAlertDialog(
       {@required this.title,
@@ -26,30 +21,30 @@ class AppAlertDialog {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: Text(
-              title,
+              title!,
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600),
             ),
             content: Text(
-              description,
+              description!,
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.normal),
             ),
             actions: <Widget>[
               negativeButtonText != null && negativeButtonOnTap != null
                   ? FlatButton(
-                      child: Text(negativeButtonText),
-                      onPressed: () => negativeButtonOnTap(),
+                      child: Text(negativeButtonText!),
+                      onPressed: negativeButtonOnTap,
                     )
                   : Container(),
               positiveButtonText != null && positiveButtonOnTap != null
                   ? FlatButton(
-                      child: Text(positiveButtonText),
-                      onPressed: () => positiveButtonOnTap(),
+                      child: Text(positiveButtonText!),
+                      onPressed: positiveButtonOnTap,
                     )
                   : Container(),
             ],

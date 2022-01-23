@@ -11,22 +11,21 @@ class OrderCubit extends Cubit<OrderState> {
 
   OrderUsecase orderUsecase = OrderUsecase();
 
-  List<Transaction> _originOrders = List<Transaction>();
-  List<Transaction> listOrder = List<Transaction>();
+  List<Transaction> _originOrders = <Transaction>[];
+  List<Transaction> listOrder = <Transaction>[];
 
-  void load({DateTime startDate, DateTime endDate}) async {
+  void load({DateTime? startDate, DateTime? endDate}) async {
     emit(OrderInitial());
     this.listOrder.clear();
     emit(OrderLoading());
     DataState<List<Transaction>> result = await orderUsecase.get(
-      startDate: startDate,
-      endDate: endDate,
+      dates: [startDate!, endDate!]
     );
     if (result.error != null) {
       emit(LoadOrderFailed());
     } else {
-      this._originOrders = result.success;
-      this.listOrder = result.success;
+      this._originOrders = result.success!;
+      this.listOrder = result.success!;
       emit(LoadOrderSuccess());
     }
   }
@@ -53,7 +52,7 @@ class OrderCubit extends Cubit<OrderState> {
     if (result.error != null) {
       emit(DetailOrderFailed());
     } else {
-      emit(DetailOrderSuccess(data: result.success.first));
+      emit(DetailOrderSuccess(data: result.success!.first));
     }
   }
 }

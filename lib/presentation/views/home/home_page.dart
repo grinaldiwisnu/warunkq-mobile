@@ -10,16 +10,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/presentation/views/store/store_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController _pageController;
+  late PageController _pageController;
   int pageIndex = 0;
-  HomeCubit homeCubit;
+  late HomeCubit homeCubit;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               "Failed to get personall data, check your connection.");
         }
       },
-      cubit: homeCubit,
+      bloc: homeCubit,
       child: Scaffold(
         body: SafeArea(
           child: PageView(
@@ -62,15 +62,15 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: pageIndex,
           backgroundColor: Colors.white,
-          elevation: 20,
+          elevation: 5,
           selectedItemColor: AppColor.primary,
           unselectedItemColor: AppColor.disableGrey,
           showSelectedLabels: true,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
-          iconSize: 26,
-          selectedFontSize: 14.sp,
-          unselectedFontSize: 14.sp,
+          iconSize: 26.sp,
+          selectedFontSize: 12.sp,
+          unselectedFontSize: 12.sp,
           onTap: (key) {
             setState(() {
               pageIndex = key;

@@ -5,7 +5,7 @@ import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 import 'package:warunkq_apps/presentation/widgets/components/search_bar.dart';
 
 class CustomerPage extends StatefulWidget {
-  CustomerPage({Key key}) : super(key: key);
+  CustomerPage({Key? key}) : super(key: key);
 
   @override
   _CustomerPageState createState() => _CustomerPageState();
@@ -37,7 +37,7 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
               child: SearchBar(
                 controller: TextEditingController(),
-                label: "Cari nama pelanggan",
+                label: "Cari nama pelanggan", onChanged: (str) {  },
               ),
             ),
             Expanded(

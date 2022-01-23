@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class DetailHistoryPage extends StatelessWidget {
-  final Transaction data;
-  const DetailHistoryPage({Key key, this.data}) : super(key: key);
+  final Transaction? data;
+  const DetailHistoryPage({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,9 @@ class DetailHistoryPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColor.primary,
         title: Text(
-          data.orderId,
+          data!.orderId!,
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             color: Colors.white,
           ),
         ),
@@ -28,13 +28,13 @@ class DetailHistoryPage extends StatelessWidget {
             Expanded(
               child: Container(
                 child: ListView.separated(
-                  itemCount: data.detailOrder.length,
+                  itemCount: data!.detailOrder!.length,
                   separatorBuilder: (context, index) => Divider(),
                   padding:
                       EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    DetailTransaction detail = data.detailOrder[index];
+                    DetailTransaction detail = data!.detailOrder![index];
                     return Container(
                       padding: EdgeInsets.symmetric(vertical: 8.h),
                       child: Column(
@@ -44,9 +44,10 @@ class DetailHistoryPage extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   child: Text(
-                                    "${detail.quantity}x " + detail.name,
+                                    "${detail.quantity}x " + detail.name!,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
                                     ),
                                   ),
                                 ),
@@ -56,7 +57,7 @@ class DetailHistoryPage extends StatelessWidget {
                                     GlobalHelper.formatPrice(detail.subTotal),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
+                                  fontSize: 14.sp,
                                 ),
                               )
                             ],
@@ -89,7 +90,7 @@ class DetailHistoryPage extends StatelessWidget {
                   Container(
                     width: 40,
                     height: 2,
-                    margin: EdgeInsets.only(top: 8.h, bottom: 4.h),
+                    margin: EdgeInsets.only(bottom: 2.h),
                     color: AppColor.boxGrey,
                   ),
                   Container(
@@ -98,22 +99,22 @@ class DetailHistoryPage extends StatelessWidget {
                     color: AppColor.boxGrey,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 15.h),
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Nama Order",
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             color: AppColor.black,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
                         Text(
-                          data.orderName,
+                          data!.orderName!,
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             color: AppColor.black,
                             fontWeight: FontWeight.normal,
                           ),
@@ -122,7 +123,7 @@ class DetailHistoryPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(bottom: 15.h),
+                    padding: EdgeInsets.only(bottom: 10.h),
                     decoration: BoxDecoration(
                         border: Border(
                       bottom: BorderSide(color: AppColor.boxGrey),
@@ -133,15 +134,15 @@ class DetailHistoryPage extends StatelessWidget {
                         Text(
                           "Subtotal",
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             color: AppColor.black,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
                         Text(
-                          "Rp" + GlobalHelper.formatPrice(data.totalPrice),
+                          "Rp" + GlobalHelper.formatPrice(data!.totalPrice),
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             color: AppColor.black,
                             fontWeight: FontWeight.normal,
                           ),
@@ -150,22 +151,22 @@ class DetailHistoryPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20.h),
+                    margin: EdgeInsets.only(top: 10.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Total",
                           style: TextStyle(
-                            fontSize: 18.sp,
+                            fontSize: 16.sp,
                             color: AppColor.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "Rp" + GlobalHelper.formatPrice(data.totalPrice),
+                          "Rp" + GlobalHelper.formatPrice(data!.totalPrice),
                           style: TextStyle(
-                            fontSize: 18.sp,
+                            fontSize: 16.sp,
                             color: AppColor.black,
                             fontWeight: FontWeight.bold,
                           ),

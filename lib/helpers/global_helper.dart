@@ -11,7 +11,7 @@ class GlobalHelper {
     }
   }
 
-  static bool isEmptyList(List<dynamic> list) {
+  static bool isEmptyList(List<dynamic>? list) {
     if (list == null) {
       return true;
     } else if (list.length == 0) {
@@ -21,11 +21,11 @@ class GlobalHelper {
     }
   }
 
-  static String formatNumberToString(String text, {String defaultValue = "0"}) {
+  static String? formatNumberToString(String? text, {String? defaultValue = "0"}) {
     if (GlobalHelper.isEmpty(text)) {
       return defaultValue;
     }
-    return int.parse(double.parse(text).toStringAsFixed(0)).toString();
+    return int.parse(double.parse(text!).toStringAsFixed(0)).toString();
   }
 
   static int formatStringToNumber(String text, {int defaultValue = 0}) {

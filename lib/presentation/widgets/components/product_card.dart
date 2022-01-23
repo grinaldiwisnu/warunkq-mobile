@@ -6,12 +6,12 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product data;
-  final bool isBestSeller;
-  final Function onTap;
+  final Product? data;
+  final bool? isBestSeller;
+  final VoidCallback? onTap;
 
   const ProductCard(
-      {Key key,
+      {Key? key,
       @required this.data,
       @required this.isBestSeller,
       @required this.onTap})
@@ -23,8 +23,8 @@ class ProductCard extends StatelessWidget {
       onTap: onTap,
       child: Card(
         color: Colors.white,
-        elevation: 1,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        elevation: 0.5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Column(
           children: [
@@ -33,15 +33,15 @@ class ProductCard extends StatelessWidget {
               child: Container(
                 child: Stack(
                   children: [
-                    GlobalHelper.isEmpty(data.image)
+                    GlobalHelper.isEmpty(data!.image)
                         ? Container(
                             alignment: Alignment.center,
                             color: AppColor.darkGrey,
                             child: Text(
-                              GlobalHelper.getInitials(this.data.productName),
+                              GlobalHelper.getInitials(this.data!.productName),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 36.sp,
+                                fontSize: 32.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -50,7 +50,7 @@ class ProductCard extends StatelessWidget {
                             alignment: Alignment.center,
                             color: AppColor.darkGrey,
                             child: CachedNetworkImage(
-                              imageUrl: data.image,
+                              imageUrl: data!.image!,
                               progressIndicatorBuilder:
                                   (context, url, progress) => Column(
                                 children: [
@@ -66,10 +66,10 @@ class ProductCard extends StatelessWidget {
                                 color: AppColor.darkGrey,
                                 child: Text(
                                   GlobalHelper.getInitials(
-                                      this.data.productName),
+                                      this.data!.productName),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 36.sp,
+                                    fontSize: 32.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -81,19 +81,19 @@ class ProductCard extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(top: 5, left: 5, right: 5),
                       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                      child: Text(this.data.quantity.toString(),
+                      child: Text(this.data!.quantity.toString(),
                           style: TextStyle(
-                            fontSize: 14.sp,
+                            fontSize: 10.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.center),
                       decoration: BoxDecoration(
                         color: Colors.black45,
-                        borderRadius: BorderRadius.circular(4.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
                     ),
-                    this.isBestSeller
+                    isBestSeller!
                         ? Positioned(
                             child: new Align(
                               alignment: FractionalOffset.bottomCenter,
@@ -101,7 +101,7 @@ class ProductCard extends StatelessWidget {
                                   margin: EdgeInsets.only(bottom: 5.0.h),
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.only(left: 5.0.w),
-                                  height: 23,
+                                  height: 23.h,
                                   child: Opacity(
                                       opacity: 1,
                                       child: Container(
@@ -129,7 +129,7 @@ class ProductCard extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.all(5.0),
+                margin: EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
@@ -137,23 +137,23 @@ class ProductCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        this.data.productName,
+                        data!.productName!,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,
-                        maxLines: 1,
+                        maxLines: 2,
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
                       SizedBox(height: 5.h),
                       Text(
-                        "Rp" + GlobalHelper.formatPrice(this.data.price),
+                        "Rp" + GlobalHelper.formatPrice(data!.price),
                         textAlign: TextAlign.left,
                         maxLines: 1,
                         style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 16.sp,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),

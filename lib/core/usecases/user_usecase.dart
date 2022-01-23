@@ -16,14 +16,14 @@ class UserUsecase {
       return DataFailed(userData.message);
     }
 
-    prefs.setString(ConstantHelper.PREFS_TOKEN_KEY, userData.result.token);
+    prefs.setString(ConstantHelper.PREFS_TOKEN_KEY, userData.result!.token!);
     prefs.setBool(ConstantHelper.PREFS_IS_USER_LOGGED_IN, true);
-    prefs.setString(ConstantHelper.PREFS_USER_EMAIL, userData.result.email);
-    prefs.setInt(ConstantHelper.PREFS_USER_ID, userData.result.id);
-    prefs.setString(ConstantHelper.PREFS_USER_NAME, userData.result.fullname);
+    prefs.setString(ConstantHelper.PREFS_USER_EMAIL, userData.result!.email!);
+    prefs.setInt(ConstantHelper.PREFS_USER_ID, userData.result!.id!);
+    prefs.setString(ConstantHelper.PREFS_USER_NAME, userData.result!.fullname!);
 
     App().dio.options.headers = {
-      'Authorization': 'Bearer ${userData.result.token}'
+      'Authorization': 'Bearer ${userData.result!.token!}'
     };
 
     return DataSuccess(userData.result);

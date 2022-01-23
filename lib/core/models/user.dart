@@ -1,14 +1,14 @@
 class User {
-  int id;
-  String fullname;
-  String username;
-  String email;
-  String createdAt;
-  String updatedAt;
-  String phoneNumber;
-  String storeName;
-  String storeAddress;
-  String token;
+  int? id;
+  String? fullname,
+      username,
+      email,
+      createdAt,
+      updatedAt,
+      phoneNumber,
+      storeName,
+      storeAddress,
+      token;
 
   User(
       {this.id,

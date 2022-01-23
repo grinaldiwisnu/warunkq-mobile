@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
   _loadWidget() async {
     var _duration = Duration(seconds: 5);
 
-    bool isLogin = App().prefs.getBool(ConstantHelper.PREFS_IS_USER_LOGGED_IN);
+    bool? isLogin = App().prefs.getBool(ConstantHelper.PREFS_IS_USER_LOGGED_IN);
     if (isLogin != null && isLogin) {
       return Timer(_duration, navigationHomePage);
     } else {

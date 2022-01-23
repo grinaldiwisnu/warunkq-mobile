@@ -1,15 +1,9 @@
 import 'package:warunkq_apps/core/models/detail_transaction.dart';
 
 class Transaction {
-  String orderId;
-  String orderName;
-  int totalPrice;
-  int discountAmount;
-  int discountTotal;
-  String status;
-  String cancelReason;
-  String createdAt;
-  List<DetailTransaction> detailOrder;
+  String? orderId, orderName, status, cancelReason, createdAt;
+  int? totalPrice,discountAmount, discountTotal;
+  List<DetailTransaction>? detailOrder;
 
   Transaction({
     this.orderId,
@@ -33,9 +27,9 @@ class Transaction {
     cancelReason = json['cancel_reason'];
     createdAt = json['created_at'];
     if (json['detail_order'] != null) {
-      detailOrder = new List<DetailTransaction>();
+      detailOrder = <DetailTransaction>[];
       json['detail_order'].forEach((v) {
-        detailOrder.add(new DetailTransaction.fromJson(v));
+        detailOrder?.add(new DetailTransaction.fromJson(v));
       });
     }
   }
@@ -51,7 +45,7 @@ class Transaction {
     data['cancel_reason'] = this.cancelReason;
     data['created_at'] = this.createdAt;
     if (this.detailOrder != null) {
-      data['detail_order'] = this.detailOrder.map((v) => v.toJson()).toList();
+      data['detail_order'] = this.detailOrder?.map((v) => v.toJson()).toList();
     }
     return data;
   }

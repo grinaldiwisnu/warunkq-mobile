@@ -18,7 +18,7 @@ class CashierCreateOrderLoading extends CashierState {}
 class CashierCreateOrderFailed extends CashierState {}
 
 class CashierCreateOrderSuccess extends CashierState {
-  final CartCashier data;
+  final CartCashier? data;
 
   CashierCreateOrderSuccess({this.data});
 }

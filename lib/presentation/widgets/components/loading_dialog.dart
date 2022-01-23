@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 
 class LoadingDialog {
-  final String title;
-  final String description;
+  final String? title, description;
 
   LoadingDialog({@required this.title, @required this.description});
 
@@ -27,7 +26,7 @@ class LoadingDialog {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    title,
+                    title!,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -44,7 +43,7 @@ class LoadingDialog {
                       SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          description,
+                          description!,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,

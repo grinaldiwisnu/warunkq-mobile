@@ -34,26 +34,30 @@ class Entrypoint extends StatelessWidget {
           BlocProvider<CategoryCubit>(create: (context) => category),
           BlocProvider<OrderCubit>(create: (context) => order),
         ],
-        child: MaterialApp(
-          title: App().appTitle,
-          builder: (context, child) {
-            ScreenUtil.init(
-                BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width,
-                    maxHeight: MediaQuery.of(context).size.height),
-                designSize: Size(375, 812),
-                allowFontScaling: false,
-                orientation: Orientation.portrait);
-
-            return child;
+        child: ScreenUtilInit(
+          designSize: const Size(375, 812),
+          builder: () {
+            return MaterialApp(
+              title: App().appTitle!,
+              debugShowCheckedModeBanner: false,
+              color: AppColor.primary,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                colorScheme: ColorScheme.light(primary: AppColor.primary),
+              ),
+              builder: (context, widget) {
+                return MediaQuery(
+                  //Setting font does not change with system font size
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: widget!,
+                );
+              },
+              home: SplashPage(),
+            );
           },
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            colorScheme: ColorScheme.light(primary: AppColor.primary),
-          ),
-          home: SplashPage(),
-        ));
+        )
+    );
   }
 
   String logs = "";

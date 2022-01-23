@@ -11,14 +11,14 @@ import 'package:warunkq_apps/presentation/widgets/components/loading_indicator.d
 import 'package:warunkq_apps/presentation/widgets/components/search_bar.dart';
 
 class ProductCategoryPage extends StatefulWidget {
-  ProductCategoryPage({Key key}) : super(key: key);
+  ProductCategoryPage({Key? key}) : super(key: key);
 
   @override
   _ProductCategoryPageState createState() => _ProductCategoryPageState();
 }
 
 class _ProductCategoryPageState extends State<ProductCategoryPage> {
-  CategoryCubit categoryCubit;
+  late CategoryCubit categoryCubit;
 
   @override
   void initState() {
@@ -35,16 +35,16 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
         title: Text(
           "Kategori Produk",
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             color: Colors.white,
           ),
         ),
       ),
       body: BlocListener(
-        cubit: categoryCubit,
+        bloc: categoryCubit,
         listener: (context, state) {},
         child: BlocBuilder(
-          cubit: categoryCubit,
+          bloc: categoryCubit,
           builder: (context, state) {
             return Container(
               child: Column(
@@ -60,7 +60,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                     ),
                     child: SearchBar(
                       controller: TextEditingController(),
-                      label: "Cari kategori",
+                      label: "Cari kategori", onChanged: (str) {  },
                     ),
                   ),
                   Expanded(
@@ -85,7 +85,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(5),
                                         boxShadow: [
                                           BoxShadow(
                                               color: AppColor.boxGrey,
@@ -94,8 +94,8 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                               offset: Offset(0, 0))
                                         ]),
                                     padding: EdgeInsets.symmetric(
-                                        vertical: 20.h, horizontal: 15.w),
-                                    margin: EdgeInsets.only(bottom: 10.h),
+                                        vertical: 10.h, horizontal: 10.w),
+                                    margin: EdgeInsets.only(bottom: 5.h),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -103,7 +103,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                         Text(
                                           "${data.name}",
                                           style: TextStyle(
-                                              fontSize: 18.sp,
+                                              fontSize: 14.sp,
                                               fontWeight: FontWeight.w500),
                                         ),
                                         SizedBox(
@@ -112,9 +112,9 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                                         Text(
                                           GlobalHelper.isEmpty(data.description)
                                               ? "-"
-                                              : data.description,
+                                              : data.description!,
                                           style: TextStyle(
-                                              fontSize: 14.sp,
+                                              fontSize: 12.sp,
                                               fontWeight: FontWeight.normal,
                                               color: AppColor.darkGrey),
                                         ),
@@ -136,7 +136,7 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                       },
                       text: "Tambah Kategori",
                       radius: 8,
-                      padding: 15,
+                      padding: 16,
                     ),
                   )
                 ],

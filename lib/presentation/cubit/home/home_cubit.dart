@@ -8,7 +8,7 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
-  User user;
+  User user = User();
   UserAPI _userAPI = UserAPI();
 
   void init() async {
@@ -17,7 +17,7 @@ class HomeCubit extends Cubit<HomeState> {
     if (response.status != 200) {
       emit(ErrorPersonalData());
     } else {
-      user = response.result;
+      user = response.result!;
       emit(SuccessPersonalData());
     }
   }

@@ -4,8 +4,8 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PhoneNumberInput extends StatelessWidget {
-  final TextEditingController controller;
-  final ValueChanged<String> onChanged;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
 
   PhoneNumberInput({@required this.controller, @required this.onChanged});
 

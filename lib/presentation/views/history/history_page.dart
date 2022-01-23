@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:warunkq_apps/core/models/transaction.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,27 +12,29 @@ import 'package:warunkq_apps/presentation/widgets/components/loading_indicator.d
 import 'package:warunkq_apps/presentation/widgets/components/search_bar.dart';
 
 class HistoryPage extends StatefulWidget {
-  HistoryPage({Key key}) : super(key: key);
+  HistoryPage({Key? key}) : super(key: key);
 
   @override
   _HistoryPageState createState() => _HistoryPageState();
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  OrderCubit orderCubit;
+  late OrderCubit orderCubit;
   TextEditingController searchControl = TextEditingController();
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(Duration(days: 1));
 
   @override
   void initState() {
+    startDate = DateTime(startDate.year, startDate.month, startDate.day);
+    endDate = DateTime(endDate.year, endDate.month, endDate.day);
     orderCubit = BlocProvider.of<OrderCubit>(context);
     orderCubit.load(startDate: startDate, endDate: endDate);
     super.initState();
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTimeRange picked = await showDateRangePicker(
+    final DateTimeRange? picked = await showDateRangePicker(
       context: context,
       firstDate: DateTime.now().subtract(Duration(days: 300)),
       lastDate: DateTime.now().add(Duration(days: 1)),
@@ -66,13 +65,13 @@ class _HistoryPageState extends State<HistoryPage> {
           title: Text(
             "Riwayat Pembelian",
             style: TextStyle(
-              fontSize: 18.sp,
+              fontSize: 16.sp,
               color: Colors.white,
             ),
           ),
         ),
         body: BlocListener(
-          cubit: orderCubit,
+          bloc: orderCubit,
           listener: (context, state) {
             if (state is LoadOrderFailed) {
               AppAlertDialog(
@@ -95,7 +94,7 @@ class _HistoryPageState extends State<HistoryPage> {
             }
           },
           child: BlocBuilder(
-              cubit: orderCubit,
+              bloc: orderCubit,
               builder: (context, state) {
                 return Container(
                   child: Column(
@@ -110,7 +109,7 @@ class _HistoryPageState extends State<HistoryPage> {
                           decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
-                                    color: AppColor.boxGrey, width: 1)),
+                                    color: AppColor.boxGrey, width: 0.5)),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +119,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   Icon(
                                     Icons.date_range_rounded,
                                     color: AppColor.black,
-                                    size: 20.sp,
+                                    size: 16.sp,
                                   ),
                                   SizedBox(
                                     width: 5.w,
@@ -128,6 +127,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   Text(
                                     "${GlobalHelper.displayDateRange(startDate)} - ${GlobalHelper.displayDateRange(endDate)}",
                                     style: TextStyle(
+                                      fontSize: 14.sp,
                                         color: Colors.black87,
                                         fontWeight: FontWeight.normal),
                                   ),
@@ -136,7 +136,7 @@ class _HistoryPageState extends State<HistoryPage> {
                               Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: AppColor.black,
-                                size: 20.sp,
+                                size: 16.sp,
                               ),
                             ],
                           ),
@@ -199,21 +199,30 @@ class _HistoryPageState extends State<HistoryPage> {
                                                             .start,
                                                     children: [
                                                       Text(
+                                                        "#${data.orderId}",
+                                                        style: TextStyle(
+                                                          fontSize: 14.sp,
+                                                          fontWeight:
+                                                          FontWeight.w700,
+                                                          color: AppColor.black,
+                                                        ),
+                                                      ),
+                                                      Text(
                                                         "Rp" +
                                                             GlobalHelper
                                                                 .formatPrice(data
                                                                     .totalPrice),
                                                         style: TextStyle(
-                                                          fontSize: 18.sp,
+                                                          fontSize: 16.sp,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           color: AppColor.black,
                                                         ),
                                                       ),
                                                       Text(
-                                                        "${GlobalHelper.displayDate(DateTime.parse(data.createdAt))} - #${data.orderId}",
+                                                        "${GlobalHelper.displayDate(DateTime.parse(data.createdAt!))}",
                                                         style: TextStyle(
-                                                          fontSize: 14.sp,
+                                                          fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                           color: AppColor.black,
@@ -226,16 +235,16 @@ class _HistoryPageState extends State<HistoryPage> {
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8),
-                                                    color: AppColor.primary,
+                                                            5),
+                                                    color: AppColor.greenSecondary,
                                                   ),
                                                   padding: EdgeInsets.symmetric(
-                                                      vertical: 10.h,
-                                                      horizontal: 15.w),
+                                                      vertical: 8.h,
+                                                      horizontal: 16.w),
                                                   child: Text(
                                                     "SELESAI",
                                                     style: TextStyle(
-                                                      fontSize: 14.sp,
+                                                      fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       color: Colors.white,

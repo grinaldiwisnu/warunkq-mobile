@@ -1,15 +1,6 @@
 class Product {
-  int id;
-  String productName;
-  String description;
-  String image;
-  String category;
-  int categoryId;
-  int basePrice;
-  int price;
-  int quantity;
-  String createdAt;
-  String updatedAt;
+  int? id, quantity, price, basePrice, categoryId;
+  String? createdAt, updatedAt, category, description, image, productName;
 
   Product(
       {this.id,
@@ -31,8 +22,8 @@ class Product {
     image = json['image'];
     category = json['category'];
     categoryId = json['category_id'];
-    basePrice = json['base_price'];
-    price = json['price'];
+    basePrice = json['price'];
+    price = json['sell_price'];
     quantity = json['quantity'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

@@ -10,14 +10,14 @@ import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.da
 import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  AuthCubit authCubit;
+  late AuthCubit authCubit;
   TextEditingController _emailInput = TextEditingController();
   TextEditingController _passwordInput = TextEditingController();
   bool _ableToNext = false;
@@ -46,15 +46,15 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.of(context).pop();
           AppAlertDialog(
                   title: "Autentikasi gagal",
-                  description: state.message,
+                  description: state.message ?? '',
                   positiveButtonText: "Oke",
                   positiveButtonOnTap: () => Navigator.of(context).pop())
               .show(context);
         }
       },
-      cubit: authCubit,
+      bloc: authCubit,
       child: BlocBuilder(
-        cubit: authCubit,
+        bloc: authCubit,
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       "Masukkan akun anda",
                       style: TextStyle(
                         color: AppColor.black,
-                        fontSize: 24.sp,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
               child: BaseButton(
                 style: AppButtonStyle.primary,
                 radius: 8,
-                padding: 20,
+                padding: 16,
                 isDisabled: !_ableToNext,
                 text: "Masuk",
                 onPressed: () {

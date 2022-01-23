@@ -4,7 +4,7 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:warunkq_apps/presentation/widgets/components/loading_indicator.dart';
 
 class ReportPage extends StatefulWidget {
-  ReportPage({Key key}) : super(key: key);
+  ReportPage({Key? key}) : super(key: key);
 
   @override
   _ReportPageState createState() => _ReportPageState();
@@ -21,7 +21,7 @@ class _ReportPageState extends State<ReportPage> {
         title: Text(
           "Laporan Penjualan",
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             color: Colors.white,
           ),
         ),

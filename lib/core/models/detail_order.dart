@@ -1,17 +1,16 @@
 import 'package:warunkq_apps/core/models/product.dart';
 
 class DetailOrder {
-  int prodId;
-  int quantity;
-  int subTotal;
-  Product product;
+  int? prodId;
+  late int quantity, subTotal;
+  Product? product;
 
-  DetailOrder({this.prodId, this.quantity, this.subTotal, this.product});
+  DetailOrder({this.prodId, this.quantity = 0, this.subTotal = 0, this.product});
 
   DetailOrder.fromJson(Map<String, dynamic> json) {
     prodId = json['prod_id'];
-    quantity = json['quantity'];
-    subTotal = json['sub_total'];
+    quantity = json['quantity'] != null ? json['quantity'] : 0;
+    subTotal = json['sub_total'] != null ? json['sub_total'] : 0;
   }
 
   Map<String, dynamic> toJson() {

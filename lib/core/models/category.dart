@@ -1,10 +1,6 @@
 class Category {
-  int id;
-  String name;
-  String description;
-  String createdAt;
-  String updatedAt;
-  int usersId;
+  int? id, usersId;
+  String? name, description, createdAt, updatedAt;
 
   Category(
       {this.id,

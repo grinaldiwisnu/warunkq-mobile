@@ -8,28 +8,28 @@ enum AppButtonStyle {
 }
 
 class BaseButton extends StatelessWidget {
-  final AppButtonStyle style;
-  final String text;
-  final bool isLoading;
-  final bool isDisabled;
-  final double radius;
-  final Function onPressed;
-  final double fontSize;
-  final FontWeight fontWeight;
-  final double padding;
-  final Widget prefixIcon;
-  final Widget suffixIcon;
-  final double elevation;
-  final BorderSide border;
+  final AppButtonStyle? style;
+  final String? text;
+  final bool? isLoading;
+  final bool? isDisabled;
+  final double? radius;
+  final VoidCallback? onPressed;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final double? padding;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final double? elevation;
+  final BorderSide? border;
 
   const BaseButton(
-      {Key key,
+      {Key? key,
       @required this.onPressed,
       this.style = AppButtonStyle.primary,
       this.text = '',
       this.isLoading = false,
       this.isDisabled = false,
-      this.fontSize = 18,
+      this.fontSize = 14,
       this.radius = 81,
       this.fontWeight = FontWeight.w600,
       this.padding = 12,
@@ -42,8 +42,8 @@ class BaseButton extends StatelessWidget {
       )})
       : super(key: key);
 
-  Color _getButtonColorByStyle(AppButtonStyle style, bool isLoading) {
-    Color color;
+  Color? _getButtonColorByStyle(AppButtonStyle style, bool isLoading) {
+    Color? color;
 
     if (isLoading) {
       return Colors.grey;
@@ -65,8 +65,8 @@ class BaseButton extends StatelessWidget {
     return color;
   }
 
-  Color _getFontColorByStyle(AppButtonStyle style) {
-    Color color;
+  Color? _getFontColorByStyle(AppButtonStyle style) {
+    Color? color;
 
     switch (style) {
       case AppButtonStyle.primary:
@@ -88,16 +88,16 @@ class BaseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // The other basic button
     return RaisedButton(
-        onPressed: !isDisabled ? onPressed : null,
-        color: _getButtonColorByStyle(this.style, isLoading),
+        onPressed: !isDisabled! ? onPressed : null,
+        color: _getButtonColorByStyle(style!, isLoading!),
         elevation: elevation,
         focusElevation: 0,
         highlightElevation: 0,
         hoverElevation: 0,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius), side: border),
+            borderRadius: BorderRadius.circular(radius!), side: border!),
         child: Container(
-            padding: EdgeInsets.symmetric(vertical: padding.h),
+            padding: EdgeInsets.symmetric(vertical: padding!.h),
             child: _buttonMainContentChild()));
   }
 
@@ -107,10 +107,10 @@ class BaseButton extends StatelessWidget {
       children: [
         prefixIcon ?? SizedBox(width: 0, height: 0),
         Text(
-          text,
+          text!,
           style: TextStyle(
-              fontSize: fontSize.sp,
-              color: _getFontColorByStyle(style),
+              fontSize: fontSize!.sp,
+              color: _getFontColorByStyle(style!),
               fontWeight: fontWeight),
         ),
         suffixIcon ?? SizedBox(width: 0, height: 0),

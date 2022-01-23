@@ -18,8 +18,7 @@ class ProductUsecase implements UseCase {
     return DataSuccess(userData.result);
   }
 
-  @override
-  SharedPreferences prefs = App().prefs;
+  SharedPreferences? prefs = App().prefs;
 
   @override
   Future<DataState> delete() {

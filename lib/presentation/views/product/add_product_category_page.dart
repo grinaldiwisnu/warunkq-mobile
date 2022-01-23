@@ -11,8 +11,8 @@ import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.da
 import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart';
 
 class AddProductCategoryPage extends StatefulWidget {
-  final Category category;
-  AddProductCategoryPage({Key key, this.category}) : super(key: key);
+  final Category? category;
+  AddProductCategoryPage({Key? key, this.category}) : super(key: key);
 
   @override
   _AddProductCategoryPageState createState() => _AddProductCategoryPageState();
@@ -23,16 +23,16 @@ class _AddProductCategoryPageState extends State<AddProductCategoryPage> {
 
   String title = "Tambah Kategori";
 
-  CategoryCubit categoryCubit;
+  late CategoryCubit categoryCubit;
   TextEditingController categoryName = TextEditingController();
-  TextEditingController categoryDesc = TextEditingController();
+  TextEditingController? categoryDesc = TextEditingController();
 
   @override
   void initState() {
     categoryCubit = BlocProvider.of<CategoryCubit>(context);
     if (!GlobalHelper.isEmpty(widget.category)) {
-      categoryName.text = widget.category.name;
-      categoryDesc.text = widget.category.description;
+      categoryName.text = widget.category!.name!;
+      categoryDesc!.text = widget.category!.description!;
       title = "Ubah Kategori";
     }
     super.initState();
@@ -41,13 +41,12 @@ class _AddProductCategoryPageState extends State<AddProductCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         backgroundColor: AppColor.primary,
         title: Text(
           title,
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             color: Colors.white,
           ),
         ),
@@ -55,7 +54,7 @@ class _AddProductCategoryPageState extends State<AddProductCategoryPage> {
       ),
       backgroundColor: Colors.white,
       body: BlocListener(
-        cubit: categoryCubit,
+        bloc: categoryCubit,
         listener: (context, state) {
           if (state is CategoryLoading) {
             LoadingDialog(
@@ -147,15 +146,15 @@ class _AddProductCategoryPageState extends State<AddProductCategoryPage> {
         child: BaseButton(
           style: AppButtonStyle.primary,
           radius: 8,
-          padding: 15,
+          padding: 16,
           text: "Simpan Kategori",
           onPressed: () {
             Category category = Category(
-              description: categoryDesc.text,
+              description: categoryDesc!.text,
               name: categoryName.text,
               id: GlobalHelper.isEmpty(widget.category)
                   ? 0
-                  : widget.category.id,
+                  : widget.category!.id!,
             );
 
             if (!GlobalHelper.isEmpty(widget.category)) {

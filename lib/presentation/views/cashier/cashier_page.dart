@@ -16,16 +16,16 @@ import 'package:warunkq_apps/presentation/widgets/components/product_card.dart';
 import 'package:warunkq_apps/presentation/widgets/components/search_bar.dart';
 
 class CashierPage extends StatefulWidget {
-  CashierPage({Key key}) : super(key: key);
+  CashierPage({Key? key}) : super(key: key);
 
   @override
   _CashierPageState createState() => _CashierPageState();
 }
 
 class _CashierPageState extends State<CashierPage> {
-  CashierCubit cashierCubit;
-  ProductCubit productCubit;
-  HomeCubit homeCubit;
+  late CashierCubit cashierCubit;
+  late ProductCubit productCubit;
+  late HomeCubit homeCubit;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _CashierPageState extends State<CashierPage> {
     return MultiBlocListener(
       listeners: [
         BlocListener(
-          cubit: productCubit,
+          bloc: productCubit,
           listener: (context, state) {
             if (state is LoadProductFailed) {
               AppAlertDialog(
@@ -61,39 +61,38 @@ class _CashierPageState extends State<CashierPage> {
         )
       ],
       child: BlocBuilder(
-        cubit: cashierCubit,
+        bloc: cashierCubit,
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: AppColor.primary,
               automaticallyImplyLeading: false,
-              title: Container(
-                height: 25.h,
-                width: 25.w,
-                child: SvgPicture.asset(
-                  "assets/logo.svg",
-                ),
+              title: BlocBuilder(
+                bloc: homeCubit,
+                builder: (context, state) {
+                  return Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      !GlobalHelper.isEmpty(homeCubit.user)
+                          ? homeCubit.user.storeName!
+                          : "",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  );
+                },
               ),
               actions: [
-                BlocBuilder(
-                  cubit: homeCubit,
-                  builder: (context, state) {
-                    return Container(
-                      padding: EdgeInsets.only(right: 15.w),
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        !GlobalHelper.isEmpty(homeCubit.user)
-                            ? homeCubit.user.storeName
-                            : "",
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500
-                        ),
-                      ),
-                    );
-                  },
-                )
+                Container(
+                  margin: EdgeInsets.only(right: 15.w),
+                  height: 25.h,
+                  width: 25.w,
+                  child: SvgPicture.asset(
+                    "assets/logo.svg",
+                  ),
+                ),
               ],
             ),
             body: Container(
@@ -113,35 +112,38 @@ class _CashierPageState extends State<CashierPage> {
                         child: SearchBar(
                           controller: TextEditingController(),
                           label: "Cari produk yang dibeli",
+                          onChanged: (str) {},
                         ),
                       ),
                       BlocBuilder(
-                        cubit: productCubit,
+                        bloc: productCubit,
                         builder: (context, state) {
                           return Expanded(
                             child: Container(
                                 color: AppColor.grey,
                                 child: RefreshIndicator(
                                   onRefresh: refreshProduct,
-                                  child: state is ProductLoading ? LoadingIndicator() : GridView.count(
-                                    shrinkWrap: true,
-                                    crossAxisCount: 2,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 12.w, vertical: 15.h),
-                                    children: List.generate(
-                                        productCubit.listProduct.length,
-                                        (index) {
-                                      Product data =
-                                          productCubit.listProduct[index];
-                                      return ProductCard(
-                                        isBestSeller: false,
-                                        data: data,
-                                        onTap: () {
-                                          cashierCubit.addItem(data);
-                                        },
-                                      );
-                                    }),
-                                  ),
+                                  child: state is ProductLoading
+                                      ? LoadingIndicator()
+                                      : GridView.count(
+                                          shrinkWrap: true,
+                                          crossAxisCount: 2,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 12.w, vertical: 15.h),
+                                          children: List.generate(
+                                              productCubit.listProduct.length,
+                                              (index) {
+                                            Product data =
+                                                productCubit.listProduct[index];
+                                            return ProductCard(
+                                              isBestSeller: false,
+                                              data: data,
+                                              onTap: () {
+                                                cashierCubit.addItem(data);
+                                              },
+                                            );
+                                          }),
+                                        ),
                                 )),
                           );
                         },
@@ -154,7 +156,9 @@ class _CashierPageState extends State<CashierPage> {
                     left: 0,
                     child: PaidButton(
                       icon: Icons.shopping_basket_outlined,
-                      isDisabled: cashierCubit.cartCashier.totalProduct > 0 ? false : true,
+                      isDisabled: cashierCubit.cartCashier.totalProduct > 0
+                          ? false
+                          : true,
                       totalPrice: cashierCubit.cartCashier.totalPrice,
                       totalProduct: cashierCubit.cartCashier.totalProduct,
                       onTap: () {

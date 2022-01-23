@@ -11,14 +11,14 @@ import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.da
 import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key key}) : super(key: key);
+  RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  AuthCubit authCubit;
+  late AuthCubit authCubit;
   TextEditingController _nameInput = TextEditingController();
   TextEditingController _phoneInput = TextEditingController();
   TextEditingController _storeNameInput = TextEditingController();
@@ -51,15 +51,15 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.of(context).pop();
           AppAlertDialog(
                   title: "Registrasi gagal",
-                  description: state.message,
+                  description: state.message ?? '',
                   positiveButtonText: "Oke",
                   positiveButtonOnTap: () => Navigator.of(context).pop())
               .show(context);
         }
       },
-      cubit: authCubit,
+      bloc: authCubit,
       child: BlocBuilder(
-        cubit: authCubit,
+        bloc: authCubit,
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       "Masukkan informasi akun anda",
                       style: TextStyle(
                         color: AppColor.black,
-                        fontSize: 24.sp,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -97,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
                     child: BaseInput(
-                      controller: _emailInput,
+                      controller: _nameInput,
                       label: "Nama lengkap",
                       maxLines: 1,
                       keyboardType: TextInputType.name,
@@ -138,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       validator: (value) {
                         if (GlobalHelper.isEmpty(value)) {
                           return "Nomor HP tidak boleh kosong";
-                        } else if (value.length < 8) {
+                        } else if (value!.length < 8) {
                           return "Nomor HP harus lebih dari 8 angka";
                         }
 
@@ -162,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       validator: (value) {
                         if (GlobalHelper.isEmpty(value)) {
                           return "Kata sandi tidak boleh kosong";
-                        } else if (value.length < 8) {
+                        } else if (value!.length < 8) {
                           return "Katasandi harus lebih dari 8 angka";
                         }
 
@@ -212,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: BaseButton(
                 style: AppButtonStyle.primary,
                 radius: 8,
-                padding: 20,
+                padding: 16,
                 isDisabled: !_ableToNext,
                 text: "Mendaftar",
                 onPressed: () {

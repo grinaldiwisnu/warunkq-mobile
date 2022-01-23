@@ -6,9 +6,9 @@ import 'package:warunkq_apps/presentation/views/home/home_page.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 
 class CashierSuccessPage extends StatelessWidget {
-  final CartCashier data;
+  final CartCashier? data;
 
-  const CashierSuccessPage({Key key, this.data}) : super(key: key);
+  const CashierSuccessPage({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class CashierSuccessPage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.only(top: 5.h),
                     child: Text(
-                      "Pesanan #${data.orderNumber}",
+                      "Pesanan #${data!.orderNumber!}",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.sp,

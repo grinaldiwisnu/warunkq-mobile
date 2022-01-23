@@ -27,8 +27,8 @@ class CashierCubit extends Cubit<CashierState> {
       cartCashier.orderName = "CUST-" + _generateOrderNumber();
     }
 
-    DetailOrder detailOrder;
-    int found;
+    DetailOrder? detailOrder;
+    int found = 0;
     for (int i = 0; i < cartCashier.detailOrder.length; i++) {
       if (cartCashier.detailOrder[i].prodId == product.id) {
         detailOrder = cartCashier.detailOrder[i];
@@ -41,15 +41,15 @@ class CashierCubit extends Cubit<CashierState> {
         product: product,
         prodId: product.id,
         quantity: 1,
-        subTotal: product.price,
+        subTotal: product.price!,
       );
       cartCashier.detailOrder.add(detailOrder);
     } else {
       cartCashier.detailOrder[found].quantity++;
-      cartCashier.detailOrder[found].subTotal += product.price;
+      cartCashier.detailOrder[found].subTotal += product.price!;
     }
 
-    cartCashier.totalPrice += product.price;
+    cartCashier.totalPrice += product.price!;
     cartCashier.totalProduct++;
 
     emit(AddItemSuccess());
@@ -102,9 +102,9 @@ class CashierCubit extends Cubit<CashierState> {
     print(this.cartCashier.toJson());
     final tempResult = cartCashier;
     DataState result = await orderUsecase.store(this.cartCashier);
-    if (result.error != null)
+    if (!GlobalHelper.isEmpty(result.error)) {
       emit(CashierCreateOrderFailed());
-    else {
+    } else {
       cartCashier = CartCashier();
       emit(CashierCreateOrderSuccess(data: tempResult));
     }

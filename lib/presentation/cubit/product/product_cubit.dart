@@ -12,7 +12,7 @@ class ProductCubit extends Cubit<ProductState> {
   // Define Usecase
   ProductUsecase productUsecase = ProductUsecase();
 
-  List<Product> listProduct = List<Product>();
+  List<Product> listProduct = <Product>[];
 
   void load() async {
     emit(ProductInitial());
@@ -24,7 +24,7 @@ class ProductCubit extends Cubit<ProductState> {
       return;
     }
 
-    this.listProduct = result.success;
+    this.listProduct = result.success!;
     emit(LoadProductSuccess());
   }
 

@@ -1,8 +1,6 @@
 class DetailTransaction {
-  int productsId;
-  int quantity;
-  int subTotal;
-  String name;
+  int? productsId, quantity, subTotal;
+  String? name;
 
   DetailTransaction({this.productsId, this.quantity, this.subTotal, this.name});
 

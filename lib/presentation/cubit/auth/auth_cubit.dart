@@ -15,7 +15,7 @@ class AuthCubit extends Cubit<AuthState> {
     DataState data = await uc.login(email, password);
     print(data.error);
     if (data.error != null) {
-      emit(AuthFailedState(message: data.error));
+      emit(AuthFailedState(message: data.error!));
     } else {
       emit(AuthSuccessState());
     }
@@ -26,7 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
     DataState data = await uc.login(email, password);
     print(data.error);
     if (data.error != null) {
-      emit(RegisterFailedState(message: data.error));
+      emit(RegisterFailedState(message: data.error!));
     } else {
       emit(RegisterSuccessState());
     }

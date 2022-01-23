@@ -7,12 +7,12 @@ import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class App {
-  static App _instance;
-  final String apiBaseURL;
-  final String appTitle;
+  static App? _instance;
+  final String? apiBaseURL;
+  final String? appTitle;
 
-  SharedPreferences prefs;
-  Dio dio;
+  late SharedPreferences prefs;
+  late Dio dio;
 
   App.configure({this.apiBaseURL, this.appTitle}) {
     _instance = this;
@@ -23,7 +23,7 @@ class App {
       throw UnimplementedError("App must be configured first.");
     }
 
-    return _instance;
+    return _instance!;
   }
 
   Future<Null> init() async {
@@ -39,10 +39,11 @@ class App {
 
   void _initDio() {
     dio = Dio(BaseOptions(
-        baseUrl: apiBaseURL,
-        connectTimeout: 10000,
-        receiveTimeout: 50000,
-        responseType: ResponseType.json));
+      baseUrl: apiBaseURL!,
+      connectTimeout: 10000,
+      receiveTimeout: 50000,
+      responseType: ResponseType.json
+    ));
 
     if (!GlobalHelper.isEmpty(prefs.get(ConstantHelper.PREFS_TOKEN_KEY))) {
       dio.options.headers = {
@@ -50,16 +51,16 @@ class App {
       };
     }
 
-    dio.interceptors.add(InterceptorsWrapper(onError: (DioError e) async {
+    dio.interceptors.add(InterceptorsWrapper(onError: (DioError e, handler) async {
       //Map<String, dynamic> data = e.response.data;
-      if (e.response.statusCode != null) {
-        if (e.response.statusCode == 400) {}
+      if (e.response?.statusCode != null) {
+        if (e.response?.statusCode == 400) {}
         // INFO : Kicking out user to login page when !authenticated
-        if (e.response.statusCode == 401) {
+        if (e.response?.statusCode == 401) {
           //String message = data['message'];
         }
       }
-      return e;
+      return handler.next(e);
     }));
   }
 }

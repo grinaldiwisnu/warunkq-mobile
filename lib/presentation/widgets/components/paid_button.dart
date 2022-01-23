@@ -4,22 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class PaidButton extends StatelessWidget {
-  final bool isDisabled;
-  final Function onTap;
-  final IconData icon;
-  final int totalPrice, totalProduct;
+  final bool? isDisabled;
+  final VoidCallback? onTap;
+  final IconData? icon;
+  final int? totalPrice, totalProduct;
 
-  const PaidButton({Key key, this.isDisabled = false, this.onTap, this.icon, this.totalPrice, this.totalProduct})
+  const PaidButton({Key? key, this.isDisabled = false, this.onTap, this.icon, this.totalPrice, this.totalProduct})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: this.onTap,
+      onTap: onTap!,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
         decoration: BoxDecoration(
-          color: this.isDisabled ? AppColor.disableDarkGrey : AppColor.primary,
+          color: isDisabled! ? AppColor.disableDarkGrey : AppColor.primary,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -27,7 +27,7 @@ class PaidButton extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: this.isDisabled
+                color: isDisabled!
                     ? AppColor.disableGrey
                     : AppColor.darkPrimary,
                 borderRadius: BorderRadius.only(
@@ -38,9 +38,9 @@ class PaidButton extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    GlobalHelper.formatNumberToString(totalProduct.toString()),
+                    GlobalHelper.formatNumberToString(totalProduct!.toString())!,
                     style: TextStyle(
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                       color: Colors.white,
                       fontWeight: FontWeight.normal,
                     ),
@@ -49,14 +49,14 @@ class PaidButton extends StatelessWidget {
                   Icon(
                     this.icon,
                     color: Colors.white,
-                    size: 24,
+                    size: 18.sp,
                   ),
                 ],
               ),
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(8),
@@ -69,7 +69,7 @@ class PaidButton extends StatelessWidget {
                     Text(
                       "Rp" + GlobalHelper.formatPrice(totalPrice),
                       style: TextStyle(
-                        fontSize: 20.sp,
+                        fontSize: 18.sp,
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
                       ),
@@ -77,7 +77,7 @@ class PaidButton extends StatelessWidget {
                     Text(
                       "Bayar",
                       style: TextStyle(
-                        fontSize: 20.sp,
+                        fontSize: 18.sp,
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
                       ),

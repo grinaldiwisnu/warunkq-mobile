@@ -10,14 +10,14 @@ import 'package:warunkq_apps/presentation/widgets/components/search_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductPage extends StatefulWidget {
-  ProductPage({Key key}) : super(key: key);
+  ProductPage({Key? key}) : super(key: key);
 
   @override
   _ProductPageState createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  ProductCubit productCubit;
+  late ProductCubit productCubit;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _ProductPageState extends State<ProductPage> {
         title: Text(
           "Produk Saya",
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             color: Colors.white,
           ),
         ),
@@ -50,7 +50,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
               child: SearchBar(
                 controller: TextEditingController(),
-                label: "Cari produk",
+                label: "Cari produk", onChanged: (str) {  },
               ),
             ),
             Expanded(
@@ -68,7 +68,7 @@ class _ProductPageState extends State<ProductPage> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(5),
                             boxShadow: [
                               BoxShadow(
                                   color: AppColor.boxGrey,
@@ -77,16 +77,16 @@ class _ProductPageState extends State<ProductPage> {
                                   offset: Offset(0, 0))
                             ]),
                         padding: EdgeInsets.symmetric(
-                            vertical: 15.h, horizontal: 15.w),
-                        margin: EdgeInsets.only(bottom: 10.h),
+                            vertical: 10.h, horizontal: 10.w),
+                        margin: EdgeInsets.only(bottom: 5.h),
                         child: Column(
                           children: [
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 50,
-                                  width: 50,
+                                  height: 50.h,
+                                  width: 50.w,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -98,7 +98,7 @@ class _ProductPageState extends State<ProductPage> {
                                     GlobalHelper.getInitials(data.productName),
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18.sp,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -106,18 +106,18 @@ class _ProductPageState extends State<ProductPage> {
                                 Expanded(
                                   child: Container(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 15.w),
+                                        EdgeInsets.symmetric(horizontal: 8.w),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           child: Text(
-                                            data.productName,
+                                            data.productName!,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              fontSize: 18.sp,
+                                              fontSize: 14.sp,
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
@@ -131,7 +131,7 @@ class _ProductPageState extends State<ProductPage> {
                                             style: TextStyle(
                                               fontWeight: FontWeight.normal,
                                               color: AppColor.darkGrey,
-                                              fontSize: 14.sp,
+                                              fontSize: 12.sp,
                                             ),
                                           ),
                                         ),
@@ -143,7 +143,7 @@ class _ProductPageState extends State<ProductPage> {
                                   "Rp${GlobalHelper.formatPrice(data.price)}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 16.sp,
+                                    fontSize: 14.sp,
                                   ),
                                 )
                               ],
@@ -166,7 +166,7 @@ class _ProductPageState extends State<ProductPage> {
                 },
                 text: "Tambah Produk",
                 radius: 8,
-                padding: 15,
+                padding: 16,
               ),
             )
           ],

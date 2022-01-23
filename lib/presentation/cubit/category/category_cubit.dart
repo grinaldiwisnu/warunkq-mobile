@@ -12,7 +12,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   // Define Usecase
   CategoryUsecase categoryUsecase = CategoryUsecase();
 
-  List<Category> listCategory = List<Category>();
+  List<Category> listCategory = <Category>[];
 
   void load() async {
     emit(CategoryLoading());
@@ -20,7 +20,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     if (result.error != null) {
       emit(LoadCategoryFailed());
     } else {
-      this.listCategory = result.success;
+      this.listCategory = result.success!;
       emit(LoadCategorySuccess());
     }
   }

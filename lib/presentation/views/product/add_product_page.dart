@@ -12,9 +12,9 @@ import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.da
 import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart';
 
 class AddProductPage extends StatefulWidget {
-  final Product product;
+  final Product? product;
 
-  AddProductPage({Key key, this.product}) : super(key: key);
+  AddProductPage({Key? key, this.product}) : super(key: key);
 
   @override
   _AddProductPageState createState() => _AddProductPageState();
@@ -24,9 +24,9 @@ class _AddProductPageState extends State<AddProductPage> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   String title = "Tambah Produk";
-  ProductCubit productCubit;
-  CategoryCubit categoryCubit;
-  int selectedCategory;
+  late ProductCubit productCubit;
+  late CategoryCubit categoryCubit;
+  int? selectedCategory;
   TextEditingController productName = TextEditingController();
   TextEditingController productSKU = TextEditingController();
   TextEditingController productHPP = TextEditingController();
@@ -38,12 +38,12 @@ class _AddProductPageState extends State<AddProductPage> {
     productCubit = BlocProvider.of<ProductCubit>(context);
     categoryCubit = BlocProvider.of<CategoryCubit>(context);
     if (!GlobalHelper.isEmpty(widget.product)) {
-      productName.text = widget.product.productName;
-      productHPP.text = widget.product.basePrice.toString();
-      productHJP.text = widget.product.price.toString();
-      productStock.text = widget.product.quantity.toString();
-      productSKU.text = widget.product.description;
-      selectedCategory = widget.product.categoryId;
+      productName.text = widget.product!.productName!;
+      productHPP.text = widget.product!.basePrice.toString();
+      productHJP.text = widget.product!.price.toString();
+      productStock.text = widget.product!.quantity.toString();
+      productSKU.text = widget.product!.description!;
+      selectedCategory = widget.product!.categoryId;
       title = "Ubah Produk";
     }
     categoryCubit.load();
@@ -95,15 +95,14 @@ class _AddProductPageState extends State<AddProductPage> {
           ).show(context);
         }
       },
-      cubit: productCubit,
+      bloc: productCubit,
       child: Scaffold(
-        resizeToAvoidBottomPadding: true,
         appBar: AppBar(
           backgroundColor: AppColor.primary,
           title: Text(
             title,
             style: TextStyle(
-              fontSize: 18.sp,
+              fontSize: 16.sp,
               color: Colors.white,
             ),
           ),
@@ -122,8 +121,8 @@ class _AddProductPageState extends State<AddProductPage> {
                   children: [
                     Center(
                       child: Container(
-                        width: MediaQuery.of(context).size.width - 180,
-                        height: 150,
+                        width: MediaQuery.of(context).size.width - 220,
+                        height: 120,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -146,6 +145,7 @@ class _AddProductPageState extends State<AddProductPage> {
                                 color: AppColor.darkGrey,
                                 fontSize: 12.sp,
                               ),
+                              maxLines: 2,
                             )
                           ],
                         ),
@@ -230,7 +230,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       },
                     ),
                     BlocBuilder(
-                      cubit: categoryCubit,
+                      bloc: categoryCubit,
                       builder: (context, state) {
                         return Container(
                           margin: EdgeInsets.symmetric(vertical: 10.h),
@@ -268,9 +268,9 @@ class _AddProductPageState extends State<AddProductPage> {
                                     categoryCubit.listCategory.length,
                                     (index) => DropdownMenuItem(
                                           child: Text(categoryCubit
-                                              .listCategory[index].name),
+                                              .listCategory[index].name!),
                                           value: categoryCubit
-                                              .listCategory[index].id,
+                                              .listCategory[index].id!,
                                         )),
                                 style: TextStyle(
                                   color: AppColor.black,
@@ -289,9 +289,9 @@ class _AddProductPageState extends State<AddProductPage> {
                                 ),
                                 isDense: true,
                                 isExpanded: true,
-                                onChanged: (val) {
+                                onChanged: (int? val) {
                                   setState(() {
-                                    selectedCategory = val;
+                                    selectedCategory = val!;
                                   });
                                 },
                                 elevation: 1,
@@ -322,7 +322,7 @@ class _AddProductPageState extends State<AddProductPage> {
           child: BaseButton(
             style: AppButtonStyle.primary,
             radius: 8,
-            padding: 15,
+            padding: 16,
             text: "Simpan Produk",
             onPressed: () {
               Product product = Product(
@@ -330,13 +330,11 @@ class _AddProductPageState extends State<AddProductPage> {
                 basePrice: GlobalHelper.formatStringToNumber(productHPP.text),
                 categoryId: selectedCategory,
                 description: productSKU.text,
-                id: GlobalHelper.isEmpty(widget.product)
-                    ? ""
-                    : widget.product.id,
+                id: GlobalHelper.isEmpty(widget.product!.id) ? 0 : widget.product?.id!,
                 price: GlobalHelper.formatStringToNumber(productHJP.text),
                 productName: productName.text,
               );
-              if (!GlobalHelper.isEmpty(widget.product)) {
+              if (!GlobalHelper.isEmpty(widget.product!)) {
                 productCubit.save(product);
               } else {
                 productCubit.add(product);

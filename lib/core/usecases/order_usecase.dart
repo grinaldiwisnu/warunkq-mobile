@@ -9,8 +9,7 @@ import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class OrderUsecase implements UseCase {
   OrderAPI orderAPI = OrderAPI();
-  @override
-  SharedPreferences prefs = App().prefs;
+  SharedPreferences? prefs = App().prefs;
 
   @override
   Future<DataState> delete() {
@@ -20,10 +19,10 @@ class OrderUsecase implements UseCase {
 
   @override
   Future<DataState<List<Transaction>>> get(
-      {DateTime startDate, DateTime endDate, String orderNumber}) async {
+      {List<DateTime>? dates, String? orderNumber}) async {
     ApiResponse<List<Transaction>> transaction;
     if (GlobalHelper.isEmpty(orderNumber)) {
-      transaction = await orderAPI.findAll(startDate, endDate);
+      transaction = await orderAPI.findAll(dates);
     } else {
       transaction = await orderAPI.find(orderNumber);
     }

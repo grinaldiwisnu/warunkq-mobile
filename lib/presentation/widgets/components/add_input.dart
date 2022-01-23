@@ -3,14 +3,14 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddInput extends StatelessWidget {
-  final String label, hint;
-  final TextEditingController controller;
-  final bool isRequired;
-  final TextInputType type;
-  final Function(String) validation;
+  final String? label, hint;
+  final TextEditingController? controller;
+  final bool? isRequired;
+  final TextInputType? type;
+  final FormFieldValidator<String>? validation;
 
   const AddInput({
-    Key key,
+    Key? key,
     @required this.label,
     @required this.hint,
     @required this.controller,
@@ -31,9 +31,9 @@ class AddInput extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  this.label,
+                  this.label!,
                   style: TextStyle(
-                    fontSize: 13.sp,
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.normal,
                     color: AppColor.black,
                   ),
@@ -41,11 +41,11 @@ class AddInput extends StatelessWidget {
                 SizedBox(
                   width: 3.w,
                 ),
-                this.isRequired
+                this.isRequired!
                     ? Text(
                         "*",
                         style: TextStyle(
-                          fontSize: 13.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.normal,
                           color: AppColor.red,
                         ),
@@ -55,18 +55,18 @@ class AddInput extends StatelessWidget {
             ),
           ),
           TextFormField(
-            validator: validation,
+            validator: validation!,
             controller: this.controller,
             style: TextStyle(
               color: AppColor.black,
-              fontSize: 16.sp,
+              fontSize: 14.sp,
             ),
             keyboardType: this.type,
             decoration: InputDecoration(
               hintText: this.hint,
               floatingLabelBehavior: FloatingLabelBehavior.always,
               hintStyle: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                   color: AppColor.boxGrey,
                   fontWeight: FontWeight.w400),
               border: UnderlineInputBorder(

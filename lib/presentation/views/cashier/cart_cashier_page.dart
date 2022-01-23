@@ -13,15 +13,15 @@ import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart
 import 'package:warunkq_apps/presentation/widgets/components/paid_button.dart';
 
 class CartCashierPage extends StatefulWidget {
-  CartCashierPage({Key key}) : super(key: key);
+  CartCashierPage({Key? key}) : super(key: key);
 
   @override
   _CartCashierPageState createState() => _CartCashierPageState();
 }
 
 class _CartCashierPageState extends State<CartCashierPage> {
-  CashierCubit cashierCubit;
-  HomeCubit homeCubit;
+  late CashierCubit cashierCubit;
+  late HomeCubit homeCubit;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
             title: Text(
               "Pesanan #${cashierCubit.cartCashier.orderNumber}",
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 color: Colors.white,
               ),
             ),
@@ -71,16 +71,16 @@ class _CartCashierPageState extends State<CartCashierPage> {
                     (Route<dynamic> route) => false);
               }
             },
-            cubit: cashierCubit,
+            bloc: cashierCubit,
             child: BlocBuilder(
-              cubit: cashierCubit,
+              bloc: cashierCubit,
               builder: (context, state) {
                 return Container(
                   child: Column(
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(
-                            vertical: 10.h, horizontal: 15.w),
+                            vertical: 8.h, horizontal: 15.w),
                         decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
@@ -113,7 +113,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                 cashierCubit.cartCashier.detailOrder.length,
                             separatorBuilder: (context, index) => Divider(),
                             padding: EdgeInsets.symmetric(
-                                vertical: 15.h, horizontal: 25.w),
+                                vertical: 10.h, horizontal: 15.w),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               DetailOrder data =
@@ -125,8 +125,8 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                     Row(
                                       children: [
                                         Container(
-                                          height: 35,
-                                          width: 35,
+                                          height: 35.h,
+                                          width: 35.w,
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
                                             border: Border.all(
@@ -137,10 +137,10 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                           ),
                                           child: Text(
                                             GlobalHelper.getInitials(
-                                                data.product.productName),
+                                                data.product!.productName),
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 18.sp,
+                                              fontSize: 16.sp,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -151,8 +151,9 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                                 horizontal: 15.w),
                                             child: Text(
                                               "${data.quantity}x " +
-                                                  data.product.productName,
+                                                  data.product!.productName!,
                                               style: TextStyle(
+                                                fontSize: 14.sp,
                                                 fontWeight: FontWeight.w400,
                                               ),
                                             ),
@@ -164,7 +165,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                                   data.subTotal),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16.sp,
+                                            fontSize: 14.sp,
                                           ),
                                         )
                                       ],
@@ -178,11 +179,11 @@ class _CartCashierPageState extends State<CartCashierPage> {
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(
-                            vertical: 10.h, horizontal: 25.w),
+                            vertical: 8.h, horizontal: 15.w),
                         child: Column(
                           children: [
                             Container(
-                              padding: EdgeInsets.symmetric(vertical: 15.h),
+                              padding: EdgeInsets.symmetric(vertical: 10.h),
                               decoration: BoxDecoration(
                                   border: Border(
                                 bottom: BorderSide(color: AppColor.boxGrey),
@@ -194,20 +195,20 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                   Text(
                                     "Diskon",
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 14.sp,
                                       color: AppColor.black,
                                     ),
                                   ),
                                   Icon(
                                     Icons.arrow_forward_ios,
                                     color: AppColor.black,
-                                    size: 20.sp,
+                                    size: 14.sp,
                                   ),
                                 ],
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(vertical: 15.h),
+                              padding: EdgeInsets.symmetric(vertical: 10.h),
                               decoration: BoxDecoration(
                                   border: Border(
                                 bottom: BorderSide(color: AppColor.boxGrey),
@@ -219,7 +220,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                   Text(
                                     "Subtotal",
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 14.sp,
                                       color: AppColor.black,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -229,7 +230,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                         GlobalHelper.formatPrice(cashierCubit
                                             .cartCashier.totalPrice),
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 14.sp,
                                       color: AppColor.black,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -261,12 +262,12 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                     Icon(
                                       Icons.delete_outline,
                                       color: AppColor.red,
-                                      size: 18.sp,
+                                      size: 16.sp,
                                     ),
                                     Text(
                                       "Hapus pesanan",
                                       style: TextStyle(
-                                        fontSize: 16.sp,
+                                        fontSize: 14.sp,
                                         color: AppColor.red,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -297,7 +298,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 15.w),
-                              margin: EdgeInsets.only(top: 20.h),
+                              margin: EdgeInsets.only(top: 15.h),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -305,7 +306,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                   Text(
                                     "Total",
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 16.sp,
                                       color: AppColor.black,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -315,7 +316,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                         GlobalHelper.formatPrice(cashierCubit
                                             .cartCashier.totalPrice),
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 16.sp,
                                       color: AppColor.black,
                                       fontWeight: FontWeight.bold,
                                     ),

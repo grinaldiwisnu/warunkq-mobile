@@ -7,8 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/core/usecase.dart';
 
 class CategoryUsecase implements UseCase {
-  @override
-  SharedPreferences prefs = App().prefs;
+  SharedPreferences? prefs = App().prefs;
 
   CategoryAPI _categoryAPI = CategoryAPI();
 
