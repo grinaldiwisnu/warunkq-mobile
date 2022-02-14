@@ -50,6 +50,12 @@ class _AddProductCategoryPageState extends State<AddProductCategoryPage> {
             color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         elevation: 1,
       ),
       backgroundColor: Colors.white,

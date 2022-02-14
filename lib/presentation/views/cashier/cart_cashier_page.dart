@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:warunkq_apps/core/models/detail_order.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +44,12 @@ class _CartCashierPageState extends State<CartCashierPage> {
                 fontSize: 16.sp,
                 color: Colors.white,
               ),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
           ),
           body: BlocListener(
@@ -118,59 +125,75 @@ class _CartCashierPageState extends State<CartCashierPage> {
                             itemBuilder: (context, index) {
                               DetailOrder data =
                                   cashierCubit.cartCashier.detailOrder[index];
-                              return Container(
-                                padding: EdgeInsets.symmetric(vertical: 8.h),
-                                child: Column(
+                              return Slidable(
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  dismissible:
+                                      DismissiblePane(onDismissed: () {}),
                                   children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          height: 35.h,
-                                          width: 35.w,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: AppColor.grey, width: 1),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: AppColor.darkGrey,
-                                          ),
-                                          child: Text(
-                                            GlobalHelper.getInitials(
-                                                data.product!.productName),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.bold,
+                                    SlidableAction(
+                                      onPressed: (context) {},
+                                      backgroundColor: Color(0xFFFE4A49),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete,
+                                    ),
+                                  ],
+                                ),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 35.h,
+                                            width: 35.w,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: AppColor.grey,
+                                                  width: 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: AppColor.darkGrey,
                                             ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15.w),
                                             child: Text(
-                                              "${data.quantity}x " +
-                                                  data.product!.productName!,
+                                              GlobalHelper.getInitials(
+                                                  data.product!.productName),
                                               style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w400,
+                                                color: Colors.white,
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Text(
-                                          "Rp" +
-                                              GlobalHelper.formatPrice(
-                                                  data.subTotal),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14.sp,
+                                          Expanded(
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 15.w),
+                                              child: Text(
+                                                "${data.quantity}x " +
+                                                    data.product!.productName!,
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                                          Text(
+                                            "Rp" +
+                                                GlobalHelper.formatPrice(
+                                                    data.subTotal),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14.sp,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },

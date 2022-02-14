@@ -37,6 +37,13 @@ class _ProductPageState extends State<ProductPage> {
             color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 1,
       ),
       body: Container(
         child: Column(
@@ -50,7 +57,8 @@ class _ProductPageState extends State<ProductPage> {
               ),
               child: SearchBar(
                 controller: TextEditingController(),
-                label: "Cari produk", onChanged: (str) {  },
+                label: "Cari produk",
+                onChanged: (str) {},
               ),
             ),
             Expanded(
@@ -64,7 +72,11 @@ class _ProductPageState extends State<ProductPage> {
                     Product data = productCubit.listProduct[index];
 
                     return InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddProductPage(product: data,),)),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AddProductPage(
+                          product: data,
+                        ),
+                      )),
                       child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white,

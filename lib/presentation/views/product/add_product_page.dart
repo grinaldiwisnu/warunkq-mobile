@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +24,7 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
+  ImagePicker _picker = ImagePicker();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   String title = "Tambah Produk";
@@ -32,6 +36,7 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController productHPP = TextEditingController();
   TextEditingController productHJP = TextEditingController();
   TextEditingController productStock = TextEditingController();
+  File images = File("");
 
   @override
   void initState() {
@@ -48,6 +53,64 @@ class _AddProductPageState extends State<AddProductPage> {
     }
     categoryCubit.load();
     super.initState();
+  }
+
+  _imgFromCamera() async {
+    XFile? image =
+        await _picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+
+    if (image != null) {
+      setState(() {
+        images = File(image.path);
+      });
+    }
+  }
+
+  _imgFromGallery() async {
+    XFile? image =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+    if (image != null) {
+      setState(() {
+        images = File(image.path);
+      });
+    }
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text(
+                        'Gallery',
+                        style: TextStyle(fontSize: 14.sp),
+                      ),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text(
+                      'Camera',
+                      style: TextStyle(fontSize: 14.sp),
+                    ),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -106,6 +169,12 @@ class _AddProductPageState extends State<AddProductPage> {
               color: Colors.white,
             ),
           ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           elevation: 1,
         ),
         backgroundColor: Colors.white,
@@ -120,34 +189,46 @@ class _AddProductPageState extends State<AddProductPage> {
                 child: Column(
                   children: [
                     Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 220,
-                        height: 120,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColor.boxGrey,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.camera_alt_outlined,
-                              size: 36.sp,
-                              color: AppColor.darkGrey,
-                            ),
-                            Text(
-                              "Tambahkan gambar produk",
-                              style: TextStyle(
-                                color: AppColor.darkGrey,
-                                fontSize: 12.sp,
+                      child: GestureDetector(
+                        onTap: () {
+                          _showPicker(context);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width - 220,
+                          height: 120,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColor.boxGrey,
+                                width: 1,
                               ),
-                              maxLines: 2,
-                            )
-                          ],
+                              borderRadius: BorderRadius.circular(8)),
+                          child: images.path != ""
+                              ? Image.file(
+                                  images,
+                                  width:
+                                      MediaQuery.of(context).size.width - 220,
+                                  height: 120,
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.camera_alt_outlined,
+                                      size: 36.sp,
+                                      color: AppColor.darkGrey,
+                                    ),
+                                    Text(
+                                      "Tambahkan gambar produk",
+                                      style: TextStyle(
+                                        color: AppColor.darkGrey,
+                                        fontSize: 12.sp,
+                                      ),
+                                      maxLines: 2,
+                                    )
+                                  ],
+                                ),
                         ),
                       ),
                     ),
@@ -330,7 +411,9 @@ class _AddProductPageState extends State<AddProductPage> {
                 basePrice: GlobalHelper.formatStringToNumber(productHPP.text),
                 categoryId: selectedCategory,
                 description: productSKU.text,
-                id: GlobalHelper.isEmpty(widget.product!.id) ? 0 : widget.product?.id!,
+                id: GlobalHelper.isEmpty(widget.product!.id)
+                    ? 0
+                    : widget.product?.id!,
                 price: GlobalHelper.formatStringToNumber(productHJP.text),
                 productName: productName.text,
               );

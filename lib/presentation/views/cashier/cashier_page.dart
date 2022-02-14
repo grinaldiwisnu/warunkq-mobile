@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
+import 'package:warunkq_apps/helpers/flutter_toast.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
@@ -66,6 +67,7 @@ class _CashierPageState extends State<CashierPage> {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: AppColor.primary,
+              elevation: 1,
               automaticallyImplyLeading: false,
               title: BlocBuilder(
                 bloc: homeCubit,
@@ -73,7 +75,7 @@ class _CashierPageState extends State<CashierPage> {
                   return Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      !GlobalHelper.isEmpty(homeCubit.user)
+                      !GlobalHelper.isEmpty(homeCubit.user.storeName)
                           ? homeCubit.user.storeName!
                           : "",
                       style: TextStyle(
@@ -162,8 +164,12 @@ class _CashierPageState extends State<CashierPage> {
                       totalPrice: cashierCubit.cartCashier.totalPrice,
                       totalProduct: cashierCubit.cartCashier.totalProduct,
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => CartCashierPage()));
+                        if (cashierCubit.cartCashier.detailOrder.length > 0) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CartCashierPage()));
+                        } else {
+                          showFlutterToast("Pilih produk dahulu.");
+                        }
                       },
                     ),
                   ),

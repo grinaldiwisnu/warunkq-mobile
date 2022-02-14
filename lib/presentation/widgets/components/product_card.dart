@@ -53,6 +53,8 @@ class ProductCard extends StatelessWidget {
                               imageUrl: data!.image!,
                               progressIndicatorBuilder:
                                   (context, url, progress) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Center(
                                     child: CircularProgressIndicator(

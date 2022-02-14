@@ -24,6 +24,13 @@ class _CustomerPageState extends State<CustomerPage> {
             color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 1,
       ),
       body: Container(
         child: Column(
@@ -37,7 +44,8 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
               child: SearchBar(
                 controller: TextEditingController(),
-                label: "Cari nama pelanggan", onChanged: (str) {  },
+                label: "Cari nama pelanggan",
+                onChanged: (str) {},
               ),
             ),
             Expanded(
@@ -45,17 +53,22 @@ class _CustomerPageState extends State<CustomerPage> {
                 color: AppColor.grey,
                 child: ListView.builder(
                   itemCount: 4,
-                  padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(color: AppColor.boxGrey, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 0))
-                        ]
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 15.w),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppColor.boxGrey,
+                                blurRadius: 2,
+                                spreadRadius: 0,
+                                offset: Offset(0, 0))
+                          ]),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.h, horizontal: 15.w),
                       margin: EdgeInsets.only(bottom: 10.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,16 +77,12 @@ class _CustomerPageState extends State<CustomerPage> {
                           Text(
                             "Customer $index",
                             style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500
-                            ),
+                                fontSize: 18.sp, fontWeight: FontWeight.w500),
                           ),
                           Text(
                             "08127318231321",
                             style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.normal
-                            ),
+                                fontSize: 14.sp, fontWeight: FontWeight.normal),
                           ),
                         ],
                       ),

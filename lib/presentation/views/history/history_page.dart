@@ -109,7 +109,7 @@ class _HistoryPageState extends State<HistoryPage> {
                           decoration: BoxDecoration(
                             border: Border(
                                 bottom: BorderSide(
-                                    color: AppColor.boxGrey, width: 0.5)),
+                                    color: AppColor.boxGrey, width: 1)),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,9 +127,10 @@ class _HistoryPageState extends State<HistoryPage> {
                                   Text(
                                     "${GlobalHelper.displayDateRange(startDate)} - ${GlobalHelper.displayDateRange(endDate)}",
                                     style: TextStyle(
-                                      fontSize: 14.sp,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.normal),
+                                      fontSize: 12.sp,
+                                      color: AppColor.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -203,7 +204,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                         style: TextStyle(
                                                           fontSize: 14.sp,
                                                           fontWeight:
-                                                          FontWeight.w700,
+                                                              FontWeight.w700,
                                                           color: AppColor.black,
                                                         ),
                                                       ),
@@ -236,7 +237,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             5),
-                                                    color: AppColor.greenSecondary,
+                                                    color:
+                                                        AppColor.greenSecondary,
                                                   ),
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 8.h,

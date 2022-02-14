@@ -21,6 +21,13 @@ class DetailHistoryPage extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 1,
       ),
       body: Container(
         child: Column(

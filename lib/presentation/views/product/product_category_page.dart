@@ -39,6 +39,13 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
             color: Colors.white,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 1,
       ),
       body: BlocListener(
         bloc: categoryCubit,
@@ -60,7 +67,8 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                     ),
                     child: SearchBar(
                       controller: TextEditingController(),
-                      label: "Cari kategori", onChanged: (str) {  },
+                      label: "Cari kategori",
+                      onChanged: (str) {},
                     ),
                   ),
                   Expanded(

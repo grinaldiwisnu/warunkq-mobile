@@ -31,9 +31,10 @@ class OrderAPI implements API {
   }
 
   @override
-  Future<ApiResponse<List<Transaction>>> create(data) async {
+  Future<ApiResponse> create(data) async {
     try {
-      Response res = await App().dio.post(UrlHelper.order, data: data!.toJson());
+      Response res =
+          await App().dio.post(UrlHelper.order, data: data!.toJson());
       print(res.data);
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse(
@@ -51,7 +52,8 @@ class OrderAPI implements API {
   @override
   Future<ApiResponse<List<Transaction>>> find(orderNumber) async {
     try {
-      Response res = await App().dio.get("${UrlHelper.order}/${orderNumber.toString()}");
+      Response res =
+          await App().dio.get("${UrlHelper.order}/${orderNumber.toString()}");
       print(res.data);
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse<List<Transaction>>(

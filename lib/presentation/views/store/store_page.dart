@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/app.dart';
+import 'package:warunkq_apps/helpers/app_color.dart';
+import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/views/product/product_category_page.dart';
 import 'package:warunkq_apps/presentation/views/product/product_page.dart';
+import 'package:warunkq_apps/presentation/views/splash_page.dart';
+import 'package:warunkq_apps/presentation/views/store/information_page.dart';
+import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.dart';
 import 'package:warunkq_apps/presentation/widgets/components/store_menu.dart';
 
 class StorePage extends StatelessWidget {
@@ -146,7 +151,10 @@ class StorePage extends StatelessWidget {
                               StoreMenu(
                                 name: "Info Usaha",
                                 icon: Icons.badge,
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => InformationPage()));
+                                },
                               ),
                               StoreMenu(
                                 name: "Daftar Pelanggan",
@@ -176,6 +184,31 @@ class StorePage extends StatelessWidget {
                           height: 40.h,
                         ),
                         InkWell(
+                          onTap: () {
+                            AppAlertDialog(
+                                title: 'Keluar',
+                                description:
+                                    'Apakah anda yakin ingin keluar dari akun ini ?',
+                                positiveButtonText: 'Ya',
+                                positiveButtonOnTap: () {
+                                  App().prefs.setBool(
+                                      ConstantHelper.PREFS_IS_USER_LOGGED_IN,
+                                      false);
+                                  App().prefs.setString(
+                                      ConstantHelper.PREFS_TOKEN_KEY, "");
+                                  App().dio.options.headers = {
+                                    'Authorization': null
+                                  };
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SplashPage()),
+                                      (Route<dynamic> route) => false);
+                                },
+                                negativeButtonText: 'Tidak',
+                                negativeButtonOnTap: () =>
+                                    Navigator.pop(context)).show(context);
+                          },
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 15.h),

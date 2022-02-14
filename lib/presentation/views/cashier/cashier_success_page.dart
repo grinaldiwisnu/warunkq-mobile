@@ -4,6 +4,7 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/presentation/views/home/home_page.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
+import 'package:warunkq_apps/presentation/widgets/components/customer_bottom_sheet.dart';
 
 class CashierSuccessPage extends StatelessWidget {
   final CartCashier? data;
@@ -64,32 +65,39 @@ class CashierSuccessPage extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-                    width: double.infinity,
-                    child: BaseButton(
-                      style: AppButtonStyle.secondary,
-                      onPressed: () {},
-                      text: "Kirim Struk",
-                      radius: 8,
-                      padding: 20,
-                      border: BorderSide(color: Colors.white, width: 1),
+                  Expanded(
+                    child: Container(
+                      padding:
+                          EdgeInsets.only(left: 15, right: 7.5, bottom: 15),
+                      child: BaseButton(
+                        style: AppButtonStyle.secondary,
+                        onPressed: () {
+                          CustomerBottomSheet(TextEditingController())
+                              .show(context);
+                        },
+                        text: "Kirim Struk",
+                        radius: 8,
+                        padding: 15,
+                        border: BorderSide(color: Colors.white, width: 1),
+                      ),
                     ),
                   ),
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-                    width: double.infinity,
-                    child: BaseButton(
-                      style: AppButtonStyle.secondary,
-                      onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                          (Route<dynamic> route) => false),
-                      text: "Buat Pesanan Lain",
-                      radius: 8,
-                      padding: 20,
-                      border: BorderSide(color: Colors.white, width: 1),
+                  Expanded(
+                    child: Container(
+                      padding:
+                          EdgeInsets.only(right: 15, left: 7.5, bottom: 15),
+                      child: BaseButton(
+                        style: AppButtonStyle.secondary,
+                        onPressed: () => Navigator.of(context)
+                            .pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                                (Route<dynamic> route) => false),
+                        text: "Buat Pesanan Lain",
+                        radius: 8,
+                        padding: 15,
+                        border: BorderSide(color: Colors.white, width: 1),
+                      ),
                     ),
                   ),
                 ],
