@@ -1,4 +1,5 @@
 import 'package:warunkq_apps/app.dart';
+import 'package:warunkq_apps/core/api.dart';
 import 'package:warunkq_apps/core/data/remote/category_api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/category.dart';
@@ -6,20 +7,14 @@ import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/core/usecase.dart';
 
-class CategoryUsecase implements UseCase {
+class CategoryUsecase implements CategoryUC {
   SharedPreferences? prefs = App().prefs;
 
-  CategoryAPI _categoryAPI = CategoryAPI();
-
-  @override
-  Future<DataState> delete() {
-    // TODO: implement delete
-    throw UnimplementedError();
-  }
+  CategoryData _categoryData = CategoryAPI();
 
   @override
   Future<DataState<List<Category>>> get() async {
-    ApiResponse<List<Category>> categoryData = await _categoryAPI.findAll();
+    ApiResponse<List<Category>> categoryData = await _categoryData.find();
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }
@@ -27,8 +22,8 @@ class CategoryUsecase implements UseCase {
   }
 
   @override
-  Future<DataState<List<Category>>> store(data) async {
-    ApiResponse<List<Category>> categoryData = await _categoryAPI.create(data);
+  Future<DataState<List<Category>>> store(Category data) async {
+    ApiResponse<List<Category>> categoryData = await _categoryData.create(data);
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }
@@ -36,8 +31,8 @@ class CategoryUsecase implements UseCase {
   }
 
   @override
-  Future<DataState<List<Category>>> update(data) async {
-    ApiResponse<List<Category>> categoryData = await _categoryAPI.update(data);
+  Future<DataState<List<Category>>> update(Category data) async {
+    ApiResponse<List<Category>> categoryData = await _categoryData.save(data);
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }

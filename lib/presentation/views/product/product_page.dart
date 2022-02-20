@@ -97,8 +97,8 @@ class _ProductPageState extends State<ProductPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 50.h,
-                                  width: 50.w,
+                                  height: 50,
+                                  width: 50,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     border: Border.all(

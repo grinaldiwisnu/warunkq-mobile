@@ -54,8 +54,8 @@ class StorePage extends StatelessWidget {
                           children: [
                             Container(
                               margin: EdgeInsets.only(right: 10.sp),
-                              height: 60.h,
-                              width: 60.w,
+                              height: 60,
+                              width: 60,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: AppColor.primary,

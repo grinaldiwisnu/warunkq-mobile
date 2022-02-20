@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/auth/auth_cubit.dart';
 import 'package:warunkq_apps/presentation/views/home/home_page.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_input.dart';
+import 'package:warunkq_apps/presentation/widgets/components/add_input.dart';
 import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.dart';
 import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart';
 
@@ -17,6 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late AuthCubit authCubit;
   TextEditingController _emailInput = TextEditingController();
   TextEditingController _passwordInput = TextEditingController();
@@ -66,54 +69,77 @@ class _LoginPageState extends State<LoginPage> {
               ),
               backgroundColor: Colors.transparent,
             ),
-            body: Container(
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 25.h),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Masukkan akun anda",
-                      style: TextStyle(
-                        color: AppColor.black,
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.w500,
+            body: Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 25.h),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Masukkan akun anda",
+                          style: TextStyle(
+                            color: AppColor.black,
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
+                        child: AddInput(
+                          controller: _emailInput,
+                          label: "Email",
+                          type: TextInputType.emailAddress,
+                          hint: "Masukkan email akun anda",
+                          validation: (val) {
+                            if (GlobalHelper.isEmpty(val)) {
+                              return "Alamat email tidak boleh kosong";
+                            } else if (!val!.contains("@")) {
+                              return "Format email harus sesuai";
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
+                        child: AddInput(
+                          controller: _passwordInput,
+                          label: "Kata sandi",
+                          hint: "Kata sandi akun anda",
+                          passwordField: true,
+                          onChanged: (val) {
+                            setState(() {
+                              _ableToNext = val.length >= 8;
+                            });
+                          },
+                          validation: (val) {
+                            if (GlobalHelper.isEmpty(val)) {
+                              return "Kata sandi tidak boleh kosong";
+                            } else if (val!.length < 8) {
+                              return "Kata sandi harus lebih dari 8 karakter";
+                            }
+
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
-                    child: BaseInput(
-                      controller: _emailInput,
-                      label: "Email anda",
-                      maxLines: 1,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                  ),
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
-                    child: BaseInput(
-                      controller: _passwordInput,
-                      label: "Kata sandi akun anda",
-                      passwordField: true,
-                      maxLines: 1,
-                      onChanged: (val) {
-                        setState(() {
-                          _ableToNext = val.length >= 8;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
             bottomSheet: Container(

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/models/transaction.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
+import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/core/usecases/order_usecase.dart';
 
 part 'order_state.dart';
@@ -9,7 +10,7 @@ part 'order_state.dart';
 class OrderCubit extends Cubit<OrderState> {
   OrderCubit() : super(OrderInitial());
 
-  OrderUsecase orderUsecase = OrderUsecase();
+  OrderUC orderUC = OrderUsecase();
 
   List<Transaction> _originOrders = <Transaction>[];
   List<Transaction> listOrder = <Transaction>[];
@@ -18,7 +19,7 @@ class OrderCubit extends Cubit<OrderState> {
     emit(OrderInitial());
     this.listOrder.clear();
     emit(OrderLoading());
-    DataState<List<Transaction>> result = await orderUsecase.get(
+    DataState<List<Transaction>> result = await orderUC.get(
       dates: [startDate!, endDate!]
     );
     if (result.error != null) {
@@ -47,8 +48,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   void prepareDetail(Transaction data) async {
     emit(OrderInitial());
-    DataState<List<Transaction>> result =
-        await orderUsecase.get(orderNumber: data.orderId);
+    DataState<List<Transaction>> result = await orderUC.get(orderNumber: data.orderId);
     if (result.error != null) {
       emit(DetailOrderFailed());
     } else {

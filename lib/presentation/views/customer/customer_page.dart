@@ -77,12 +77,12 @@ class _CustomerPageState extends State<CustomerPage> {
                           Text(
                             "Customer $index",
                             style: TextStyle(
-                                fontSize: 18.sp, fontWeight: FontWeight.w500),
+                                fontSize: 16.sp, fontWeight: FontWeight.w500),
                           ),
                           Text(
                             "08127318231321",
                             style: TextStyle(
-                                fontSize: 14.sp, fontWeight: FontWeight.normal),
+                                fontSize: 12.sp, fontWeight: FontWeight.normal),
                           ),
                         ],
                       ),

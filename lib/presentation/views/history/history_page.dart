@@ -238,19 +238,25 @@ class _HistoryPageState extends State<HistoryPage> {
                                                         BorderRadius.circular(
                                                             5),
                                                     color:
-                                                        AppColor.greenSecondary,
+                                                        AppColor.primary,
                                                   ),
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 8.h,
                                                       horizontal: 16.w),
-                                                  child: Text(
-                                                    "SELESAI",
-                                                    style: TextStyle(
-                                                      fontSize: 12.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.white,
-                                                    ),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        "SELESAI",
+                                                        style: TextStyle(
+                                                          fontSize: 10.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 4.w,),
+                                                      Icon(Icons.check, color: Colors.white, size: 12.sp,)
+                                                    ],
                                                   ),
                                                 )
                                               ],

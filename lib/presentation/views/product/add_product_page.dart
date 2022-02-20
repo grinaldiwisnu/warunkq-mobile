@@ -139,8 +139,8 @@ class _AddProductPageState extends State<AddProductPage> {
             description: "Berhasil menambahkan produk.",
             positiveButtonText: "Oke",
             positiveButtonOnTap: () {
-              productCubit.load();
               Navigator.of(context).pop();
+              productCubit.load();
               Navigator.of(context).pop();
             },
           ).show(context);
@@ -151,8 +151,8 @@ class _AddProductPageState extends State<AddProductPage> {
             description: "Berhasil merubah produk.",
             positiveButtonText: "Oke",
             positiveButtonOnTap: () {
-              productCubit.load();
               Navigator.of(context).pop();
+              productCubit.load();
               Navigator.of(context).pop();
             },
           ).show(context);
@@ -411,13 +411,14 @@ class _AddProductPageState extends State<AddProductPage> {
                 basePrice: GlobalHelper.formatStringToNumber(productHPP.text),
                 categoryId: selectedCategory,
                 description: productSKU.text,
-                id: GlobalHelper.isEmpty(widget.product!.id)
+                id: GlobalHelper.isEmpty(widget.product)
                     ? 0
                     : widget.product?.id!,
                 price: GlobalHelper.formatStringToNumber(productHJP.text),
                 productName: productName.text,
+                uploadImage: GlobalHelper.isEmpty(images.path) ? null : images,
               );
-              if (!GlobalHelper.isEmpty(widget.product!)) {
+              if (!GlobalHelper.isEmpty(widget.product)) {
                 productCubit.save(product);
               } else {
                 productCubit.add(product);

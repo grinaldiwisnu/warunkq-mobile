@@ -9,12 +9,15 @@ class ProductCard extends StatelessWidget {
   final Product? data;
   final bool? isBestSeller;
   final VoidCallback? onTap;
+  final int count;
 
   const ProductCard(
       {Key? key,
       @required this.data,
       @required this.isBestSeller,
-      @required this.onTap})
+      @required this.onTap,
+      this.count = 0,
+      })
       : super(key: key);
 
   @override
@@ -80,6 +83,8 @@ class ProductCard extends StatelessWidget {
                               fit: BoxFit.fill,
                             ),
                           ),
+                    count == 0
+                        ? Container() : overlayActiveItem(count),
                     Container(
                       margin: EdgeInsets.only(top: 5, left: 5, right: 5),
                       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -124,7 +129,7 @@ class ProductCard extends StatelessWidget {
                                       ))),
                             ),
                           )
-                        : Container()
+                        : Container(),
                   ],
                 ),
               ),
@@ -171,13 +176,14 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget overlayActiveItem(double count) {
+  Widget overlayActiveItem(int count) {
+
     return Stack(
       children: <Widget>[
         SizedBox(
           child: Opacity(
-            opacity: 0.5,
-            child: Container(color: AppColor.boxGrey),
+            opacity: 0.6,
+            child: Container(color: AppColor.black),
           ),
         ),
         Center(
@@ -196,7 +202,7 @@ class ProductCard extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            opacity: 0.7,
+            opacity: 1,
           ),
         ),
       ],

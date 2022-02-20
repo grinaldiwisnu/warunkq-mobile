@@ -7,6 +7,7 @@ import 'package:warunkq_apps/core/models/cart_cashier.dart';
 import 'package:warunkq_apps/core/models/detail_order.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
+import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/core/usecases/order_usecase.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
@@ -16,7 +17,7 @@ part 'cashier_state.dart';
 class CashierCubit extends Cubit<CashierState> {
   CashierCubit() : super(CashierInitial());
 
-  OrderUsecase orderUsecase = OrderUsecase();
+  OrderUC orderUC = OrderUsecase();
 
   CartCashier cartCashier = CartCashier();
 
@@ -47,6 +48,7 @@ class CashierCubit extends Cubit<CashierState> {
     } else {
       cartCashier.detailOrder[found].quantity++;
       cartCashier.detailOrder[found].subTotal += product.price!;
+      cartCashier.detailOrder[found].productionPrice = product.basePrice!;
     }
 
     cartCashier.totalPrice += product.price!;
@@ -62,6 +64,14 @@ class CashierCubit extends Cubit<CashierState> {
     cartCashier.totalProduct = 0;
 
     emit(CashierDeleteOrder());
+  }
+
+  void deleteItem(DetailOrder item) async {
+    emit(CashierInitial());
+    cartCashier.detailOrder.remove(item);
+    cartCashier.totalPrice -= item.subTotal;
+    cartCashier.totalProduct -= item.quantity;
+    emit(CashierItemDeleted());
   }
 
   String _generateOrderNumber() {
@@ -101,7 +111,7 @@ class CashierCubit extends Cubit<CashierState> {
 
     print(this.cartCashier.toJson());
     final tempResult = cartCashier;
-    DataState result = await orderUsecase.store(this.cartCashier);
+    DataState result = await orderUC.store(this.cartCashier);
     if (!GlobalHelper.isEmpty(result.error)) {
       emit(CashierCreateOrderFailed());
     } else {

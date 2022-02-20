@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
+import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/core/usecases/category_usecase.dart';
 
 part 'category_state.dart';
@@ -10,13 +11,13 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit() : super(CategoryInitial());
 
   // Define Usecase
-  CategoryUsecase categoryUsecase = CategoryUsecase();
+  CategoryUC categoryUC = CategoryUsecase();
 
   List<Category> listCategory = <Category>[];
 
   void load() async {
     emit(CategoryLoading());
-    DataState<List<Category>> result = await categoryUsecase.get();
+    DataState<List<Category>> result = await categoryUC.get();
     if (result.error != null) {
       emit(LoadCategoryFailed());
     } else {
@@ -27,7 +28,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   void save(Category data) async {
     emit(CategoryLoading());
-    DataState<List<Category>> result = await categoryUsecase.update(data);
+    DataState<List<Category>> result = await categoryUC.update(data);
     if (result.error != null) {
       emit(UpdateCategoryFailed());
     } else {
@@ -37,7 +38,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   void add(Category data) async {
     emit(CategoryLoading());
-    DataState<List<Category>> result = await categoryUsecase.store(data);
+    DataState<List<Category>> result = await categoryUC.store(data);
     if (result.error != null) {
       emit(AddCategoryFailed());
     } else {

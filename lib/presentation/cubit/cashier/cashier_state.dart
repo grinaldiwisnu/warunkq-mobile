@@ -22,3 +22,5 @@ class CashierCreateOrderSuccess extends CashierState {
 
   CashierCreateOrderSuccess({this.data});
 }
+
+class CashierItemDeleted extends CashierState {}

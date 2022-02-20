@@ -8,6 +8,8 @@ class AddInput extends StatelessWidget {
   final bool? isRequired;
   final TextInputType? type;
   final FormFieldValidator<String>? validation;
+  final bool passwordField;
+  final ValueChanged<String>? onChanged;
 
   const AddInput({
     Key? key,
@@ -17,6 +19,8 @@ class AddInput extends StatelessWidget {
     @required this.validation,
     this.isRequired = false,
     this.type = TextInputType.name,
+    this.passwordField = false,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -34,7 +38,7 @@ class AddInput extends StatelessWidget {
                   this.label!,
                   style: TextStyle(
                     fontSize: 12.sp,
-                    fontWeight: FontWeight.normal,
+                    fontWeight: FontWeight.w500,
                     color: AppColor.black,
                   ),
                 ),
@@ -62,6 +66,8 @@ class AddInput extends StatelessWidget {
               fontSize: 14.sp,
             ),
             keyboardType: this.type,
+            obscureText: passwordField,
+            onChanged: onChanged,
             decoration: InputDecoration(
               hintText: this.hint,
               floatingLabelBehavior: FloatingLabelBehavior.always,

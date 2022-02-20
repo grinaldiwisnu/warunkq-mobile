@@ -44,7 +44,7 @@ class User {
     data['email'] = this.email;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['phone_number'] = this.phoneNumber;
+    data['phone'] = this.phoneNumber;
     data['store_name'] = this.storeName;
     data['store_address'] = this.storeAddress;
     return data;

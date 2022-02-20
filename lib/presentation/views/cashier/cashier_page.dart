@@ -137,12 +137,22 @@ class _CashierPageState extends State<CashierPage> {
                                               (index) {
                                             Product data =
                                                 productCubit.listProduct[index];
+
+                                            int count = 0;
+                                            cashierCubit.cartCashier.detailOrder.forEach((element) {
+                                              if (element.prodId == data.id) {
+                                                count = element.quantity;
+                                                return;
+                                              }
+                                            });
+
                                             return ProductCard(
                                               isBestSeller: false,
                                               data: data,
                                               onTap: () {
                                                 cashierCubit.addItem(data);
                                               },
+                                              count: count,
                                             );
                                           }),
                                         ),

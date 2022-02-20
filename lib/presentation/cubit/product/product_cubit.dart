@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
+import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/core/usecases/product_usecase.dart';
 
 part 'product_state.dart';
@@ -10,7 +11,7 @@ class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());
 
   // Define Usecase
-  ProductUsecase productUsecase = ProductUsecase();
+  ProductUC productUC = ProductUsecase();
 
   List<Product> listProduct = <Product>[];
 
@@ -18,7 +19,7 @@ class ProductCubit extends Cubit<ProductState> {
     emit(ProductInitial());
     this.listProduct.clear();
     emit(ProductLoading());
-    DataState<List<Product>> result = await productUsecase.get();
+    DataState<List<Product>> result = await productUC.get();
     if (result.error != null) {
       emit(LoadProductFailed());
       return;
@@ -30,7 +31,7 @@ class ProductCubit extends Cubit<ProductState> {
 
   void save(Product data) async {
     emit(ProductLoading());
-    DataState<List<Product>> result = await productUsecase.update(data);
+    DataState<List<Product>> result = await productUC.update(data);
     if (result.error != null) {
       emit(UpdateProductFailed());
     } else {
@@ -40,7 +41,7 @@ class ProductCubit extends Cubit<ProductState> {
 
   void add(Product data) async {
     emit(ProductLoading());
-    DataState<List<Product>> result = await productUsecase.store(data);
+    DataState<List<Product>> result = await productUC.store(data);
     if (result.error != null) {
       emit(AddProductFailed());
     } else {

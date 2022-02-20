@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:warunkq_apps/app.dart';
+import 'package:warunkq_apps/core/api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/helpers/url_helper.dart';
 
-class ProductAPI {
-  Future<ApiResponse<List<Product>>> findAll() async {
+class ProductAPI implements ProductData {
+  Future<ApiResponse<List<Product>>> find() async {
     try {
       Response res = await App().dio.get(UrlHelper.product);
       if (res.data['status'] == HttpStatus.ok) {
@@ -28,7 +29,7 @@ class ProductAPI {
   Future<ApiResponse<List<Product>>> create(Product data) async {
     try {
       Response res =
-          await App().dio.post(UrlHelper.product, data: data.toJson());
+          await App().dio.post(UrlHelper.product, data: FormData.fromMap(await data.toMap()));
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse<List<Product>>(
             result: List.generate(res.data['result'].length,
@@ -44,11 +45,11 @@ class ProductAPI {
     }
   }
 
-  Future<ApiResponse<List<Product>>> update(Product data) async {
+  Future<ApiResponse<List<Product>>> save(Product data) async {
     try {
       Response res = await App()
           .dio
-          .put("${UrlHelper.product}/${data.id}", data: data.toJson());
+          .put("${UrlHelper.product}/${data.id}", data: FormData.fromMap(await data.toMap()));
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse<List<Product>>(
             result: List.generate(res.data['result'].length,
@@ -62,5 +63,11 @@ class ProductAPI {
       return ApiResponse(
           status: 500, message: "Something wrong, back in a minutes.");
     }
+  }
+
+  @override
+  Future<ApiResponse> delete(Product data) {
+    // TODO: implement delete
+    throw UnimplementedError();
   }
 }

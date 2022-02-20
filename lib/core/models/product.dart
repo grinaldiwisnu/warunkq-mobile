@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+
 class Product {
   int? id, quantity, price, basePrice, categoryId;
   String? createdAt, updatedAt, category, description, image, productName;
+  File? uploadImage;
 
   Product(
       {this.id,
@@ -13,7 +18,8 @@ class Product {
       this.createdAt,
       this.updatedAt,
       this.basePrice,
-      this.categoryId});
+      this.categoryId,
+      this.uploadImage});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,5 +47,22 @@ class Product {
     data['prod_categories_id'] = this.categoryId;
     data['prod_price'] = this.basePrice;
     return data;
+  }
+
+  Future<Map<String, dynamic>> toMap() async {
+    // ignore: unnecessary_cast
+    return {
+      'id': this.id,
+      'prod_name': this.productName,
+      'prod_desc': this.description,
+      'prod_image': uploadImage == null ? null : await MultipartFile.fromFile(
+          this.uploadImage!.path, filename: this.uploadImage!.path.split('/').last
+      ),
+      'category': this.category,
+      'prod_quantity': this.quantity,
+      'prod_categories_id': this.categoryId,
+      'prod_price': this.basePrice,
+      'prod_sell_price': this.price,
+    } as Map<String, dynamic>;
   }
 }

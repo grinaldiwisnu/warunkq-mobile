@@ -10,6 +10,7 @@ import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/order/order_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
+import 'package:warunkq_apps/presentation/cubit/report/report_cubit.dart';
 import 'package:warunkq_apps/presentation/views/splash_page.dart';
 
 class Entrypoint extends StatelessWidget {
@@ -24,6 +25,7 @@ class Entrypoint extends StatelessWidget {
     ProductCubit product = ProductCubit();
     CategoryCubit category = CategoryCubit();
     OrderCubit order = OrderCubit();
+    ReportCubit report = ReportCubit();
 
     return MultiBlocProvider(
         providers: [
@@ -33,6 +35,7 @@ class Entrypoint extends StatelessWidget {
           BlocProvider<ProductCubit>(create: (context) => product),
           BlocProvider<CategoryCubit>(create: (context) => category),
           BlocProvider<OrderCubit>(create: (context) => order),
+          BlocProvider<ReportCubit>(create: (context) => report),
         ],
         child: ScreenUtilInit(
           designSize: const Size(375, 812),
@@ -58,12 +61,5 @@ class Entrypoint extends StatelessWidget {
           },
         )
     );
-  }
-
-  String logs = "";
-
-  // Call inside a setState({ }) block to be able to reflect changes on screen
-  void log(String logString) {
-    logs += logString.toString() + "\n";
   }
 }

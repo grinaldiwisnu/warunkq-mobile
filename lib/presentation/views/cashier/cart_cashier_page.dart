@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:warunkq_apps/core/models/detail_order.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:warunkq_apps/helpers/flutter_toast.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
@@ -119,20 +120,21 @@ class _CartCashierPageState extends State<CartCashierPage> {
                             itemCount:
                                 cashierCubit.cartCashier.detailOrder.length,
                             separatorBuilder: (context, index) => Divider(),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.h, horizontal: 15.w),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               DetailOrder data =
                                   cashierCubit.cartCashier.detailOrder[index];
                               return Slidable(
                                 endActionPane: ActionPane(
+                                  key: const ValueKey(0),
                                   motion: const ScrollMotion(),
                                   dismissible:
                                       DismissiblePane(onDismissed: () {}),
                                   children: [
                                     SlidableAction(
-                                      onPressed: (context) {},
+                                      onPressed: (context) {
+                                        cashierCubit.deleteItem(data);
+                                      },
                                       backgroundColor: Color(0xFFFE4A49),
                                       foregroundColor: Colors.white,
                                       icon: Icons.delete,
@@ -140,14 +142,15 @@ class _CartCashierPageState extends State<CartCashierPage> {
                                   ],
                                 ),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 8.h, horizontal: 15.w),
                                   child: Column(
                                     children: [
                                       Row(
                                         children: [
                                           Container(
-                                            height: 35.h,
-                                            width: 35.w,
+                                            height: 40,
+                                            width: 40,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
                                               border: Border.all(
@@ -349,12 +352,19 @@ class _CartCashierPageState extends State<CartCashierPage> {
                             ),
                             PaidButton(
                               icon: Icons.payments_outlined,
-                              isDisabled: false,
+                              isDisabled: cashierCubit.cartCashier.totalProduct > 0
+                                  ? false
+                                  : true,
                               totalPrice: cashierCubit.cartCashier.totalPrice,
                               totalProduct:
                                   cashierCubit.cartCashier.totalProduct,
                               onTap: () {
-                                cashierCubit.createOrder();
+                                if (cashierCubit.cartCashier.detailOrder.length > 0) {
+                                  cashierCubit.createOrder();
+                                } else {
+                                  showFlutterToast("Pilih produk dahulu.");
+                                  Navigator.of(context).pop();
+                                }
                               },
                             ),
                           ],

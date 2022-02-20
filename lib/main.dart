@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:warunkq_apps/app.dart';
-import 'package:warunkq_apps/entrypoint.dart';
+import 'package:warunkq_apps/presentation/views/entrypoint.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
