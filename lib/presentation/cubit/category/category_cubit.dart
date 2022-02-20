@@ -3,15 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:warunkq_apps/core/usecase.dart';
-import 'package:warunkq_apps/core/usecases/category_usecase.dart';
 
 part 'category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
-  CategoryCubit() : super(CategoryInitial());
+  CategoryCubit({required this.categoryUC}) : super(CategoryInitial());
 
   // Define Usecase
-  CategoryUC categoryUC = CategoryUsecase();
+  final CategoryUC categoryUC;
 
   List<Category> listCategory = <Category>[];
 

@@ -3,14 +3,13 @@ import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/models/transaction.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:warunkq_apps/core/usecase.dart';
-import 'package:warunkq_apps/core/usecases/order_usecase.dart';
 
 part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
-  OrderCubit() : super(OrderInitial());
+  OrderCubit({required this.orderUC}) : super(OrderInitial());
 
-  OrderUC orderUC = OrderUsecase();
+  final OrderUC orderUC;
 
   List<Transaction> _originOrders = <Transaction>[];
   List<Transaction> listOrder = <Transaction>[];

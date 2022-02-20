@@ -12,9 +12,10 @@ import 'package:warunkq_apps/helpers/global_helper.dart';
 part './report_state.dart';
 
 class ReportCubit extends Cubit<ReportState> {
-  ReportCubit() : super(ReportInitial());
+  ReportCubit({required this.orderUC}) : super(ReportInitial());
 
-  OrderUC orderUC = OrderUsecase();
+  final OrderUC orderUC;
+
   List<charts.Series<LinearSales, DateTime>> summaryReport = [];
   List<TopSelling> topProduct = [];
   Summary dataSummary = Summary();

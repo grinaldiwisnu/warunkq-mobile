@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/api.dart';
-import 'package:warunkq_apps/core/data/remote/user_api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/register.dart';
 import 'package:warunkq_apps/core/models/user.dart';
@@ -10,11 +9,13 @@ import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 
 class UserUsecase implements UserUC {
-  UserData _userData = UserAPI();
-  SharedPreferences prefs = App().prefs;
+  final UserData data;
+  final SharedPreferences prefs;
+
+  UserUsecase(this.data, this.prefs);
 
   Future<DataState<User>> login(String email, String password) async {
-    ApiResponse<User> userData = await _userData.login(email, password);
+    ApiResponse<User> userData = await data.login(email, password);
     if (userData.message != null) {
       return DataFailed(userData.message);
     }
@@ -34,7 +35,7 @@ class UserUsecase implements UserUC {
 
   @override
   Future<DataState> register(Register register) async {
-    ApiResponse userData = await _userData.register(register);
+    ApiResponse userData = await data.register(register);
     if (userData.message != null) {
       return DataFailed(userData.message);
     }

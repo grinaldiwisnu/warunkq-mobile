@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
+import 'package:warunkq_apps/injection_container.dart';
 import 'package:warunkq_apps/presentation/cubit/auth/auth_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
@@ -19,23 +20,15 @@ class Entrypoint extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: AppColor.darkPrimary));
 
-    AuthCubit auth = AuthCubit();
-    HomeCubit home = HomeCubit();
-    CashierCubit cashier = CashierCubit();
-    ProductCubit product = ProductCubit();
-    CategoryCubit category = CategoryCubit();
-    OrderCubit order = OrderCubit();
-    ReportCubit report = ReportCubit();
-
     return MultiBlocProvider(
         providers: [
-          BlocProvider<AuthCubit>(create: (context) => auth),
-          BlocProvider<HomeCubit>(create: (context) => home),
-          BlocProvider<CashierCubit>(create: (context) => cashier),
-          BlocProvider<ProductCubit>(create: (context) => product),
-          BlocProvider<CategoryCubit>(create: (context) => category),
-          BlocProvider<OrderCubit>(create: (context) => order),
-          BlocProvider<ReportCubit>(create: (context) => report),
+          BlocProvider<AuthCubit>(create: (context) => sl<AuthCubit>()),
+          BlocProvider<HomeCubit>(create: (context) => sl<HomeCubit>()),
+          BlocProvider<CashierCubit>(create: (context) => sl<CashierCubit>()),
+          BlocProvider<ProductCubit>(create: (context) => sl<ProductCubit>()),
+          BlocProvider<CategoryCubit>(create: (context) => sl<CategoryCubit>()),
+          BlocProvider<OrderCubit>(create: (context) => sl<OrderCubit>()),
+          BlocProvider<ReportCubit>(create: (context) => sl<ReportCubit>()),
         ],
         child: ScreenUtilInit(
           designSize: const Size(375, 812),

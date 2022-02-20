@@ -1,10 +1,7 @@
-import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/api.dart';
-import 'package:warunkq_apps/core/data/remote/order_api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/cart_cashier.dart';
 import 'package:warunkq_apps/core/models/chart_summary.dart';
-import 'package:warunkq_apps/core/models/linear_sales.dart';
 import 'package:warunkq_apps/core/models/top_selling.dart';
 import 'package:warunkq_apps/core/models/transaction.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
@@ -13,17 +10,19 @@ import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class OrderUsecase implements OrderUC {
-  OrderData _orderData = OrderAPI();
-  SharedPreferences? prefs = App().prefs;
+  final OrderData data;
+  final SharedPreferences prefs;
+
+  OrderUsecase(this.data, this.prefs);
 
   @override
   Future<DataState<List<Transaction>>> get(
       {List<DateTime>? dates, String? orderNumber}) async {
     ApiResponse<List<Transaction>> transaction;
     if (GlobalHelper.isEmpty(orderNumber)) {
-      transaction = await _orderData.findAll(dates!);
+      transaction = await data.findAll(dates!);
     } else {
-      transaction = await _orderData.find(orderNumber!);
+      transaction = await data.find(orderNumber!);
     }
 
     if (transaction.message != null) {
@@ -33,8 +32,8 @@ class OrderUsecase implements OrderUC {
   }
 
   @override
-  Future<DataState> store(CartCashier data) async {
-    ApiResponse categoryData = await _orderData.create(data);
+  Future<DataState> store(CartCashier params) async {
+    ApiResponse categoryData = await data.create(params);
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }
@@ -43,7 +42,7 @@ class OrderUsecase implements OrderUC {
 
   @override
   Future<DataState<ChartSummary>> summary(List<DateTime> dates) async {
-    ApiResponse categoryData = await _orderData.summary(dates);
+    ApiResponse categoryData = await data.summary(dates);
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }
@@ -52,7 +51,7 @@ class OrderUsecase implements OrderUC {
 
   @override
   Future<DataState<List<TopSelling>>> topSelling(List<DateTime> dates) async {
-    ApiResponse categoryData = await _orderData.topSelling(dates);
+    ApiResponse categoryData = await data.topSelling(dates);
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }

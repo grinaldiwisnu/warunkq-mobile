@@ -3,14 +3,15 @@ import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/models/register.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:warunkq_apps/core/usecase.dart';
-import 'package:warunkq_apps/core/usecases/user_usecase.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
+  AuthCubit({
+    required this.userUC,
+  }) : super(AuthInitial());
 
-  UserUC userUC = UserUsecase();
+  final UserUC userUC;
 
   void auth(String email, String password) async {
     emit(AuthInitial());

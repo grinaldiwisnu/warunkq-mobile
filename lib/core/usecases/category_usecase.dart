@@ -1,6 +1,4 @@
-import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/api.dart';
-import 'package:warunkq_apps/core/data/remote/category_api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
@@ -8,13 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/core/usecase.dart';
 
 class CategoryUsecase implements CategoryUC {
-  SharedPreferences? prefs = App().prefs;
+  final SharedPreferences prefs;
+  final CategoryData data;
 
-  CategoryData _categoryData = CategoryAPI();
+  CategoryUsecase(this.prefs, this.data);
 
   @override
   Future<DataState<List<Category>>> get() async {
-    ApiResponse<List<Category>> categoryData = await _categoryData.find();
+    ApiResponse<List<Category>> categoryData = await data.find();
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }
@@ -22,8 +21,8 @@ class CategoryUsecase implements CategoryUC {
   }
 
   @override
-  Future<DataState<List<Category>>> store(Category data) async {
-    ApiResponse<List<Category>> categoryData = await _categoryData.create(data);
+  Future<DataState<List<Category>>> store(Category params) async {
+    ApiResponse<List<Category>> categoryData = await data.create(params);
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }
@@ -31,8 +30,8 @@ class CategoryUsecase implements CategoryUC {
   }
 
   @override
-  Future<DataState<List<Category>>> update(Category data) async {
-    ApiResponse<List<Category>> categoryData = await _categoryData.save(data);
+  Future<DataState<List<Category>>> update(Category params) async {
+    ApiResponse<List<Category>> categoryData = await data.save(params);
     if (categoryData.message != null) {
       return DataFailed(categoryData.message);
     }

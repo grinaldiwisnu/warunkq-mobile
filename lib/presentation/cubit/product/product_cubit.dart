@@ -3,15 +3,14 @@ import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:warunkq_apps/core/usecase.dart';
-import 'package:warunkq_apps/core/usecases/product_usecase.dart';
 
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  ProductCubit() : super(ProductInitial());
+  ProductCubit({required this.productUC}) : super(ProductInitial());
 
   // Define Usecase
-  ProductUC productUC = ProductUsecase();
+  final ProductUC productUC;
 
   List<Product> listProduct = <Product>[];
 

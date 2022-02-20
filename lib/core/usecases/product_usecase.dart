@@ -1,18 +1,19 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/api.dart';
-import 'package:warunkq_apps/core/data/remote/product_api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:warunkq_apps/core/usecase.dart';
 
 class ProductUsecase implements ProductUC {
-  ProductData _productData = ProductAPI();
+  final ProductData data;
+
+  ProductUsecase(this.data);
 
   @override
   Future<DataState<List<Product>>> get() async {
-    ApiResponse<List<Product>> userData = await _productData.find();
+    ApiResponse<List<Product>> userData = await data.find();
     if (userData.message != null) {
       return DataFailed(userData.message);
     }
@@ -22,8 +23,8 @@ class ProductUsecase implements ProductUC {
   SharedPreferences? prefs = App().prefs;
 
   @override
-  Future<DataState<List<Product>>> store(data) async {
-    ApiResponse<List<Product>> productData = await _productData.create(data);
+  Future<DataState<List<Product>>> store(params) async {
+    ApiResponse<List<Product>> productData = await data.create(params);
     if (productData.message != null) {
       return DataFailed(productData.message);
     }
@@ -31,8 +32,8 @@ class ProductUsecase implements ProductUC {
   }
 
   @override
-  Future<DataState<List<Product>>> update(data) async {
-    ApiResponse<List<Product>> productData = await _productData.save(data);
+  Future<DataState<List<Product>>> update(params) async {
+    ApiResponse<List<Product>> productData = await data.save(params);
     print(productData.result.toString());
     if (productData.message != null) {
       return DataFailed(productData.message);

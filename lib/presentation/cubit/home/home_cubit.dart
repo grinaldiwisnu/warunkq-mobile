@@ -1,16 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/core/api.dart';
-import 'package:warunkq_apps/core/data/remote/user_api.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/user.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
+  HomeCubit({required this.userData}) : super(HomeInitial());
+  final UserData userData;
+
   User user = User();
-  UserData userData = UserAPI();
 
   void init() async {
     emit(HomeInitial());
