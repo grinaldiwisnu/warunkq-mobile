@@ -1,13 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/app.dart';
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:warunkq_apps/core/usecase.dart';
 
 class ProductUsecase implements ProductUC {
-  final ProductData data;
+  final ProductRemote data;
 
   ProductUsecase(this.data);
 

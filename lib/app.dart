@@ -5,7 +5,7 @@ import 'package:flutter_flipperkit/plugins/sharedpreferences/flipper_shared_pref
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
-import 'package:warunkq_apps/injection_container.dart';
+import 'package:warunkq_apps/di.dart';
 
 class App {
   static App? _instance;

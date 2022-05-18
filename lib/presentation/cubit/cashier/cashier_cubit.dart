@@ -2,16 +2,16 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/models/cart_cashier.dart';
 import 'package:warunkq_apps/core/models/detail_order.dart';
 import 'package:warunkq_apps/core/models/product.dart';
+import 'package:warunkq_apps/core/models/webstruct.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 import 'package:warunkq_apps/core/usecase.dart';
-import 'package:warunkq_apps/core/usecases/order_usecase.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
+import 'package:warunkq_apps/helpers/webstruct.dart';
 
 part 'cashier_state.dart';
 
@@ -118,6 +118,19 @@ class CashierCubit extends Cubit<CashierState> {
     } else {
       cartCashier = CartCashier();
       emit(CashierCreateOrderSuccess(data: tempResult));
+    }
+  }
+
+  void sendReceipt(CartCashier cartCashier, String phoneNumber) async {
+    emit(CashierInitial());
+    WebStruct webStruct = WebStruct();
+    emit(CashierSendReceiptLoading());
+    webStruct.init();
+    Webstruct sendStruct = await webStruct.send(cartCashier, phoneNumber);
+    if (sendStruct.status == true) {
+      emit(CashierSendReceiptSuccess());
+    } else {
+      emit(CashierSendReceiptFailed());
     }
   }
 }

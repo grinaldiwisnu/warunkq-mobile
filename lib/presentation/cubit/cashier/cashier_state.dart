@@ -24,3 +24,9 @@ class CashierCreateOrderSuccess extends CashierState {
 }
 
 class CashierItemDeleted extends CashierState {}
+
+class CashierSendReceiptLoading extends CashierState {}
+
+class CashierSendReceiptSuccess extends CashierState {}
+
+class CashierSendReceiptFailed extends CashierState {}

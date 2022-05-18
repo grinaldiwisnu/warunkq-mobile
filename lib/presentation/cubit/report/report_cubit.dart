@@ -34,7 +34,9 @@ class ReportCubit extends Cubit<ReportState> {
         data: listSales.success!.data!,
       )];
 
-      dataSummary = listSales.success!.summary!;
+      if (listSales.success!.data!.length != 0) {
+        dataSummary = listSales.success!.summary!;
+      }
     }
 
     DataState<List<TopSelling>> listTopSellingItem = await orderUC.topSelling(dates);

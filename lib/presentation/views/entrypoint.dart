@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
-import 'package:warunkq_apps/injection_container.dart';
+import 'package:warunkq_apps/di.dart';
 import 'package:warunkq_apps/presentation/cubit/auth/auth_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';

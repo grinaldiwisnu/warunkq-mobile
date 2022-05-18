@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warunkq_apps/app.dart';
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/register.dart';
 import 'package:warunkq_apps/core/models/user.dart';
@@ -9,7 +9,7 @@ import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 
 class UserUsecase implements UserUC {
-  final UserData data;
+  final UserRemote data;
   final SharedPreferences prefs;
 
   UserUsecase(this.data, this.prefs);

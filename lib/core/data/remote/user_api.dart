@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:warunkq_apps/app.dart';
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/register.dart';
 import 'package:warunkq_apps/core/models/user.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/url_helper.dart';
 
-class UserAPI implements UserData {
+class UserAPI implements UserRemote {
   Future<ApiResponse<User>> login(String email, String password) async {
     try {
       Response res = await App()

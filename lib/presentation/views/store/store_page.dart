@@ -5,6 +5,7 @@ import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:warunkq_apps/helpers/constant_helper.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
+import 'package:warunkq_apps/presentation/views/customer/customer_page.dart';
 import 'package:warunkq_apps/presentation/views/product/product_category_page.dart';
 import 'package:warunkq_apps/presentation/views/product/product_page.dart';
 import 'package:warunkq_apps/presentation/views/splash_page.dart';
@@ -159,7 +160,10 @@ class StorePage extends StatelessWidget {
                               StoreMenu(
                                 name: "Daftar Pelanggan",
                                 icon: Icons.supervisor_account_rounded,
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CustomerPage()));
+                                },
                               ),
                               StoreMenu(
                                 name: "Bantuan",

@@ -74,6 +74,7 @@ class _CartCashierPageState extends State<CartCashierPage> {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => CashierSuccessPage(
+                              cashierCubit: cashierCubit,
                               data: state.data,
                             )),
                     (Route<dynamic> route) => false);

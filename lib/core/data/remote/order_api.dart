@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:warunkq_apps/app.dart';
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/cart_cashier.dart';
 import 'package:warunkq_apps/core/models/chart_summary.dart';
@@ -11,7 +11,7 @@ import 'package:warunkq_apps/core/models/top_selling.dart';
 import 'package:warunkq_apps/core/models/transaction.dart';
 import 'package:warunkq_apps/helpers/url_helper.dart';
 
-class OrderAPI implements OrderData {
+class OrderAPI implements OrderRemote {
   @override
   Future<ApiResponse<List<Transaction>>> findAll(List<DateTime> dates) async {
     try {

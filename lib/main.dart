@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:warunkq_apps/app.dart';
-import 'injection_container.dart' as di;
+import 'di.dart' as di;
 import 'package:warunkq_apps/presentation/views/entrypoint.dart';
 
 void main() async {

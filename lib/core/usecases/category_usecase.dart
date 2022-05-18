@@ -1,4 +1,4 @@
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
@@ -7,7 +7,7 @@ import 'package:warunkq_apps/core/usecase.dart';
 
 class CategoryUsecase implements CategoryUC {
   final SharedPreferences prefs;
-  final CategoryData data;
+  final CategoryRemote data;
 
   CategoryUsecase(this.prefs, this.data);
 

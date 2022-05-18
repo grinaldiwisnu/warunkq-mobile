@@ -1,4 +1,4 @@
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/cart_cashier.dart';
 import 'package:warunkq_apps/core/models/chart_summary.dart';
@@ -10,7 +10,7 @@ import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
 
 class OrderUsecase implements OrderUC {
-  final OrderData data;
+  final OrderRemote data;
   final SharedPreferences prefs;
 
   OrderUsecase(this.data, this.prefs);

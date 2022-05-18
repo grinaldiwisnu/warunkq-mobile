@@ -1,12 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/data/remote/customer_api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/data/remote/category_api.dart';
 import 'package:warunkq_apps/core/data/remote/order_api.dart';
 import 'package:warunkq_apps/core/data/remote/product_api.dart';
 import 'package:warunkq_apps/core/data/remote/user_api.dart';
 import 'package:warunkq_apps/core/usecase.dart';
 import 'package:warunkq_apps/core/usecases/category_usecase.dart';
+import 'package:warunkq_apps/core/usecases/customer_usecase.dart';
 import 'package:warunkq_apps/core/usecases/order_usecase.dart';
 import 'package:warunkq_apps/core/usecases/product_usecase.dart';
 import 'package:warunkq_apps/core/usecases/user_usecase.dart';
@@ -49,12 +51,14 @@ Future<void> init() async {
   sl.registerLazySingleton<ProductUC>(() => ProductUsecase(sl()));
   sl.registerLazySingleton<CategoryUC>(() => CategoryUsecase(sl(), sl()));
   sl.registerLazySingleton<OrderUC>(() => OrderUsecase(sl(), sl()));
+  sl.registerLazySingleton<CustomerUC>(() => CustomerUsecase(sl(), sl()));
 
   // Data
-  sl.registerLazySingleton<ProductData>(() => ProductAPI());
-  sl.registerLazySingleton<OrderData>(() => OrderAPI());
-  sl.registerLazySingleton<CategoryData>(() => CategoryAPI());
-  sl.registerLazySingleton<UserData>(() => UserAPI());
+  sl.registerLazySingleton<ProductRemote>(() => ProductAPI());
+  sl.registerLazySingleton<OrderRemote>(() => OrderAPI());
+  sl.registerLazySingleton<CategoryRemote>(() => CategoryAPI());
+  sl.registerLazySingleton<UserRemote>(() => UserAPI());
+  sl.registerLazySingleton<CustomerRemote>(() => CustomerAPI());
 
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);

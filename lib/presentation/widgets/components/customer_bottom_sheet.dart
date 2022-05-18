@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
 import 'package:warunkq_apps/presentation/widgets/components/add_input.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomerBottomSheet {
-  final TextEditingController controller;
+  final TextEditingController controller = TextEditingController();
+  final CashierCubit cashierCubit;
 
-  CustomerBottomSheet(this.controller);
+  CustomerBottomSheet(this.cashierCubit);
 
   void show(BuildContext context) {
     showModalBottomSheet(
@@ -67,7 +69,11 @@ class CustomerBottomSheet {
                       radius: 8,
                       padding: 16,
                       text: "Kirim Struk",
-                      onPressed: () {},
+                      onPressed: () {
+                        cashierCubit.sendReceipt(cashierCubit.cartCashier,
+                            controller.text);
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ),
                 ],

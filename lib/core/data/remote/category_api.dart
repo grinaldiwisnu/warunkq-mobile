@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:warunkq_apps/app.dart';
-import 'package:warunkq_apps/core/api.dart';
+import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
 import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/helpers/url_helper.dart';
 
-class CategoryAPI implements CategoryData {
+class CategoryAPI implements CategoryRemote {
   Future<ApiResponse<List<Category>>> find() async {
     try {
       Response res = await App().dio.get(UrlHelper.category);

@@ -2,19 +2,22 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:warunkq_apps/app.dart';
+import 'package:warunkq_apps/core/models/customer.dart';
 import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
-import 'package:warunkq_apps/core/models/product.dart';
+import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/helpers/url_helper.dart';
 
-class ProductAPI implements ProductRemote {
-  Future<ApiResponse<List<Product>>> find() async {
+class CustomerAPI implements CustomerRemote {
+  Future<ApiResponse<List<Customer>>> find() async {
     try {
-      Response res = await App().dio.get(UrlHelper.product);
+      Response res = await App().dio.get(UrlHelper.category);
       if (res.data['status'] == HttpStatus.ok) {
-        return ApiResponse<List<Product>>(
-            result: List.generate(res.data['result']['data'].length,
-                (index) => Product.fromJson(res.data['result']['data'][index])),
+        return ApiResponse<List<Customer>>(
+            result: List.generate(
+                res.data['result']['data'].length,
+                (index) =>
+                    Customer.fromJson(res.data['result']['data'][index])),
             status: res.data['status']);
       }
 
@@ -26,14 +29,14 @@ class ProductAPI implements ProductRemote {
     }
   }
 
-  Future<ApiResponse<List<Product>>> create(Product data) async {
+  Future<ApiResponse<List<Customer>>> create(Customer data) async {
     try {
       Response res =
-          await App().dio.post(UrlHelper.product, data: FormData.fromMap(await data.toMap()));
+          await App().dio.post(UrlHelper.category, data: data.toJson());
       if (res.data['status'] == HttpStatus.ok) {
-        return ApiResponse<List<Product>>(
+        return ApiResponse<List<Customer>>(
             result: List.generate(res.data['result'].length,
-                (index) => Product.fromJson(res.data['result'][index])),
+                (index) => Customer.fromJson(res.data['result'][index])),
             status: res.data['status']);
       }
 
@@ -45,15 +48,15 @@ class ProductAPI implements ProductRemote {
     }
   }
 
-  Future<ApiResponse<List<Product>>> save(Product data) async {
+  Future<ApiResponse<List<Customer>>> save(Customer data) async {
     try {
       Response res = await App()
           .dio
-          .put("${UrlHelper.product}/${data.id}", data: FormData.fromMap(await data.toMap()));
+          .put(UrlHelper.category + "${data.id}", data: data.toJson());
       if (res.data['status'] == HttpStatus.ok) {
-        return ApiResponse<List<Product>>(
+        return ApiResponse<List<Customer>>(
             result: List.generate(res.data['result'].length,
-                (index) => Product.fromJson(res.data['result'][index])),
+                (index) => Customer.fromJson(res.data['result'][index])),
             status: res.data['status']);
       }
 
@@ -66,7 +69,7 @@ class ProductAPI implements ProductRemote {
   }
 
   @override
-  Future<ApiResponse> delete(Product data) {
+  Future<ApiResponse> delete(Customer data) {
     // TODO: implement delete
     throw UnimplementedError();
   }

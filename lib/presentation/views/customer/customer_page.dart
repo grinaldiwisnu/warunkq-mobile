@@ -68,7 +68,7 @@ class _CustomerPageState extends State<CustomerPage> {
                                 offset: Offset(0, 0))
                           ]),
                       padding: EdgeInsets.symmetric(
-                          vertical: 20.h, horizontal: 15.w),
+                          vertical: 15  .h, horizontal: 15.w),
                       margin: EdgeInsets.only(bottom: 10.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
