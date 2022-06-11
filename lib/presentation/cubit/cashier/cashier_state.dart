@@ -30,3 +30,5 @@ class CashierSendReceiptLoading extends CashierState {}
 class CashierSendReceiptSuccess extends CashierState {}
 
 class CashierSendReceiptFailed extends CashierState {}
+
+class CashierUseCustomerSuccess extends CashierState {}

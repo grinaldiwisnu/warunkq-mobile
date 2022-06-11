@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:warunkq_apps/core/models/user.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:warunkq_apps/helpers/global_helper.dart';
@@ -47,10 +46,10 @@ class _InformationPageState extends State<InformationPage> {
         if (state is ErrorUpdatePersonalData) {
           Navigator.of(context).pop();
           AppAlertDialog(
-              title: "Perubahan informasi gagal",
-              description: "Gagal melakukan perubahan data",
-              positiveButtonText: "Oke",
-              positiveButtonOnTap: () => Navigator.of(context).pop())
+                  title: "Perubahan informasi gagal",
+                  description: "Gagal melakukan perubahan data",
+                  positiveButtonText: "Oke",
+                  positiveButtonOnTap: () => Navigator.of(context).pop())
               .show(context);
         } else if (state is SuccessUpdatePersonalData) {
           Future.delayed(Duration(seconds: 2));
@@ -58,8 +57,8 @@ class _InformationPageState extends State<InformationPage> {
           Navigator.of(context).pop();
         } else if (state is HomeInitial) {
           LoadingDialog(
-              title: "Melakukan perubahan ...",
-              description: "Mohon tunggu beberapa saat.")
+                  title: "Melakukan perubahan ...",
+                  description: "Mohon tunggu beberapa saat.")
               .show(context);
         }
       },
@@ -92,7 +91,8 @@ class _InformationPageState extends State<InformationPage> {
                 height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
                     child: Column(
                       children: [
                         SizedBox(
@@ -177,8 +177,7 @@ class _InformationPageState extends State<InformationPage> {
                 onPressed: () {
                   AppAlertDialog(
                       title: 'Konfirmasi perubahan data',
-                      description:
-                      'Apakah data yang anda berikan sudah benar?',
+                      description: 'Apakah data yang anda berikan sudah benar?',
                       positiveButtonText: 'Ya',
                       positiveButtonOnTap: () {
                         homeCubit.user.email = personalEmail.text;

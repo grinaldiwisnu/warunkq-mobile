@@ -237,8 +237,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             5),
-                                                    color:
-                                                        AppColor.primary,
+                                                    color: AppColor.primary,
                                                   ),
                                                   padding: EdgeInsets.symmetric(
                                                       vertical: 8.h,
@@ -254,8 +253,14 @@ class _HistoryPageState extends State<HistoryPage> {
                                                           color: Colors.white,
                                                         ),
                                                       ),
-                                                      SizedBox(width: 4.w,),
-                                                      Icon(Icons.check, color: Colors.white, size: 12.sp,)
+                                                      SizedBox(
+                                                        width: 4.w,
+                                                      ),
+                                                      Icon(
+                                                        Icons.check,
+                                                        color: Colors.white,
+                                                        size: 12.sp,
+                                                      )
                                                     ],
                                                   ),
                                                 )

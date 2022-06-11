@@ -40,6 +40,7 @@ class _ProductPageState extends State<ProductPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
+            productCubit.search("");
             Navigator.of(context).pop();
           },
         ),
@@ -58,114 +59,133 @@ class _ProductPageState extends State<ProductPage> {
               child: SearchBar(
                 controller: TextEditingController(),
                 label: "Cari produk",
-                onChanged: (str) {},
+                onChanged: (str) {
+                  productCubit.search(str);
+                },
               ),
             ),
-            Expanded(
-              child: Container(
-                color: AppColor.grey,
-                child: ListView.builder(
-                  itemCount: productCubit.listProduct.length,
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-                  itemBuilder: (context, index) {
-                    Product data = productCubit.listProduct[index];
-
-                    return InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AddProductPage(
-                          product: data,
-                        ),
-                      )),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: AppColor.boxGrey,
-                                  blurRadius: 2,
-                                  spreadRadius: 0,
-                                  offset: Offset(0, 0))
-                            ]),
+            BlocListener(
+              bloc: productCubit,
+              listener: (context, state) {},
+              child: BlocBuilder(
+                bloc: productCubit,
+                builder: (context, state) {
+                  return Expanded(
+                    child: Container(
+                      color: AppColor.grey,
+                      child: ListView.builder(
+                        itemCount: productCubit.listProduct.length,
                         padding: EdgeInsets.symmetric(
-                            vertical: 10.h, horizontal: 10.w),
-                        margin: EdgeInsets.only(bottom: 5.h),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 50,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: AppColor.grey, width: 1),
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: AppColor.darkGrey,
-                                  ),
-                                  child: Text(
-                                    GlobalHelper.getInitials(data.productName),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Text(
-                                            data.productName!,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
+                            vertical: 10.h, horizontal: 15.w),
+                        itemBuilder: (context, index) {
+                          Product data = productCubit.listProduct[index];
+
+                          return InkWell(
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddProductPage(
+                                product: data,
+                              ),
+                            )),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: AppColor.boxGrey,
+                                        blurRadius: 2,
+                                        spreadRadius: 0,
+                                        offset: Offset(0, 0))
+                                  ]),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.h, horizontal: 10.w),
+                              margin: EdgeInsets.only(bottom: 5.h),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 50,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppColor.grey, width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: AppColor.darkGrey,
+                                        ),
+                                        child: Text(
+                                          GlobalHelper.getInitials(
+                                              data.productName),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Container(
-                                          margin: EdgeInsets.only(top: 8.h),
-                                          child: Text(
-                                            "${data.description}",
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              color: AppColor.darkGrey,
-                                              fontSize: 12.sp,
-                                            ),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8.w),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                child: Text(
+                                                  data.productName!,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(top: 8.h),
+                                                child: Text(
+                                                  "${data.description}",
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: AppColor.darkGrey,
+                                                    fontSize: 12.sp,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Text(
+                                        "Rp${GlobalHelper.formatPrice(data.price)}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp,
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  "Rp${GlobalHelper.formatPrice(data.price)}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.sp,
-                                  ),
-                                )
-                              ],
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
             Container(

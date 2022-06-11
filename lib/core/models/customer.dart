@@ -8,11 +8,11 @@ class Customer {
 
   Customer(
       {this.id,
-        this.usersId,
-        this.name,
-        this.phone,
-        this.createdAt,
-        this.updatedAt});
+      this.usersId,
+      this.name,
+      this.phone,
+      this.createdAt,
+      this.updatedAt});
 
   Customer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,8 +27,8 @@ class Customer {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['users_id'] = this.usersId;
-    data['name'] = this.name;
-    data['phone'] = this.phone;
+    data['customer_name'] = this.name;
+    data['customer_phone'] = this.phone;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

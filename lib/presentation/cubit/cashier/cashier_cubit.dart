@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/models/cart_cashier.dart';
+import 'package:warunkq_apps/core/models/customer.dart';
 import 'package:warunkq_apps/core/models/detail_order.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/core/models/webstruct.dart';
@@ -132,5 +133,13 @@ class CashierCubit extends Cubit<CashierState> {
     } else {
       emit(CashierSendReceiptFailed());
     }
+  }
+
+  void useCustomer(Customer customer) async {
+    emit(CashierInitial());
+    this.cartCashier.customerId = customer.id;
+    this.cartCashier.orderName = customer.name;
+    this.cartCashier.phoneNumber = customer.phone;
+    emit(CashierUseCustomerSuccess());
   }
 }

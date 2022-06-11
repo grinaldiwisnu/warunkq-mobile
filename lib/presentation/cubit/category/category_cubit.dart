@@ -13,6 +13,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   final CategoryUC categoryUC;
 
   List<Category> listCategory = <Category>[];
+  List<Category> originListCategory = <Category>[];
 
   void load() async {
     emit(CategoryLoading());
@@ -20,6 +21,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     if (result.error != null) {
       emit(LoadCategoryFailed());
     } else {
+      this.originListCategory = result.success!;
       this.listCategory = result.success!;
       emit(LoadCategorySuccess());
     }
@@ -43,5 +45,15 @@ class CategoryCubit extends Cubit<CategoryState> {
     } else {
       emit(AddCategorySuccess());
     }
+  }
+
+  void search(String query) async {
+    emit(CategoryLoading());
+    this.listCategory = this
+        .originListCategory
+        .where((element) =>
+            element.name!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    emit(CategorySearchSuccess());
   }
 }

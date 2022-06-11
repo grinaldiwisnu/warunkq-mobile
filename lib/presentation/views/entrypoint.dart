@@ -8,6 +8,7 @@ import 'package:warunkq_apps/di.dart';
 import 'package:warunkq_apps/presentation/cubit/auth/auth_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
+import 'package:warunkq_apps/presentation/cubit/customer/customer_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/order/order_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
@@ -29,6 +30,7 @@ class Entrypoint extends StatelessWidget {
           BlocProvider<CategoryCubit>(create: (context) => sl<CategoryCubit>()),
           BlocProvider<OrderCubit>(create: (context) => sl<OrderCubit>()),
           BlocProvider<ReportCubit>(create: (context) => sl<ReportCubit>()),
+          BlocProvider<CustomerCubit>(create: (context) => sl<CustomerCubit>()),
         ],
         child: ScreenUtilInit(
           designSize: const Size(375, 812),
@@ -52,7 +54,6 @@ class Entrypoint extends StatelessWidget {
               home: SplashPage(),
             );
           },
-        )
-    );
+        ));
   }
 }

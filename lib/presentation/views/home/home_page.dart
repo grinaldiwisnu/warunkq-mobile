@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:warunkq_apps/helpers/flutter_toast.dart';
+import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
+import 'package:warunkq_apps/presentation/cubit/customer/customer_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/views/cashier/cashier_page.dart';
 import 'package:warunkq_apps/presentation/views/history/history_page.dart';
@@ -20,14 +22,22 @@ class _HomePageState extends State<HomePage> {
   late PageController _pageController;
   int pageIndex = 0;
   late HomeCubit homeCubit;
+  late CategoryCubit categoryCubit;
+  late CustomerCubit customerCubit;
 
   @override
   void initState() {
     homeCubit = BlocProvider.of<HomeCubit>(context);
+    categoryCubit = BlocProvider.of<CategoryCubit>(context);
+    customerCubit = BlocProvider.of<CustomerCubit>(context);
+
     _pageController = PageController(
       initialPage: 0,
       keepPage: true,
     );
+
+    categoryCubit.load();
+    customerCubit.load();
 
     super.initState();
   }

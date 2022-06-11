@@ -22,3 +22,5 @@ class UpdateProductSuccess extends ProductState {}
 class AddProductFailed extends ProductState {}
 
 class AddProductSuccess extends ProductState {}
+
+class ProductSearchSuccess extends ProductState {}

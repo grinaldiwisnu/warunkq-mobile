@@ -21,7 +21,8 @@ class GlobalHelper {
     }
   }
 
-  static String? formatNumberToString(String? text, {String? defaultValue = "0"}) {
+  static String? formatNumberToString(String? text,
+      {String? defaultValue = "0"}) {
     if (GlobalHelper.isEmpty(text)) {
       return defaultValue;
     }

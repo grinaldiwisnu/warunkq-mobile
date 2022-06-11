@@ -100,8 +100,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 15.h,
                       ),
                       Container(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 25.w,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 25.w,
+                        ),
                         child: AddInput(
                           controller: _nameInput,
                           label: "Nama lengkap",
@@ -117,8 +118,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Container(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 25.w,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 25.w,
+                        ),
                         child: AddInput(
                           controller: _emailInput,
                           label: "Email",
@@ -134,8 +136,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Container(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 25.w,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 25.w,
+                        ),
                         child: AddInput(
                           controller: _phoneInput,
                           label: "Nomor HP",
@@ -153,8 +156,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Container(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 25.w,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 25.w,
+                        ),
                         child: AddInput(
                           controller: _storeNameInput,
                           label: "Nama warung",
@@ -169,8 +173,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Container(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 25.w,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 25.w,
+                        ),
                         child: AddInput(
                           controller: _storeAddressInput,
                           label: "Alamat warung",
@@ -186,8 +191,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Container(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 25.w,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 25.w,
+                        ),
                         child: AddInput(
                           controller: _passwordInput,
                           label: "Kata sandi",
@@ -210,8 +216,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Container(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 25.w,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 25.w,
+                        ),
                         margin: EdgeInsets.only(bottom: 100.h),
                         child: AddInput(
                           controller: _rePasswordInput,
@@ -228,7 +235,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               return "Kata sandi tidak boleh kosong";
                             } else if (value!.length < 8) {
                               return "Katasandi harus lebih dari 8 angka";
-                            } else if (_passwordInput.text != _rePasswordInput.text) {
+                            } else if (_passwordInput.text !=
+                                _rePasswordInput.text) {
                               return "Password tidak sesuai dengan password sebelumnya";
                             }
 
@@ -253,8 +261,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () {
                   AppAlertDialog(
                       title: 'Konfirmasi pendaftaran',
-                      description:
-                      'Apakah data yang anda berikan sudah benar?',
+                      description: 'Apakah data yang anda berikan sudah benar?',
                       positiveButtonText: 'Ya',
                       positiveButtonOnTap: () {
                         Register register = Register(
@@ -264,7 +271,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           password: _passwordInput.text,
                           storeName: _storeNameInput.text,
                           storeAddress: _storeAddressInput.text,
-                          username: _nameInput.text.toLowerCase().replaceAll(" ", "").substring(0, 8),
+                          username: _nameInput.text
+                              .toLowerCase()
+                              .replaceAll(" ", "")
+                              .substring(0, 8),
                         );
                         authCubit.register(register);
                         Navigator.pop(context);

@@ -20,18 +20,18 @@ class ChartSummary {
 }
 
 class Summary {
-  int? hpp;
-  int? total;
-  int? discount;
-  int? products;
+  int? hpp = 0;
+  int? total = 0;
+  int? discount = 0;
+  int? products = 0;
 
   Summary({this.hpp, this.total, this.discount, this.products});
 
   Summary.fromJson(Map<String, dynamic> json) {
-    hpp = json['HPP'];
-    total = json['TOTAL'];
-    discount = json['DISCOUNT'];
-    products = json['PRODUCT'];
+    hpp = json['HPP'] ?? 0;
+    total = json['TOTAL'] ?? 0;
+    discount = json['DISCOUNT'] ?? 0;
+    products = json['PRODUCT'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

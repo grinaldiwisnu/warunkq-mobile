@@ -14,7 +14,8 @@ import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart
 class CashierSuccessPage extends StatelessWidget {
   final CartCashier? data;
   final CashierCubit cashierCubit;
-  const CashierSuccessPage({Key? key, this.data, required this.cashierCubit}) : super(key: key);
+  const CashierSuccessPage({Key? key, this.data, required this.cashierCubit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +39,8 @@ class CashierSuccessPage extends StatelessWidget {
                   title: "Gagal mengirim struk",
                   description: "Sistem gagal mengirimkan struk belanja anda.",
                   positiveButtonText: "Oke",
-                  positiveButtonOnTap: () => Navigator.of(context).pop())
-                  .show(context);
+                  positiveButtonOnTap: () =>
+                      Navigator.of(context).pop()).show(context);
             }
           },
           child: BlocBuilder(
@@ -96,12 +97,13 @@ class CashierSuccessPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Container(
-                            padding:
-                            EdgeInsets.only(left: 15, right: 7.5, bottom: 15),
+                            padding: EdgeInsets.only(
+                                left: 15, right: 7.5, bottom: 15),
                             child: BaseButton(
                               style: AppButtonStyle.secondary,
                               onPressed: () {
-                                CustomerBottomSheet(cashierCubit).show(context);
+                                CustomerBottomSheet(cashierCubit, data!)
+                                    .show(context);
                               },
                               text: "Kirim Struk",
                               radius: 8,
@@ -112,14 +114,14 @@ class CashierSuccessPage extends StatelessWidget {
                         ),
                         Expanded(
                           child: Container(
-                            padding:
-                            EdgeInsets.only(right: 15, left: 7.5, bottom: 15),
+                            padding: EdgeInsets.only(
+                                right: 15, left: 7.5, bottom: 15),
                             child: BaseButton(
                               style: AppButtonStyle.secondary,
                               onPressed: () => Navigator.of(context)
                                   .pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()),
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()),
                                       (Route<dynamic> route) => false),
                               text: "Buat Pesanan Lain",
                               radius: 8,

@@ -10,7 +10,8 @@ import 'package:warunkq_apps/core/models/user.dart';
 import 'package:warunkq_apps/core/resources/state.dart';
 
 abstract class OrderUC {
-  Future<DataState<List<Transaction>>> get({List<DateTime>? dates, String? orderNumber});
+  Future<DataState<List<Transaction>>> get(
+      {List<DateTime>? dates, String? orderNumber});
   Future<DataState> store(CartCashier data);
   Future<DataState<ChartSummary>> summary(List<DateTime> dates);
   Future<DataState<List<TopSelling>>> topSelling(List<DateTime> dates);
@@ -38,9 +39,3 @@ abstract class UserUC {
   Future<DataState<User>> login(String email, String password);
   Future<DataState> register(Register register);
 }
-
-// create partner bill type
-// handler ->
-// call usecase partnerBillTypeModel = partnerBillType.create(data) ->
-// call usecase partner.update(partnerBillTypeModel)
-// order tipe meja -> call usecase order -> didalem use case order, call usecase meja untuk create order ke meja

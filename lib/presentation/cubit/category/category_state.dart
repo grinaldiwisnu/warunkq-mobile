@@ -21,4 +21,6 @@ class UpdateCategorySuccess extends CategoryState {}
 
 class AddCategoryFailed extends CategoryState {}
 
+class CategorySearchSuccess extends CategoryState {}
+
 class AddCategorySuccess extends CategoryState {}

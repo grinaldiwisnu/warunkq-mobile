@@ -15,6 +15,7 @@ import 'package:warunkq_apps/core/usecases/user_usecase.dart';
 import 'package:warunkq_apps/presentation/cubit/auth/auth_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/cashier/cashier_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/category/category_cubit.dart';
+import 'package:warunkq_apps/presentation/cubit/customer/customer_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/home/home_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/order/order_cubit.dart';
 import 'package:warunkq_apps/presentation/cubit/product/product_cubit.dart';
@@ -25,26 +26,29 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // Cubit
   sl.registerFactory(() => AuthCubit(
-    userUC: sl(),
-  ));
+        userUC: sl(),
+      ));
   sl.registerFactory(() => CashierCubit(
-    orderUC: sl(),
-  ));
+        orderUC: sl(),
+      ));
   sl.registerFactory(() => CategoryCubit(
-    categoryUC: sl(),
-  ));
+        categoryUC: sl(),
+      ));
   sl.registerFactory(() => HomeCubit(
-    userData: sl(),
-  ));
+        userData: sl(),
+      ));
   sl.registerFactory(() => OrderCubit(
-    orderUC: sl(),
-  ));
+        orderUC: sl(),
+      ));
   sl.registerFactory(() => ProductCubit(
-    productUC: sl(),
-  ));
+        productUC: sl(),
+      ));
   sl.registerFactory(() => ReportCubit(
-    orderUC: sl(),
-  ));
+        orderUC: sl(),
+      ));
+  sl.registerFactory(() => CustomerCubit(
+        customerUC: sl(),
+      ));
 
   // UseCase
   sl.registerLazySingleton<UserUC>(() => UserUsecase(sl(), sl()));

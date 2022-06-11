@@ -1,10 +1,10 @@
 import 'package:warunkq_apps/core/models/detail_order.dart';
 
 class CartCashier {
-  int? usersId, customerId, phoneNumber, discountAmount, discountTotal;
+  int? usersId, customerId, discountAmount, discountTotal;
   int totalPrice, totalProduct;
   String? status = "success";
-  String? orderNumber, orderName;
+  String? orderNumber, orderName, phoneNumber;
   List<DetailOrder> detailOrder = <DetailOrder>[];
 
   CartCashier(

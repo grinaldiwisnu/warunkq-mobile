@@ -5,13 +5,12 @@ import 'package:warunkq_apps/app.dart';
 import 'package:warunkq_apps/core/models/customer.dart';
 import 'package:warunkq_apps/core/remote.dart';
 import 'package:warunkq_apps/core/models/api_response.dart';
-import 'package:warunkq_apps/core/models/category.dart';
 import 'package:warunkq_apps/helpers/url_helper.dart';
 
 class CustomerAPI implements CustomerRemote {
   Future<ApiResponse<List<Customer>>> find() async {
     try {
-      Response res = await App().dio.get(UrlHelper.category);
+      Response res = await App().dio.get(UrlHelper.customer);
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse<List<Customer>>(
             result: List.generate(
@@ -32,7 +31,7 @@ class CustomerAPI implements CustomerRemote {
   Future<ApiResponse<List<Customer>>> create(Customer data) async {
     try {
       Response res =
-          await App().dio.post(UrlHelper.category, data: data.toJson());
+          await App().dio.post(UrlHelper.customer, data: data.toJson());
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse<List<Customer>>(
             result: List.generate(res.data['result'].length,
@@ -52,7 +51,7 @@ class CustomerAPI implements CustomerRemote {
     try {
       Response res = await App()
           .dio
-          .put(UrlHelper.category + "${data.id}", data: data.toJson());
+          .put(UrlHelper.customer + "${data.id}", data: data.toJson());
       if (res.data['status'] == HttpStatus.ok) {
         return ApiResponse<List<Customer>>(
             result: List.generate(res.data['result'].length,

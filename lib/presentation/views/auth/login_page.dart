@@ -6,7 +6,6 @@ import 'package:warunkq_apps/helpers/global_helper.dart';
 import 'package:warunkq_apps/presentation/cubit/auth/auth_cubit.dart';
 import 'package:warunkq_apps/presentation/views/home/home_page.dart';
 import 'package:warunkq_apps/presentation/widgets/base/base_button.dart';
-import 'package:warunkq_apps/presentation/widgets/base/base_input.dart';
 import 'package:warunkq_apps/presentation/widgets/components/add_input.dart';
 import 'package:warunkq_apps/presentation/widgets/components/app_alert_dialog.dart';
 import 'package:warunkq_apps/presentation/widgets/components/loading_dialog.dart';
@@ -95,8 +94,8 @@ class _LoginPageState extends State<LoginPage> {
                         height: 15.h,
                       ),
                       Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 25.w, vertical: 10.h),
                         child: AddInput(
                           controller: _emailInput,
                           label: "Email",
@@ -114,8 +113,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 25.w, vertical: 10.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 25.w, vertical: 10.h),
                         child: AddInput(
                           controller: _passwordInput,
                           label: "Kata sandi",

@@ -13,10 +13,12 @@ class ProductCubit extends Cubit<ProductState> {
   final ProductUC productUC;
 
   List<Product> listProduct = <Product>[];
+  List<Product> originListProduct = <Product>[];
 
   void load() async {
     emit(ProductInitial());
     this.listProduct.clear();
+    this.originListProduct.clear();
     emit(ProductLoading());
     DataState<List<Product>> result = await productUC.get();
     if (result.error != null) {
@@ -25,6 +27,7 @@ class ProductCubit extends Cubit<ProductState> {
     }
 
     this.listProduct = result.success!;
+    this.originListProduct = result.success!;
     emit(LoadProductSuccess());
   }
 
@@ -46,5 +49,15 @@ class ProductCubit extends Cubit<ProductState> {
     } else {
       emit(AddProductSuccess());
     }
+  }
+
+  void search(String query) async {
+    emit(ProductLoading());
+    this.listProduct = this
+        .originListProduct
+        .where((element) =>
+            element.productName!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    emit(ProductSearchSuccess());
   }
 }

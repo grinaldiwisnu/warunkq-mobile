@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:warunkq_apps/core/models/customer.dart';
 import 'package:warunkq_apps/core/models/detail_order.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -95,24 +96,31 @@ class _CartCashierPageState extends State<CartCashierPage> {
                               bottom: BorderSide(
                                   color: AppColor.boxGrey, width: 1)),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "#${cashierCubit.cartCashier.orderName}",
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CustomerPage()));
-                              },
-                              child: Icon(
+                        child: GestureDetector(
+                          onTap: () async {
+                            Customer customer = await Navigator.of(context)
+                                .push(MaterialPageRoute(
+                                    builder: (context) => CustomerPage(
+                                          isFromCashier: true,
+                                        )));
+
+                            if (!GlobalHelper.isEmpty(customer)) {
+                              cashierCubit.useCustomer(customer);
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "#${cashierCubit.cartCashier.orderName}",
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                              Icon(
                                 Icons.group_add_rounded,
                                 color: AppColor.black,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Expanded(
@@ -353,14 +361,17 @@ class _CartCashierPageState extends State<CartCashierPage> {
                             ),
                             PaidButton(
                               icon: Icons.payments_outlined,
-                              isDisabled: cashierCubit.cartCashier.totalProduct > 0
-                                  ? false
-                                  : true,
+                              isDisabled:
+                                  cashierCubit.cartCashier.totalProduct > 0
+                                      ? false
+                                      : true,
                               totalPrice: cashierCubit.cartCashier.totalPrice,
                               totalProduct:
                                   cashierCubit.cartCashier.totalProduct,
                               onTap: () {
-                                if (cashierCubit.cartCashier.detailOrder.length > 0) {
+                                if (cashierCubit
+                                        .cartCashier.detailOrder.length >
+                                    0) {
                                   cashierCubit.createOrder();
                                 } else {
                                   showFlutterToast("Pilih produk dahulu.");

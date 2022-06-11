@@ -75,290 +75,339 @@ class _ReportPageState extends State<ReportPage> {
           bloc: reportCubit,
           builder: (context, state) {
             return SingleChildScrollView(
-              child: state is LoadingReport ? Center(child: CircularProgressIndicator(),) :
-              Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        _selectDate(context);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.h, horizontal: 15.w),
-                        decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  color: AppColor.boxGrey, width: 1)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.date_range_rounded,
-                                  color: AppColor.black,
-                                  size: 16.sp,
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Text(
-                                  "${GlobalHelper.displayDateRange(startDate)} - ${GlobalHelper.displayDateRange(endDate)}",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: AppColor.black,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: AppColor.black,
-                              size: 16.sp,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: 15.w, right: 15.w, top: 10.h, bottom: 10.h),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColor.boxGrey, width: 1),
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
-                      ),
+              child: state is LoadingReport
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(color: AppColor.boxGrey, width: 1),
+                          GestureDetector(
+                            onTap: () async {
+                              _selectDate(context);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.h, horizontal: 15.w),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: AppColor.boxGrey, width: 1)),
                               ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Rangkuman Penjualan",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 275.h,
-                            padding: EdgeInsets.all(15),
-                            child: PointLineChart(summaryReport, animate: true,),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 10.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Laba kotor",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColor.darkGrey,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Rp${GlobalHelper.formatPrice(reportCubit.dataSummary.total)}",
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Laba bersih",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColor.darkGrey,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Rp${GlobalHelper.formatPrice(reportCubit.dataSummary.total! - reportCubit.dataSummary.hpp! - reportCubit.dataSummary.discount!)}",
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 15.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Penggunaan diskon",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColor.darkGrey,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Rp${GlobalHelper.formatPrice(reportCubit.dataSummary.discount)}",
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "Produk terjual",
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColor.darkGrey,
-                                      ),
-                                    ),
-                                    Text(
-                                      "${reportCubit.dataSummary.products} produk",
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 5.h),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColor.boxGrey, width: 1),
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(color: AppColor.boxGrey, width: 1),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Produk Terlaris",
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: reportCubit.topProduct.length,
-                              shrinkWrap: true,
-                              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.only(bottom: 8.h),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        color: AppColor.boxGrey,
-                                        width: 1,
-                                      ),
-                                    )
-                                  ),
-                                  child: Column(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
                                     children: [
-                                      Container(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              reportCubit.topProduct[index].name!,
-                                              style: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Text(
-                                              "Rp" + GlobalHelper.formatPrice(reportCubit.topProduct[index].total),
-                                              style: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      Icon(
+                                        Icons.date_range_rounded,
+                                        color: AppColor.black,
+                                        size: 16.sp,
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(top: 5.h, bottom: 8),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: AppColor.greenSecondary,
-                                              ),
-                                            ),
-                                            Text(
-                                              "${reportCubit.topProduct[index].selling} terjual",
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: AppColor.greenSecondary,
-                                              ),
-                                            ),
-                                          ],
+                                      SizedBox(
+                                        width: 5.w,
+                                      ),
+                                      Text(
+                                        "${GlobalHelper.displayDateRange(startDate)} - ${GlobalHelper.displayDateRange(endDate)}",
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: AppColor.black,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                     ],
                                   ),
-                                );
-                              },
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: AppColor.black,
+                                    size: 16.sp,
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                                top: 10.h,
+                                bottom: 10.h),
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: AppColor.boxGrey, width: 1),
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          color: AppColor.boxGrey, width: 1),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Rangkuman Penjualan",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 275.h,
+                                  padding: EdgeInsets.all(15),
+                                  child: PointLineChart(
+                                    summaryReport,
+                                    animate: true,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      left: 15.w, right: 15.w, bottom: 10.h),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Laba kotor",
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColor.darkGrey,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Rp${GlobalHelper.formatPrice(reportCubit.dataSummary.total)}",
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "Laba bersih",
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColor.darkGrey,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Rp${GlobalHelper.formatPrice(reportCubit.dataSummary.total! - reportCubit.dataSummary.hpp! - reportCubit.dataSummary.discount!)}",
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      left: 15.w, right: 15.w, bottom: 15.h),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Penggunaan diskon",
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColor.darkGrey,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Rp${GlobalHelper.formatPrice(reportCubit.dataSummary.discount)}",
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "Produk terjual",
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColor.darkGrey,
+                                            ),
+                                          ),
+                                          Text(
+                                            "${reportCubit.dataSummary.products} produk",
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 15.w, right: 15.w, top: 5.h),
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: AppColor.boxGrey, width: 1),
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          color: AppColor.boxGrey, width: 1),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Produk Terlaris",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                reportCubit.topProduct.length != 0
+                                    ? Container(
+                                        child: ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount:
+                                              reportCubit.topProduct.length,
+                                          shrinkWrap: true,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 15.h, horizontal: 15.w),
+                                          itemBuilder: (context, index) {
+                                            return Container(
+                                              margin:
+                                                  EdgeInsets.only(bottom: 8.h),
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                bottom: BorderSide(
+                                                  color: AppColor.boxGrey,
+                                                  width: 1,
+                                                ),
+                                              )),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          reportCubit
+                                                              .topProduct[index]
+                                                              .name!,
+                                                          style: TextStyle(
+                                                            fontSize: 16.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "Rp" +
+                                                              GlobalHelper.formatPrice(
+                                                                  reportCubit
+                                                                      .topProduct[
+                                                                          index]
+                                                                      .total),
+                                                          style: TextStyle(
+                                                            fontSize: 16.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 5.h, bottom: 8),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            color: AppColor
+                                                                .greenSecondary,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "${reportCubit.topProduct[index].selling} terjual",
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            color: AppColor
+                                                                .greenSecondary,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    : Container(
+                                        padding: EdgeInsets.all(10),
+                                        child:
+                                            Text("Belum ada produk terlaris"))
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             );
           },
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:warunkq_apps/core/models/product.dart';
 import 'package:warunkq_apps/helpers/app_color.dart';
 import 'package:warunkq_apps/helpers/flutter_toast.dart';
@@ -114,7 +114,9 @@ class _CashierPageState extends State<CashierPage> {
                         child: SearchBar(
                           controller: TextEditingController(),
                           label: "Cari produk yang dibeli",
-                          onChanged: (str) {},
+                          onChanged: (str) {
+                            productCubit.search(str);
+                          },
                         ),
                       ),
                       BlocBuilder(
@@ -127,35 +129,51 @@ class _CashierPageState extends State<CashierPage> {
                                   onRefresh: refreshProduct,
                                   child: state is ProductLoading
                                       ? LoadingIndicator()
-                                      : GridView.count(
-                                          shrinkWrap: true,
-                                          crossAxisCount: 2,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 12.w, vertical: 15.h),
-                                          children: List.generate(
-                                              productCubit.listProduct.length,
-                                              (index) {
-                                            Product data =
-                                                productCubit.listProduct[index];
+                                      : productCubit.listProduct.length == 0
+                                          ? Container(
+                                              height: 215.h,
+                                              width: 215.w,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/empty_product.png'),
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                            )
+                                          : GridView.count(
+                                              shrinkWrap: true,
+                                              crossAxisCount: 2,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.w,
+                                                  vertical: 15.h),
+                                              children: List.generate(
+                                                  productCubit.listProduct
+                                                      .length, (index) {
+                                                Product data = productCubit
+                                                    .listProduct[index];
 
-                                            int count = 0;
-                                            cashierCubit.cartCashier.detailOrder.forEach((element) {
-                                              if (element.prodId == data.id) {
-                                                count = element.quantity;
-                                                return;
-                                              }
-                                            });
+                                                int count = 0;
+                                                cashierCubit
+                                                    .cartCashier.detailOrder
+                                                    .forEach((element) {
+                                                  if (element.prodId ==
+                                                      data.id) {
+                                                    count = element.quantity;
+                                                    return;
+                                                  }
+                                                });
 
-                                            return ProductCard(
-                                              isBestSeller: false,
-                                              data: data,
-                                              onTap: () {
-                                                cashierCubit.addItem(data);
-                                              },
-                                              count: count,
-                                            );
-                                          }),
-                                        ),
+                                                return ProductCard(
+                                                  isBestSeller: false,
+                                                  data: data,
+                                                  onTap: () {
+                                                    cashierCubit.addItem(data);
+                                                  },
+                                                  count: count,
+                                                );
+                                              }),
+                                            ),
                                 )),
                           );
                         },

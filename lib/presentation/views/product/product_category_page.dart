@@ -68,7 +68,9 @@ class _ProductCategoryPageState extends State<ProductCategoryPage> {
                     child: SearchBar(
                       controller: TextEditingController(),
                       label: "Cari kategori",
-                      onChanged: (str) {},
+                      onChanged: (str) {
+                        categoryCubit.search(str);
+                      },
                     ),
                   ),
                   Expanded(
